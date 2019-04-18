@@ -1,4 +1,5 @@
 # POO
+Just a reminder, java sucks
 Trabalho de grupo
 
 GRUPO NUMERO ???
