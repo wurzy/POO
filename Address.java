@@ -1,8 +1,13 @@
-import java.util.Objects;
-
+/**
+ * Classe que implementa uma morada.
+ * Esta classe gere um código postal, distrito, concelho, freguesia, rua, número da casa e andar, caso seja um prédio.
+ * Nota: o andar deverá ser 0 quando se trata duma casa particular e não um prédio.
+ *
+ * @author  Grupo de Trabalho -->INSERIR<--
+ */
 public class Address {
 
-    private int cityPostal, /* 4750-202  -> 4750 */ townPostal, /* 4750-202  ->  202*/  houseNo /*número da porta*/, andar /*em caso de prédio, caso não seja é 0 por defeito*/;
+    private int cityPostal, /* 4750-202  -> 4750 */ townPostal, /* 4750-202  ->  202*/  houseNo /*número da casa*/, andar /*em caso de prédio, caso não seja é 0 por defeito*/;
     private String district, city, town, street;
 
     /**
@@ -23,7 +28,7 @@ public class Address {
      * Aceita como parâmetros os diversos componentes da morada
      * @param cityPostal para um código postal 4750-222 insere-se o 4750.
      * @param townPostal para o mesmo código postal, insere-se o 222.
-     * @param houseNo para o número da porta.
+     * @param houseNo para o número da casa.
      * @param andar para o andar (caso seja um prédio).
      * @param district para o nome do distrito
      * @param city para o nome da concelho.
@@ -78,9 +83,9 @@ public class Address {
 
     /**
      * Método de instância (get).
-     * Devolve o número da porta.
+     * Devolve o número da casa.
      *
-     * @return o número da porta associado à morada.
+     * @return o número da casa associado à morada.
      */
     public int getHouseNo() {
         return this.houseNo;
@@ -158,9 +163,9 @@ public class Address {
 
     /**
      * Método de instância (set).
-     * Atualiza o número da porta duma morada.
+     * Atualiza o número da casa duma morada.
      *
-     * @param houseNo novo número da porta para a morada.
+     * @param houseNo novo número da casa para a morada.
      */
     public void setHouseNo(int houseNo) {
         this.houseNo = houseNo;

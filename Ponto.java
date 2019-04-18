@@ -1,4 +1,3 @@
-
 /**
  * Classe que implementa um Ponto num plano2D.
  * As coordenadas do Ponto são doubles.
@@ -25,8 +24,6 @@ public class Ponto {
         this.x = cx;
         this.y = cy;
     }
-
-
 
     /**
      * Construtor de cópia de Ponto.
@@ -127,7 +124,6 @@ public class Ponto {
                 Math.pow(this.y - umPonto.getY(), 2));
     }
 
-
     /**
      * Método que determina se dois pontos são iguais.
      * @return booleano que dá verdadeiro se os valores das duas coordenadas forem iguais.
@@ -135,7 +131,6 @@ public class Ponto {
     public boolean iguais(Ponto umPonto) {
         return (this.x == umPonto.getX() && this.y == umPonto.getY());
     }
-
 
     /**
      * Método que determina se o módulo das duas coordenadas dá o mesmo.
@@ -168,7 +163,6 @@ public class Ponto {
         return (this.x == p.getX() && this.y == p.getY());
 
     }
-
 
      /**
      * Método que faz uma cópia do ponto receptor da mensagem.
