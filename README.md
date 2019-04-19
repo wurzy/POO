@@ -9,7 +9,7 @@ José Pedro Silva A84577
 
 Ricardo Cunha A84302
 
-Válter Carvalho A84464 (metam aqui os vossos)
+Válter Carvalho A84464 
 
 TO DO: 
 
