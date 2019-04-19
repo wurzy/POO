@@ -105,9 +105,9 @@ public class Birthday {
      */
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.day+ "-");
-        sb.append(this.month + "-");
-        sb.append(this.year);
+        sb.append(this.day).append("-").
+        append(this.month).append("-").
+        append(this.year);
         return sb.toString();
     }
 
