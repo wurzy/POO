@@ -251,7 +251,7 @@ public class Address {
         append("\nConcelho: ").append(this.city).
         append("\nFreguesia: ").append(this.town).
         append("\nRua: ").append(this.street).
-        append("\nNúmero da casa: ").append(this.houseNo).
+        append("\nNúmero da porta: ").append(this.houseNo).
         append(sp).
         append("\nCódigo Postal: ").append(this.postalCode());
 

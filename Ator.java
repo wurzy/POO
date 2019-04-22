@@ -4,12 +4,15 @@
  *
  * @author  Grupo de Trabalho -->INSERIR<--
  */
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Ator {
     private String email; //key
     private String name;
     private String password;
     private Address address; // varias componentes da morada
-    private Birthday birthday; // Day-Mth-Yr
+    private LocalDate birthday; // Day-Mth-Yr
 
     /**
      * Construtor por omissão de um Ator.
@@ -19,24 +22,24 @@ public class Ator {
         this.name = "";
         this.password = "";
         this.address = new Address();
-        this.birthday = new Birthday();
+        this.birthday = LocalDate.of(0,0,0);
     }
 
     /**
      * Construtor parametrizado de um Ator.
-     * Aceita como parãmetros cada componente necessária.
+     * Aceita como parâmetros cada componente necessária.
      */
-    public Ator(String email, String name, String password, Address address, Birthday birthday) {
+    public Ator(String email, String name, String password, Address address, LocalDate date) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.address = address.clone();
-        this.birthday = birthday.clone();
+        this.birthday = LocalDate.of(date.getYear(),date.getMonth(),date.getDayOfMonth());
     }
 
     /**
      * Construtor de cópia de um Ator.
-     * Aceita como parãmetro outro Ator e utiliza os métodos de acesso aos valores das variáveis de instância.
+     * Aceita como parâmetro outro Ator e utiliza os métodos de acesso aos valores das variáveis de instância.
      */
     public Ator(Ator at) {
         this.email = at.getEmail();
@@ -92,8 +95,8 @@ public class Ator {
      *
      * @return data de aniversário do Ator.
      */
-    public Birthday getBirthday() {
-        return this.birthday.clone();
+    public LocalDate getBirthday() {
+        return LocalDate.of(this.birthday.getYear(),this.birthday.getMonth(),this.birthday.getDayOfMonth());
     }
 
     /**
@@ -140,10 +143,10 @@ public class Ator {
      * Método de instância (set).
      * Atualiza a data de aniversário do utilizador.
      *
-     * @param birthday nova data de aniversário do utilizador.
+     * @param bd nova data de aniversário do utilizador.
      */
-    public void setBirthday(Birthday birthday) {
-        this.birthday = birthday.clone();
+    public void setBirthday(LocalDate bd) {
+        this.birthday = LocalDate.of(bd.getYear(),bd.getMonth(),bd.getDayOfMonth());
     }
 
     /**
@@ -154,7 +157,7 @@ public class Ator {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Informação pessoal:\n\nNome: ").append(this.name).
-        append("\nAniversário: ").append(this.birthday.toString()).
+        append("\nAniversário: ").append(this.birthday.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))).
         append("\nEmail: ").append(this.email).
         append("\nPassword: ").append(this.password).
         append("\n\nMorada:\n").append(this.address.toString());

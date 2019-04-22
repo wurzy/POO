@@ -146,7 +146,7 @@ public class Ponto {
      */
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Ponto: (").append(this.getX()).append(" , ").append(this.getY()).append(")").append("\n");
+        sb.append("(").append(this.getX()).append(" , ").append(this.getY()).append(")").append("\n");
         return sb.toString();
     }
 

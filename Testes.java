@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Arrays;
@@ -19,6 +21,8 @@ public class Testes
        System.out.println(p.iguais(x));
        System.out.println(p);
        System.out.println(x);
+        LocalDate teste = LocalDate.of(1999,4,2);
+       System.out.println(teste.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 
        Address add = new Address(4269,420,21,2,"Lisboa","Benfica","Santa Clara","Yes");
        Address add2 = new Address(4213,213,3,0,"xd","xk","xf","xs");
@@ -29,7 +33,7 @@ public class Testes
         System.out.println(at.equals(at2));
        at2.setAddress(add2);
        System.out.println(at.equals(at2));
-    */
+
        Veiculo vei = new Veiculo();
        Veiculo audi = new Veiculo(23,12,3,1,2);
        Map<String,Veiculo> xd = new HashMap<>();
@@ -38,8 +42,8 @@ public class Testes
        List<Integer> c = new ArrayList<>();
        c.add(2);
        c.add(3);
-       Address add = new Address(4269,420,21,2,"Lisboa","Benfica","Santa Clara","Yes");
-       Birthday bir = new Birthday(25,12,1992);
+
+       //Birthday bir = new Birthday(25,12,1992);
        Ator at = new Ator("ola@user.com","Fernando","ola123",add,bir);
        Proprietario pro = new Proprietario(at,xd,c);
        System.out.println(pro);
@@ -51,5 +55,23 @@ public class Testes
        pro.setHistorico(xd);
        System.out.println(pro.equals(pro2));
 
+       Address add = new Address(4269,420,21,2,"Lisboa","Benfica","Santa Clara","Yes");
+       Ator novo = new Ator("xd","ola","...",add,LocalDate.of(1999,1,3));
+       System.out.println(novo);
+       */
+       Ponto p1 = new Ponto();
+       Ponto p2 = p1.clone();
+       p2.setY(4.2);
+       p2.setX(1.4);
+       Ponto p3 = new Ponto(p2);
+       p3.setX(69);
+       p3.setY(20.2);
+
+       Aluguer al = new Aluguer(1,2,"xd","xd2",p1,p2,p3,100,2.4,69);
+       System.out.println(al);
+
+
+
     }
+
 }
