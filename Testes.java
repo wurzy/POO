@@ -113,12 +113,21 @@ public class Testes
 
         System.out.println("\nACABOU\n");
 
-        //Set<Aluguer> hist2 = v1.getHistorico();
-        //hist2.add(al4);
+        Set<Aluguer> hist2 = v1.getHistorico();
+        hist2.add(al4);
         //System.out.println(hist1.get);
         for(Aluguer l:hist1) {
             System.out.println(l.getAluguerID());
         }
+        System.out.println("\n");
+        for(Aluguer l:hist2) {
+            System.out.println(l.getAluguerID());
+        }
+        System.out.println("\n");
+        for(Aluguer l:hist1) {
+            System.out.println(l.getAluguerID());
+        }
+        //System.out.println(hist1.equals(hist2));
 
       //  System.out.println(hist2.equals(hist1));
 

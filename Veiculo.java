@@ -18,7 +18,7 @@ public class Veiculo {
         this.velocidade = 0;
         this.priceKm = 0;
         this.consumoKm = 0;
-        this.historico = new TreeSet<>(new AluguerComparator());
+        this.historico = new TreeSet<>();
         this.classificoes = new ArrayList<>();
         this.depositoMax = 0;
         this.depositoAtual = 0;
@@ -30,19 +30,7 @@ public class Veiculo {
         this.velocidade = velocidade;
         this.priceKm = priceKm;
         this.consumoKm = consumoKm;
-        for(Aluguer l:historico) {
-            System.out.println(l.getAluguerID());
-        }
         setHistorico(historico);
-        System.out.println("\n");
-        for(Aluguer l:this.historico) {
-            System.out.println(l.getAluguerID());
-        }
-        System.out.println("\n");
-        for(Aluguer l:historico) {
-            System.out.println(l.getAluguerID());
-        }
-
         setClassificacoes(classificoes);
         this.depositoMax = depositoMax;
         this.depositoAtual = depositoAtual;
@@ -77,7 +65,12 @@ public class Veiculo {
     }
 
     public Set<Aluguer> getHistorico() {
-        return this.historico.stream().collect(Collectors.toSet());
+        Set<Aluguer> getter = new TreeSet<>();
+        Iterator<Aluguer> it = this.historico.iterator();
+        while(it.hasNext()) {
+            getter.add(it.next().clone());
+        }
+        return getter;
     }
 
     public List<Integer> getClassificacoes() {
@@ -109,7 +102,11 @@ public class Veiculo {
     }
 
     public void setHistorico(Set<Aluguer> al) {
-        this.historico = al.stream().collect(Collectors.toSet());
+        this.historico = new TreeSet<>();
+        Iterator<Aluguer> it = al.iterator();
+        while(it.hasNext()) {
+            this.historico.add(it.next().clone());
+        }
     }
 
     public void setClassificacoes(List<Integer> classificoes) {

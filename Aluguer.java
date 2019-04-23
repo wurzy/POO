@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Aluguer{
+public class Aluguer implements Comparable<Aluguer>{
     private int aluguerID; //so para distinguir
     private int veiculoID; //id do veiculo
     private String clienteID; //email do cliente
@@ -169,11 +169,11 @@ public class Aluguer{
     public Aluguer clone() {
         return new Aluguer(this);
     }
-/*
+
     public int compareTo(Aluguer al) {
         if(this.aluguerID == al.getAluguerID()) return 0;
         else if (this.aluguerID < al.getAluguerID()) return -1;
         else return 1;
     }
-    */
+
 }
