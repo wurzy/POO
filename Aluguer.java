@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Aluguer {
+public class Aluguer{
     private int aluguerID; //so para distinguir
     private int veiculoID; //id do veiculo
     private String clienteID; //email do cliente
@@ -143,7 +143,7 @@ public class Aluguer {
         append("Posição inicial do Veículo:").append(this.posInicialVeiculo.toString()).
         append("Pontuação dada pelo Cliente: ").append(this.rating).
         append("\nCusto da viagem: ").append(this.preco).
-        append("\nTempo que demorou a viagem: ").append(this.tempo);
+        append("\nTempo que demorou a viagem: ").append(this.tempo).append("\n");
        // append("\n").append();
 
         return sb.toString();
@@ -169,5 +169,11 @@ public class Aluguer {
     public Aluguer clone() {
         return new Aluguer(this);
     }
-
+/*
+    public int compareTo(Aluguer al) {
+        if(this.aluguerID == al.getAluguerID()) return 0;
+        else if (this.aluguerID < al.getAluguerID()) return -1;
+        else return 1;
+    }
+    */
 }
