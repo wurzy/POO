@@ -81,7 +81,7 @@ public class Testes
         for(Aluguer l:teste) {
           System.out.println(l.getAluguerID());
         }
-    */
+
         Ponto p1 = new Ponto();
         Ponto p2 = p1.clone();
         p2.setY(4.2);
@@ -130,7 +130,33 @@ public class Testes
         //System.out.println(hist1.equals(hist2));
 
       //  System.out.println(hist2.equals(hist1));
+    */
+       LocalDate bir = LocalDate.of(1999,2,3);
+       Address add = new Address(4269,420,21,2,"Lisboa","Benfica","Santa Clara","Yes");
+       Set<Aluguer> hist1 = new TreeSet<>();
 
+       Ator at = new Ator("ola@user.com","Fernando","ola123",add,bir);
+       Ator at2 = new Ator("ssss@user.com","Leandro","2222",add,bir);
+
+       Ponto p1 = new Ponto(2.0,4.2);
+       Ponto p2 = new Ponto( 7.2, 1.9 );
+       Ponto p3 = new Ponto(6.1,20.3);
+
+       Aluguer al1 = new Aluguer(4,2,"xd","xd2",p1,p2,p3,100,2.4,69);
+       Aluguer al2 = new Aluguer(1,9,"a","b",p2,p1,p1,20,40,10.2);
+       Aluguer al3 = new Aluguer(5,10,"uu","sdaa",p3,p3,p3,40,1,2);
+       Aluguer al4 = new Aluguer(2,103,"ssss","sdadaa",p1,p3,p2,401,21,332);
+
+       hist1.add(al1);
+       hist1.add(al2);
+       hist1.add(al3);
+
+       Cliente cli = new Cliente(at2,p1,hist1);
+
+       //hist1.add(al4);
+
+       Cliente cli2 = new Cliente(at2,p1,hist1);
+       System.out.println(cli);
     }
 
 }
