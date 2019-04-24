@@ -56,7 +56,7 @@ public class Proprietario extends Ator{
 
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Proprietario that = (Proprietario) o;
         return (super.equals(that) &&

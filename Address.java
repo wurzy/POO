@@ -264,7 +264,7 @@ public class Address {
      */
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         Address add = (Address) o;
         return this.cityPostal == add.getCityPostal() &&
                 this.townPostal == add.getTownPostal() &&

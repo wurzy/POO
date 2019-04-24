@@ -151,7 +151,7 @@ public class Aluguer implements Comparable<Aluguer>{
 
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         Aluguer aluguer = (Aluguer) o;
         return (this.aluguerID == aluguer.getAluguerID() &&
                 this.veiculoID == aluguer.getVeiculoID() &&

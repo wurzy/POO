@@ -138,7 +138,7 @@ public class Veiculo {
 
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         Veiculo veiculo = (Veiculo) o;
         return (this.ID == veiculo.getID() &&
                 this.vezesUsado == veiculo.getVezesUsado() &&
