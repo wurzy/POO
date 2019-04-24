@@ -76,4 +76,7 @@ public class Cliente extends Ator{
                 this.posicao.equals(cliente.getPosicao()));
     }
 
+    public Cliente clone(){
+        return new Cliente(this);
+    }
 }
