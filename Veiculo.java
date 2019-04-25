@@ -2,7 +2,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Veiculo {
-    private int ID;
+    private String ID; //matricula
     private int vezesUsado;
     private double velocidade;
     private double priceKm;
@@ -13,7 +13,7 @@ public class Veiculo {
     private double depositoAtual; //litros que tem o deposito de combustivel
 
     public Veiculo() {
-        this.ID = -1;
+        this.ID = "N/A";
         this.vezesUsado = 0;
         this.velocidade = 0;
         this.priceKm = 0;
@@ -24,7 +24,7 @@ public class Veiculo {
         this.depositoAtual = 0;
     }
 
-    public Veiculo(int id, int vezesUsado, double velocidade, double priceKm, double consumoKm, Set<Aluguer> historico, List<Integer> classificoes, double depositoAtual, double depositoMax) {
+    public Veiculo(String id, int vezesUsado, double velocidade, double priceKm, double consumoKm, Set<Aluguer> historico, List<Integer> classificoes, double depositoAtual, double depositoMax) {
         this.ID = id;
         this.vezesUsado = vezesUsado;
         this.velocidade = velocidade;
@@ -48,7 +48,7 @@ public class Veiculo {
         this.depositoAtual = x.getDepositoAtual();
     }
 
-    public int getID() { return this.ID; }
+    public String getID() { return this.ID; }
 
     public int getVezesUsado() {return this.vezesUsado;}
 
@@ -85,7 +85,7 @@ public class Veiculo {
         return this.depositoAtual;
     }
 
-    public void setID(int id) { this.ID = id; }
+    public void setID(String id) { this.ID = id; }
 
     public void setVezesUsado(int vezesUsado) {this.vezesUsado = vezesUsado;}
 
@@ -140,7 +140,7 @@ public class Veiculo {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Veiculo veiculo = (Veiculo) o;
-        return (this.ID == veiculo.getID() &&
+        return (this.ID.equals(veiculo.getID()) &&
                 this.vezesUsado == veiculo.getVezesUsado() &&
                 this.consumoKm == veiculo.getConsumoKm() &&
                 this.velocidade == veiculo.getVelocidade() &&

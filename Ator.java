@@ -11,17 +11,17 @@ public class Ator {
     private String email; //key
     private String name;
     private String password;
-    private Address address; // varias componentes da morada
+    private String address; // varias componentes da morada
     private LocalDate birthday; // Day-Mth-Yr
 
     /**
      * Construtor por omissão de um Ator.
      */
     public Ator() {
-        this.email = "";
-        this.name = "";
-        this.password = "";
-        this.address = new Address();
+        this.email = "N/A";
+        this.name = "N/A";
+        this.password = "N/A";
+        this.address = "N/A";
         this.birthday = LocalDate.of(0,0,0);
     }
 
@@ -29,11 +29,11 @@ public class Ator {
      * Construtor parametrizado de um Ator.
      * Aceita como parâmetros cada componente necessária.
      */
-    public Ator(String email, String name, String password, Address address, LocalDate date) {
+    public Ator(String email, String name, String password, String address, LocalDate date) {
         this.email = email;
         this.name = name;
         this.password = password;
-        this.address = address.clone();
+        this.address = address;
         this.birthday = LocalDate.of(date.getYear(),date.getMonth(),date.getDayOfMonth());
     }
 
@@ -85,8 +85,8 @@ public class Ator {
      *
      * @return Morada do Ator.
      */
-    public Address getAddress() {
-        return this.address.clone();
+    public String getAddress() {
+        return this.address;
     }
 
     /**
@@ -135,8 +135,8 @@ public class Ator {
      *
      * @param address nova morada do utilizador.
      */
-    public void setAddress(Address address) {
-        this.address = address.clone();
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     /**
@@ -160,7 +160,7 @@ public class Ator {
         append("\nAniversário: ").append(this.birthday.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))).
         append("\nEmail: ").append(this.email).
         append("\nPassword: ").append(this.password).
-        append("\n\nMorada:\n\n").append(this.address.toString());
+        append("\n\nMorada:\n\n").append(this.address);
 
         return sb.toString();
     }

@@ -134,7 +134,7 @@ public class Testes
        LocalDate bir = LocalDate.of(1999,2,3);
        Address add = new Address(4269,420,21,2,"Lisboa","Benfica","Santa Clara","Yes");
        Set<Aluguer> hist1 = new TreeSet<>();
-       Map<Integer, Veiculo> frota = new HashMap<>();
+       Map<String, Veiculo> frota = new HashMap<>();
        List<Integer> class1 = new ArrayList<>();
        class1.add(4);
        class1.add(20);
@@ -142,8 +142,8 @@ public class Testes
        class1.add(50);
 
 
-       Ator at = new Ator("ola@user.com","Fernando","ola123",add,bir);
-       Ator at2 = new Ator("ssss@user.com","Leandro","2222",add,bir);
+       Ator at = new Ator("ola@user.com","Fernando","ola123","69 street xD",bir);
+       Ator at2 = new Ator("ssss@user.com","Leandro","2222","420 blazing abbath 69",bir);
 
        Ponto p1 = new Ponto(2.0,4.2);
        Ponto p2 = new Ponto( 7.2, 1.9 );
@@ -159,12 +159,12 @@ public class Testes
        hist1.add(al3);
 
 
-       Veiculo opel = new Veiculo(1,2,2,3,5,hist1,class1,4,10);
+       Veiculo opel = new Veiculo("69-69-69",2,2,3,5,hist1,class1,4,10);
 
        //hist1.add(al4);
 
        for(int i: class1) {
-          frota.put(i,opel);
+          frota.put("69",opel);
        }
 
        Proprietario prop = new Proprietario(at,hist1,20.4,frota);

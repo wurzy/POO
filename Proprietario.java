@@ -3,9 +3,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Proprietario extends Ator{
-    private Set<Aluguer> historico;
-    private double classificacao; //podemos gerir isto por metodo externo
-    private Map<Integer,Veiculo> frota;
+    private Set<Aluguer> historico; // might be changed
+    private double classificacao; // podemos gerir isto por metodo externo
+    private Map<String,Veiculo> frota; // id de carro -> carro
 
     public Proprietario() {
         super();
@@ -14,14 +14,14 @@ public class Proprietario extends Ator{
         this.frota = new HashMap<>();
     }
 
-    public Proprietario(String email, String name, String password, Address address, LocalDate date, Set<Aluguer> historico, double classificacao, Map<Integer, Veiculo> frota) {
+    public Proprietario(String email, String name, String password, Address address, LocalDate date, Set<Aluguer> historico, double classificacao, Map<String, Veiculo> frota) {
         super(email, name, password, address, date);
         setHistorico(historico);
         this.classificacao = classificacao;
         setFrota(frota);
     }
 
-    public Proprietario(Ator at, Set<Aluguer> historico, double classificacao, Map<Integer, Veiculo> frota) {
+    public Proprietario(Ator at, Set<Aluguer> historico, double classificacao, Map<String, Veiculo> frota) {
         super(at);
         setHistorico(historico);
         this.classificacao = classificacao;
@@ -48,7 +48,7 @@ public class Proprietario extends Ator{
         return this.classificacao;
     }
 
-    public Map<Integer, Veiculo> getFrota() {
+    public Map<String, Veiculo> getFrota() {
         return this.frota.entrySet()
                          .stream()
                          .collect(Collectors.toMap(e->e.getKey(),e->e.getValue().clone()));
@@ -66,7 +66,7 @@ public class Proprietario extends Ator{
         this.classificacao = classificacao;
     }
 
-    public void setFrota(Map<Integer, Veiculo> frota) {
+    public void setFrota(Map<String, Veiculo> frota) {
         this.frota = frota.entrySet()
                           .stream()
                           .collect(Collectors.toMap(e->e.getKey(),e->e.getValue().clone()));
@@ -91,3 +91,4 @@ public class Proprietario extends Ator{
         return new Proprietario(this);
     }
 }
+
