@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Aluguer implements Comparable<Aluguer>{
-    private int aluguerID; //so para distinguir
+    private int aluguerID; //ordenaçao
     private int veiculoID; //id do veiculo
     private String clienteID; //email do cliente
     private String propID; //email do proprietario
