@@ -14,7 +14,7 @@ public class Cliente extends Ator{
         this.historico = new TreeSet<>();
     }
 
-    public Cliente(String email, String name, String password, Address address, LocalDate date, Ponto posicaoI, Ponto posicaoF, Set<Aluguer> historico) {
+    public Cliente(String email, String name, String password, String address, LocalDate date, Ponto posicaoI, Ponto posicaoF, Set<Aluguer> historico) {
         super(email, name, password, address, date);
         this.posicaoI = posicaoI;
         this.posicaoF = posicaoF;

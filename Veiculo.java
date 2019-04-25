@@ -124,7 +124,7 @@ public class Veiculo {
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
-        sb.append("ID do Veículo: ").append(this.ID).
+        sb.append("Matrícula do Veículo: ").append(this.ID).
         append("\nNúmero de vezes que foi alugado: ").append(this.getVezesUsado()).
         append("\nVelocidade Média: ").append(this.velocidade).
         append("\nPreço/km: ").append(this.priceKm).

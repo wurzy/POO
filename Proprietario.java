@@ -14,7 +14,7 @@ public class Proprietario extends Ator{
         this.frota = new HashMap<>();
     }
 
-    public Proprietario(String email, String name, String password, Address address, LocalDate date, Set<Aluguer> historico, double classificacao, Map<String, Veiculo> frota) {
+    public Proprietario(String email, String name, String password, String address, LocalDate date, Set<Aluguer> historico, double classificacao, Map<String, Veiculo> frota) {
         super(email, name, password, address, date);
         setHistorico(historico);
         this.classificacao = classificacao;

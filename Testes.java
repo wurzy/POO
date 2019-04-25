@@ -132,7 +132,7 @@ public class Testes
       //  System.out.println(hist2.equals(hist1));
     */
        LocalDate bir = LocalDate.of(1999,2,3);
-       Address add = new Address(4269,420,21,2,"Lisboa","Benfica","Santa Clara","Yes");
+       //Address add = new Address(4269,420,21,2,"Lisboa","Benfica","Santa Clara","Yes");
        Set<Aluguer> hist1 = new TreeSet<>();
        Map<String, Veiculo> frota = new HashMap<>();
        List<Integer> class1 = new ArrayList<>();
