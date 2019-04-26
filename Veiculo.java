@@ -1,35 +1,39 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Veiculo {
+public abstract class Veiculo {
     private String ID; //matricula
-    private int vezesUsado;
-    private double velocidade;
-    private double priceKm;
-    private double consumoKm;
-    private Set<Aluguer> historico;
-    private List<Integer> classificoes;
-    private double depositoMax;
+    private String marca;
+    private Ponto posicao;
+   // private double reliable; // grau de fiabilidade
+    private double velocidade; // Vel media
+    private double priceKm; // €/km
+    private double consumoKm; // Combust/KM
+    private Set<Aluguer> historico; // alugueres
+    private List<Integer> classificoes; // ratings
+    private double depositoMax; // max do deposito
     private double depositoAtual; //litros que tem o deposito de combustivel
 
     public Veiculo() {
         this.ID = "N/A";
-        this.vezesUsado = 0;
-        this.velocidade = 0;
-        this.priceKm = 0;
-        this.consumoKm = 0;
+        this.marca = "N/A";
+        this.posicao = new Ponto();
+      //  this.velocidade = 0;
+       // this.priceKm = 0; //gerimos isto nas extended
+       // this.consumoKm = 0;
         this.historico = new TreeSet<>();
         this.classificoes = new ArrayList<>();
         this.depositoMax = 0;
         this.depositoAtual = 0;
     }
 
-    public Veiculo(String id, int vezesUsado, double velocidade, double priceKm, double consumoKm, Set<Aluguer> historico, List<Integer> classificoes, double depositoAtual, double depositoMax) {
+    public Veiculo(String id, String marca, Ponto posicao, Set<Aluguer> historico, List<Integer> classificoes, double depositoAtual, double depositoMax) {
         this.ID = id;
-        this.vezesUsado = vezesUsado;
-        this.velocidade = velocidade;
-        this.priceKm = priceKm;
-        this.consumoKm = consumoKm;
+        this.marca = marca;
+        this.posicao = posicao.clone();
+        //this.velocidade = velocidade;
+        //this.priceKm = priceKm;
+        //this.consumoKm = consumoKm;
         setHistorico(historico);
         setClassificacoes(classificoes);
         this.depositoMax = depositoMax;
@@ -38,10 +42,11 @@ public class Veiculo {
 
     public Veiculo(Veiculo x) {
         this.ID = x.getID();
-        this.vezesUsado = x.getVezesUsado();
-        this.velocidade = x.getVelocidade();
-        this.priceKm = x.getPriceKm();
-        this.consumoKm = x.getConsumoKm();
+        this.marca = x.getMarca();
+        this.posicao = x.getPosicao();
+       // this.velocidade = x.getVelocidade();
+        //this.priceKm = x.getPriceKm();
+        //this.consumoKm = x.getConsumoKm();
         this.historico = x.getHistorico();
         this.classificoes = x.getClassificacoes();
         this.depositoMax = x.getDepositoMax();
@@ -50,7 +55,9 @@ public class Veiculo {
 
     public String getID() { return this.ID; }
 
-    public int getVezesUsado() {return this.vezesUsado;}
+    public String getMarca() {return this.marca;}
+
+    public Ponto getPosicao() {return this.posicao.clone();}
 
     public double getVelocidade() {
         return this.velocidade;
@@ -87,7 +94,9 @@ public class Veiculo {
 
     public void setID(String id) { this.ID = id; }
 
-    public void setVezesUsado(int vezesUsado) {this.vezesUsado = vezesUsado;}
+    public void setMarca(String marca) {this.marca = marca;}
+
+    public void setPosicao(Ponto p) {this.posicao = p.clone();}
 
     public void setVelocidade(double velocidade) {
         this.velocidade = velocidade;
@@ -121,11 +130,14 @@ public class Veiculo {
         this.depositoAtual = depositoAtual;
     }
 
+    public abstract String toString();
+    /*
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
         sb.append("Matrícula do Veículo: ").append(this.ID).
-        append("\nNúmero de vezes que foi alugado: ").append(this.getVezesUsado()).
+        append("\nMarca: ").append(this.marca).
+        append("\nPosição atual: ").append(this.getPosicao()).
         append("\nVelocidade Média: ").append(this.velocidade).
         append("\nPreço/km: ").append(this.priceKm).
         append("\nConsumo/km: ").append(this.consumoKm).
@@ -135,13 +147,14 @@ public class Veiculo {
 
         return sb.toString();
     }
-
+*/
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Veiculo veiculo = (Veiculo) o;
         return (this.ID.equals(veiculo.getID()) &&
-                this.vezesUsado == veiculo.getVezesUsado() &&
+                this.marca.equals(veiculo.getMarca()) &&
+                this.posicao.equals(veiculo.getPosicao()) &&
                 this.consumoKm == veiculo.getConsumoKm() &&
                 this.velocidade == veiculo.getVelocidade() &&
                 this.priceKm == veiculo.getPriceKm() &&
@@ -151,7 +164,6 @@ public class Veiculo {
                 this.depositoMax == veiculo.getDepositoMax());
     }
 
-    public Veiculo clone(){
-        return new Veiculo(this);
-    }
+    public abstract Veiculo clone();
+
 }

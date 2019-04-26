@@ -130,7 +130,7 @@ public class Testes
         //System.out.println(hist1.equals(hist2));
 
       //  System.out.println(hist2.equals(hist1));
-    */
+
        LocalDate bir = LocalDate.of(1999,2,3);
        //Address add = new Address(4269,420,21,2,"Lisboa","Benfica","Santa Clara","Yes");
        Set<Aluguer> hist1 = new TreeSet<>();
@@ -170,6 +170,27 @@ public class Testes
        Proprietario prop = new Proprietario(at,hist1,20.4,frota);
 
        System.out.println(prop);
+       */
+       Set<Aluguer> hist1 = new TreeSet<>();
+       Map<String, Veiculo> frota = new HashMap<>();
+       List<Integer> class1 = new ArrayList<>();
+       class1.add(4);
+       class1.add(20);
+       class1.add(100);
+       class1.add(50);
+       Ponto p1 = new Ponto(2.0,4.2);
+       Ponto p2 = new Ponto( 7.2, 1.9 );
+       Ponto p3 = new Ponto(6.1,20.3);
+       Aluguer al1 = new Aluguer(4,"chungo","xd","xd2",p1,p2,p3,100,2.4,69);
+      // Aluguer al2 = new Aluguer(1,"big","a","b",p2,p1,p1,20,40,10.2);
+      // Aluguer al3 = new Aluguer(5,"is","uu","sdaa",p3,p3,p3,40,1,2);
+      // Aluguer al4 = new Aluguer(2,"op","ssss","sdadaa",p1,p3,p2,401,21,332);
+
+       hist1.add(al1);
+       //hist1.add(al2);
+       //hist1.add(al3);
+       Veiculo opel = new Gasolina("69","opel",new Ponto(1,2), hist1 ,class1,10,20);
+       System.out.println(opel);
     }
 
 }

@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Aluguer implements Comparable<Aluguer>{
     private int aluguerID; //ordenaçao
-    private int veiculoID; //id do veiculo
+    private String veiculoID; //matricula do veiculo
     private String clienteID; //email do cliente
     private String propID; //email do proprietario
     private Ponto inicioPercurso; //onde estava cliente
@@ -11,10 +11,11 @@ public class Aluguer implements Comparable<Aluguer>{
     private int rating; // rating
     private double preco; // inicio->fim preco
     private double tempo; // inicio->fim tempo
+    // aqui vai dar jeito ter uma Data em que foi alugado, imo
 
     public Aluguer() {
         this.aluguerID = -1;
-        this.veiculoID = -1;
+        this.veiculoID = "N/A";
         this.clienteID = "N/A";
         this.propID = "N/A";
         this.inicioPercurso = new Ponto();
@@ -25,7 +26,7 @@ public class Aluguer implements Comparable<Aluguer>{
         this.tempo = 0;
     }
 
-    public Aluguer(int aluguerID, int veiculoID, String clienteID, String propID, Ponto inicioPercurso, Ponto fimPercurso, Ponto posInicialVeiculo, int rating, double preco, double tempo) {
+    public Aluguer(int aluguerID, String veiculoID, String clienteID, String propID, Ponto inicioPercurso, Ponto fimPercurso, Ponto posInicialVeiculo, int rating, double preco, double tempo) {
         this.aluguerID = aluguerID;
         this.veiculoID = veiculoID;
         this.clienteID = clienteID;
@@ -55,7 +56,7 @@ public class Aluguer implements Comparable<Aluguer>{
         return this.aluguerID;
     }
 
-    public int getVeiculoID() {
+    public String getVeiculoID() {
         return this.veiculoID;
     }
 
@@ -95,7 +96,7 @@ public class Aluguer implements Comparable<Aluguer>{
         this.aluguerID = aluguerID;
     }
 
-    public void setVeiculoID(int veiculoID) {
+    public void setVeiculoID(String veiculoID) {
         this.veiculoID = veiculoID;
     }
 
@@ -135,7 +136,7 @@ public class Aluguer implements Comparable<Aluguer>{
         StringBuilder sb = new StringBuilder();
 
         sb.append("ID do Aluguer: ").append(this.aluguerID).
-        append("\nID do Veículo: ").append(this.veiculoID).
+        append("\nMatrícula do Veículo: ").append(this.veiculoID).
         append("\nEmail do Cliente: ").append(this.clienteID).
         append("\nEmail do Proprietário: ").append(this.propID).
         append("\nPosição inicial do Cliente: ").append(this.inicioPercurso.toString()).
@@ -154,9 +155,9 @@ public class Aluguer implements Comparable<Aluguer>{
         if (o == null || this.getClass() != o.getClass()) return false;
         Aluguer aluguer = (Aluguer) o;
         return (this.aluguerID == aluguer.getAluguerID() &&
-                this.veiculoID == aluguer.getVeiculoID() &&
-                this.clienteID == aluguer.getClienteID() &&
-                this.propID == aluguer.getPropID() &&
+                this.veiculoID.equals(aluguer.getVeiculoID()) &&
+                this.clienteID.equals(aluguer.getClienteID()) &&
+                this.propID.equals(aluguer.getPropID()) &&
                 this.inicioPercurso.equals(aluguer.getInicioPercurso()) &&
                 this.fimPercurso.equals(aluguer.getFimPercurso()) &&
                 this.posInicialVeiculo.equals(aluguer.getPosInicialVeiculo()) &&
@@ -171,9 +172,12 @@ public class Aluguer implements Comparable<Aluguer>{
     }
 
     public int compareTo(Aluguer al) {
+        return Integer.compare(this.aluguerID,al.getAluguerID());
+        /*
         if(this.aluguerID == al.getAluguerID()) return 0;
         else if (this.aluguerID < al.getAluguerID()) return -1;
         else return 1;
+        */
     }
 
 }
