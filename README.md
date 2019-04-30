@@ -1,5 +1,5 @@
 # POO
-------------------------------->Just a reminder, java sucks <------------------------------
+**------------------------------->Just a reminder, java sucks <------------------------------**
 
 Trabalho de grupo
 
@@ -9,9 +9,9 @@ José Pedro Silva A84577
 
 Ricardo Cunha A84302
 
-Válter Carvalho A84464 
+Válter Carvalho A84464
 
-TO DO: 
+TO DO:
 
 -RELATORIO;
 -CLASSES: Aluguer, Carro, Cliente, Alugador
