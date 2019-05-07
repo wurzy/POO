@@ -90,5 +90,26 @@ public class Proprietario extends Ator{
     public Proprietario clone(){
         return new Proprietario(this);
     }
+
+    public void abastecer (Veiculo veiculo){
+        this.getFrota().get(veiculo.getID()).setDepositoAtual(veiculo.getDepositoMax());
+
+    }
+
+    public void newPrecoKm (Veiculo veiculo, double pkm){
+        this.getFrota().get(veiculo.getID()).setPriceKm(pkm);
+    }
+
+    public void setTripCost (int id,double preco){
+        Iterator<Aluguer> it = this.historico.iterator();
+
+        while (it.hasNext()){
+            Aluguer l = it.next();
+            if(id == l.getAluguerID()) {
+                l.setPreco(preco);
+            }
+        }
+    }
+
 }
 
