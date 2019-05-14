@@ -160,7 +160,7 @@ public class Ator {
         append("\nAniversário: ").append(this.birthday.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))).
         append("\nEmail: ").append(this.email).
         append("\nPassword: ").append(this.password).
-        append("\n\nMorada:\n\n").append(this.address);
+        append("\nMorada:").append(this.address);
 
         return sb.toString();
     }

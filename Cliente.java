@@ -71,7 +71,7 @@ public class Cliente extends Ator{
         sb.append(super.toString()).
         append("\nAlugueres realizados: \n").append(this.historico).
         append("\nPosição atual: (x , y) = ").append(this.posicaoI.toString()).
-        append("\nPosição pretendida: (x , y) = ").append(this.posicaoF.toString()).append("\n");
+        append("Posição pretendida: (x , y) = ").append(this.posicaoF.toString()).append("\n");
 
         return sb.toString();
     }
@@ -89,4 +89,78 @@ public class Cliente extends Ator{
     public Cliente clone(){
         return new Cliente(this);
     }
+
+
+
+
+    public Veiculo getCloser (List<Veiculo> lv){
+        /*
+        Falta try catch para listas vazias
+        */
+        double x = lv.get(0).getPosicao().distancia(this.posicaoI);
+        Veiculo veiculo = lv.get(0).clone();
+        for(Veiculo v:lv){
+            if(this.posicaoI.distancia(v.getPosicao()) < x){
+                x = this.posicaoI.distancia(v.getPosicao());
+                veiculo = v.clone();
+            }
+        }
+        return veiculo;
+    }
+
+    public Veiculo getCheaper (List<Veiculo> lv){
+        /*
+        Falta try catch para listas vazias
+        */
+        double dist = this.getPosicaoI().distancia(this.posicaoF);
+        double preco = lv.get(0).getPriceKm() * dist;
+        Veiculo veiculo = lv.get(0).clone();
+
+        for (Veiculo v : lv){
+            if((dist * v.getPriceKm()) < preco){
+                preco = dist * v.getPriceKm();
+                veiculo = v.clone();
+            }
+        }
+
+        return veiculo;
+    }
+
+    public Veiculo getCloserDist (List<Veiculo> lv, double d){
+
+        /*
+        ESTA PRECISA MESMO DE TRY CATCH LOL
+        */
+        double dist = this.getPosicaoI().distancia(this.posicaoF);
+        double preco = -1;
+        Veiculo veiculo;
+        int i = 0;
+
+        for (Veiculo v : lv){
+            if(((dist * v.getPriceKm()) < preco || preco == -1)  &&  dist <= d){
+                preco = dist * v.getPriceKm();
+                veiculo = v.clone();
+                i++;
+
+            }
+        }
+        //if (i>0) return veiculo;
+        return new Gasolina();
+    }
+
+    public boolean getVeiculoSpec (List<Veiculo> lv, Veiculo v){
+        return lv.contains(v);
+    }
+
+    public Veiculo getBestAutonomy (List<Veiculo> lv, double autonomia){
+        Veiculo veiculo = lv.get(0);
+        for (Veiculo v : lv){
+            if (v.getAutonomia() == autonomia) {
+                veiculo = v;
+                break;
+            }
+        }
+        return veiculo;
+    }
+
 }

@@ -166,4 +166,8 @@ public abstract class Veiculo {
 
     public abstract Veiculo clone();
 
+    public double getAutonomia (){
+        return this.getDepositoAtual() * this.getConsumoKm();
+    }
+
 }
