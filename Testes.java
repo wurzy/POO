@@ -195,14 +195,18 @@ public class Testes
        Veiculo opel = new Gasolina("69","opel",new Ponto(1,2), hist1 ,class1,10,20);
        */
        Map<String,Veiculo> frota = new HashMap<>();
-       Veiculo opel = new Eletrico("XX","opel",new Ponto(2,3),null,null,0,0);
-       Veiculo vw = new Hibrido("AA","vw",new Ponto(1,3),null,null,0,0);
-       Veiculo seat = new Hibrido("BB","seat",new Ponto(0,1),null,null,0,0);
-       Veiculo ford = new Gasolina("YY","ford",new Ponto(4,4),null,null,0,0);
-       frota.put("opel",opel);
-       frota.put("vw",vw);
-       frota.put("seat",seat);
-       frota.put("ford",ford);
+//       Veiculo opel = new Eletrico("XX","opel",new Ponto(2,3),null,null,0,0);
+  //     Veiculo vw = new Hibrido("AA","vw",new Ponto(1,3),null,null,0,0);
+    //   Veiculo seat = new Hibrido("BB","seat",new Ponto(0,1),null,null,0,0);
+      // Veiculo ford = new Gasolina("YY","ford",new Ponto(4,4),null,null,0,0);
+       //frota.put("opel",opel);
+       //frota.put("vw",vw);
+       //frota.put("seat",seat);
+       //frota.put("ford",ford);
+
+       Aluguer al = new Aluguer(0,"x","x","x",new Ponto(0,0),new Ponto(0,0),new Ponto(0,0),0,0,0,LocalDate.of(1,1,1));
+      // al.setStatus(true);
+       System.out.println(al);
        //System.out.println(hist1);
        //System.out.println(at);
        //System.out.println(at.getHistorico());

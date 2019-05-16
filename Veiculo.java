@@ -130,6 +130,10 @@ public abstract class Veiculo {
         this.depositoAtual = depositoAtual;
     }
 
+    public String historicString(){
+        return "Histórico de Alugueres:\n " + this.getHistorico();
+    }
+
     public String toString() {
         return "\nMatrícula do Veículo: " + this.getID() +
                 "\nMarca: " + this.getMarca() +
@@ -137,9 +141,9 @@ public abstract class Veiculo {
                 "Velocidade média: " + this.getVelocidade() +
                 "\nPreço/km: " + this.getPriceKm() + " €/km" +
                 "\nConsumo/km: " + this.getConsumoKm() + " L/km" +
-                "\nDepósito: " + this.getDepositoAtual() + "/" + this.getDepositoMax() + " L" +
-                "\n\nHistórico de Alugueres:\n\n " + this.getHistorico() +
-                "\n\nHistórico de Classificações:\n\n " + this.getClassificacoes() + "\n";
+                "\nAutonomia: " + this.getDepositoAtual() + "/" + this.getDepositoMax() + " L" ;
+                //"\n\nHistórico de Alugueres:\n\n " + this.getHistorico() +
+                //"\n\nHistórico de Classificações:\n\n " + this.getClassificacoes() + "\n";
     }
 
     public boolean equals(Object o) {

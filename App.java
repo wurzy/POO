@@ -52,13 +52,21 @@ public class App {
                         switch (menuCliente.getOp()) {
                             case 1:
                                 //EXECUTE QUERIES
-                                System.out.println("xD");
+                                System.out.println("O carro mais perto é:\n");
+                                System.out.println(rentClosest(logNegocio.getCliente(menuLogin.getPassword()),logNegocio.getCarros()));
                                 break;
                             case 2:
-                                System.out.println("lol");
+                                System.out.println("O carro mais barato é:");
+                                System.out.println(rentCheapest(logNegocio.getCliente(menuLogin.getPassword()),logNegocio.getCarros()));
                                 break;
                             case 3:
-                                System.out.println("lmao");
+                                System.out.println("Inserir distância:\n");
+                                double d;
+                                do{
+                                    System.out.print("D = ");
+                                    d=menuLogin.lerDouble();
+                                }while(d==-1);
+                                System.out.println(rentCheapest(logNegocio.getCliente(menuLogin.getPassword()),logNegocio.getCarros(),d));
                                 break;
                             case 4:
                                 System.out.println("kkkk");
@@ -107,7 +115,7 @@ public class App {
         for(Veiculo x : cars.values()) {
             poscar = x.getPosicao();
             dist = poscar.distancia(posI);
-            if(dist < mindist) {
+            if(dist < mindist) { //tem de ter autonomia
                 mindist = dist;
                 if(x instanceof Eletrico) {
                     aux = new Eletrico(x);
@@ -122,9 +130,99 @@ public class App {
         }
         return aux;
     }
-/*
-    private Veiculo rentCheapest(Map<String,Veiculo> cars) {
 
+    private Veiculo rentCheapest(Cliente client, Map<String,Veiculo> cars) {
+        double mincusto = Double.MAX_VALUE;
+        Veiculo v = null;
+        Ponto posF = client.getPosicaoF();
+        Ponto posC;
+        double pkm, custo,distancia;
+        for(Veiculo x: cars.values()) {
+            posC = x.getPosicao();
+            distancia = posF.distancia(posC);
+            pkm = x.getPriceKm();
+            custo = pkm*distancia;
+            if(custo < mincusto) {
+                mincusto = custo;
+                if(x instanceof Eletrico) {
+                    v = new Eletrico(x);
+                }
+                else if (x instanceof Hibrido) {
+                    v = new Hibrido(x);
+                }
+                else {
+                    v = new Gasolina(x);
+                }
+            }
+        }
+        return v;
     }
-    */
+
+    //este e para a distancia no maximo de raio X
+    private Veiculo rentCheapest(Cliente client, Map<String,Veiculo> cars, double raio) {
+        double mincusto = Double.MAX_VALUE;
+        Veiculo v = null;
+        Ponto posI = client.getPosicaoI();
+        Ponto posF = client.getPosicaoF();
+        Ponto posC;
+        double pkm, custo;
+        double distancia;
+        for(Veiculo x: cars.values()) {
+            posC = x.getPosicao();
+            distancia = posC.distancia(posF);
+            pkm = x.getPriceKm();
+            custo = pkm*distancia;
+            if(custo < mincusto && posI.distancia(posC)<=raio) {
+                mincusto = custo;
+                if(x instanceof Eletrico) {
+                    v = new Eletrico(x);
+                }
+                else if (x instanceof Hibrido) {
+                    v = new Hibrido(x);
+                }
+                else {
+                    v = new Gasolina(x);
+                }
+            }
+        }
+        return v;
+    }
+
+    private Veiculo rentAutonomy(Cliente client, Map<String,Veiculo> cars, double autonomy) throws PrintError {
+        Veiculo v = null;
+        double autonomia;
+        for(Veiculo x : cars.values()) {
+            autonomia = x.getDepositoAtual();
+            if(autonomia==autonomy) {
+                if(x instanceof Eletrico) {
+                    v = new Eletrico(x);
+                }
+                else if (x instanceof Hibrido) {
+                    v = new Hibrido(x);
+                }
+                else {
+                    v = new Gasolina(x);
+                }
+            }
+        }
+        if(v==null) {
+            throw new PrintError("Não existe carro que satisfaça as condições");
+        }
+        return v;
+    }
+
+    private Veiculo rentID(Cliente client, Map<String,Veiculo> cars, String ID) throws PrintError {
+        Veiculo v = null;
+        if(cars.containsKey(ID)) {
+            v = cars.get(ID).clone();
+        }
+        else {
+            throw new PrintError("Não existe carro com essa Matrícula");
+        }
+        return v;
+    }
+
+    private void printAvailableCars(Map<String,Veiculo> cars) {
+        System.out.println(cars.toString());
+    }
 }

@@ -80,6 +80,7 @@ public class MyLog {
 
         v.setMarca(partes[1]);
         v.setID(partes[2]);
+
         v.setVelocidade(Double.parseDouble(partes[4]));
         v.setPriceKm(Double.parseDouble(partes[5]));
         v.setConsumoKm(Double.parseDouble(partes[6]));
@@ -168,5 +169,15 @@ public class MyLog {
                 retValue = false;
         }
         return retValue;
+    }
+
+    public Cliente getCliente(String password) {
+        return this.clientes.get(password);
+    }
+
+    private void addVehicle(Veiculo v, String password) {
+        Proprietario p = this.proprietarios.get(password).clone();
+        p.addToFrota(v);
+        this.proprietarios.put(password,p);
     }
 }

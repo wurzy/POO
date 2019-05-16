@@ -5,29 +5,27 @@ import java.util.stream.Collectors;
 public class Proprietario extends Ator{
     private List<Integer> classificacao; // podemos gerir isto por metodo externo
     private Map<String,Veiculo> frota; // id de carro -> carro
+    private Set<Aluguer> queue;
 
     public Proprietario() {
         super();
         this.classificacao = new ArrayList<>();
         this.frota = new HashMap<>();
+        this.queue = new TreeSet<>();
     }
 
-    public Proprietario(String email, String name, String password, String address, LocalDate date, Set<Aluguer> historico, List<Integer> classificacao, Map<String, Veiculo> frota) {
-        super(email, name, password, address, date,historico);
-        this.classificacao = new ArrayList<>(classificacao);
-        setFrota(frota);
-    }
-
-    public Proprietario(Ator at, List<Integer> classificacao, Map<String, Veiculo> frota) {
-        super(at);
-        this.classificacao = new ArrayList<>(classificacao);
-        setFrota(frota);
+    public Proprietario(String email, String name, String password, String address) {
+        super(email, name, password, address, LocalDate.now(), new TreeSet<>());
+        this.classificacao = new ArrayList<>();
+        this.frota = new HashMap<>();
+        this.queue = new TreeSet<>();
     }
 
     public Proprietario(Proprietario prop) {
         super(prop.getEmail(),prop.getName(),prop.getPassword(),prop.getAddress(),prop.getBirthday(),prop.getHistorico());
-        this.classificacao = prop.getClassificacao();
+        setClassificacao(prop.getClassificacao());
         setFrota(prop.getFrota());
+        setQueue(prop.getQueue());
     }
 
     public List<Integer> getClassificacao() {
@@ -40,6 +38,14 @@ public class Proprietario extends Ator{
                          .collect(Collectors.toMap(e->e.getKey(),e->e.getValue().clone()));
     }
 
+    public Set<Aluguer> getQueue(){
+        Set<Aluguer> ret = new TreeSet<>();
+        for(Aluguer l: this.queue) {
+            ret.add(l.clone());
+        }
+        return ret;
+    }
+
     public void setClassificacao(List<Integer> classificacao) {
         this.classificacao = new ArrayList<>(classificacao);
     }
@@ -50,10 +56,18 @@ public class Proprietario extends Ator{
                           .collect(Collectors.toMap(e->e.getKey(),e->e.getValue().clone()));
     }
 
+    public void setQueue(Set<Aluguer> queue) {
+        this.queue = new TreeSet<>();
+        for(Aluguer l: queue) {
+            this.queue.add(l.clone());
+        }
+    }
+
     public String toString(){
         return (super.toString() +
                 "\n\nClassificação média: " + calculaClassificao() +
-                "\nFrota de veículos:\n\n " + this.frota.toString()) + "\n";
+                "\nFrota de veículos:\n\n " + this.frota.toString() +
+                "\nAlugueres por aceitar:\n\n" + this.queue.toString() + "\n");
     }
 
     public boolean equals(Object o) {
@@ -62,7 +76,8 @@ public class Proprietario extends Ator{
         Proprietario that = (Proprietario) o;
         return (super.equals(that) &&
                 this.classificacao.equals(that.getClassificacao()) &&
-                this.frota.equals(that.getFrota()));
+                this.frota.equals(that.getFrota()) &&
+                this.queue.equals(that.getQueue()));
     }
 
     public Proprietario clone(){
@@ -77,5 +92,8 @@ public class Proprietario extends Ator{
         return (double) sum/this.classificacao.size();
     }
 
+    public void addToFrota(Veiculo v) {
+        this.frota.put(v.getID(),v.clone());
+    }
 }
 

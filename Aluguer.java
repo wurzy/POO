@@ -3,6 +3,7 @@ import java.util.*;
 
 public class Aluguer implements Comparable<Aluguer>{
     private int aluguerID; //ordenaçao
+    private boolean status;
     private String veiculoID; //matricula do veiculo
     private String clienteID; //email do cliente
     private String tipo;
@@ -17,6 +18,7 @@ public class Aluguer implements Comparable<Aluguer>{
 
     public Aluguer() {
         this.aluguerID = -1;
+        this.status = false;
         this.veiculoID = "N/A";
         this.clienteID = "N/A";
         this.tipo = "N/A";
@@ -31,6 +33,7 @@ public class Aluguer implements Comparable<Aluguer>{
 
     public Aluguer(int aluguerID, String veiculoID, String clienteID, String tipo, Ponto inicioPercurso, Ponto fimPercurso, Ponto posInicialVeiculo, int rating, double preco, double tempo, LocalDate date) {
         this.aluguerID = aluguerID;
+        this.status = false;
         this.veiculoID = veiculoID;
         this.clienteID = clienteID;
         this.tipo = tipo;
@@ -45,6 +48,7 @@ public class Aluguer implements Comparable<Aluguer>{
 
     public Aluguer(Aluguer al) {
         this.aluguerID = al.getAluguerID();
+        this.status = al.getStatus();
         this.veiculoID = al.getVeiculoID();
         this.clienteID = al.getClienteID();
         this.tipo = al.getTipo();
@@ -60,6 +64,8 @@ public class Aluguer implements Comparable<Aluguer>{
     public int getAluguerID() {
         return this.aluguerID;
     }
+
+    public boolean getStatus() {return this.status;}
 
     public String getVeiculoID() {
         return this.veiculoID;
@@ -103,6 +109,10 @@ public class Aluguer implements Comparable<Aluguer>{
         this.aluguerID = aluguerID;
     }
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     public void setVeiculoID(String veiculoID) {
         this.veiculoID = veiculoID;
     }
@@ -143,6 +153,7 @@ public class Aluguer implements Comparable<Aluguer>{
 
     public String toString(){
         return ("ID do Aluguer: " + this.aluguerID +
+                "\nEstado do aluguer: " + (this.status?"Aceite":"Por aceitar") +
                 "\nMatrícula do Veículo: " + this.veiculoID +
                 "\nEmail do Cliente: " + this.clienteID +
                 "\nTipo de Aluguer: "  + this.tipo +
@@ -160,6 +171,7 @@ public class Aluguer implements Comparable<Aluguer>{
         if (o == null || this.getClass() != o.getClass()) return false;
         Aluguer aluguer = (Aluguer) o;
         return (this.aluguerID == aluguer.getAluguerID() &&
+                this.status == aluguer.getStatus() &&
                 this.veiculoID.equals(aluguer.getVeiculoID()) &&
                 this.clienteID.equals(aluguer.getClienteID()) &&
                 this.tipo.equals(aluguer.getTipo()) &&

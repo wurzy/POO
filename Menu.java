@@ -52,5 +52,18 @@ public class Menu {
         return this.op;
     }
 
+    public double lerDouble(){
+        double op = -1;
+        Scanner sc = new Scanner(System.in);
+        //out.print("Input: ");
+        try {
+            op = sc.nextDouble();
+        }
+        catch (InputMismatchException e){
+            out.println("Não foi um double");
+        }
+        return op;
+    }
+
     public void setOp(int op){ this.op = op; }
 }
