@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 public abstract class Veiculo {
     private String ID; //matricula
     private String marca;
+    private String prop;
     private Ponto posicao;
    // private double reliable; // grau de fiabilidade
     private double velocidade; // Vel media
@@ -130,24 +131,18 @@ public abstract class Veiculo {
         this.depositoAtual = depositoAtual;
     }
 
-    public abstract String toString();
-    /*
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("Matrícula do Veículo: ").append(this.ID).
-        append("\nMarca: ").append(this.marca).
-        append("\nPosição atual: ").append(this.getPosicao()).
-        append("\nVelocidade Média: ").append(this.velocidade).
-        append("\nPreço/km: ").append(this.priceKm).
-        append("\nConsumo/km: ").append(this.consumoKm).
-        append("\nDepósito: ").append(this.depositoAtual).append(" / ").append(this.depositoMax).
-        append("\nHistórico de Alugueres: ").append(this.getHistorico()).
-        append("\nHistórico de Classificações:").append(this.getClassificacoes()).append("\n");
-
-        return sb.toString();
+    public String toString() {
+        return "\nMatrícula do Veículo: " + this.getID() +
+                "\nMarca: " + this.getMarca() +
+                "\nPosição atual: " + this.getPosicao() +
+                "Velocidade média: " + this.getVelocidade() +
+                "\nPreço/km: " + this.getPriceKm() + " €/km" +
+                "\nConsumo/km: " + this.getConsumoKm() + " L/km" +
+                "\nDepósito: " + this.getDepositoAtual() + "/" + this.getDepositoMax() + " L" +
+                "\n\nHistórico de Alugueres:\n\n " + this.getHistorico() +
+                "\n\nHistórico de Classificações:\n\n " + this.getClassificacoes() + "\n";
     }
-*/
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
@@ -165,9 +160,5 @@ public abstract class Veiculo {
     }
 
     public abstract Veiculo clone();
-
-    public double getAutonomia (){
-        return this.getDepositoAtual() * this.getConsumoKm();
-    }
 
 }

@@ -10,11 +10,11 @@ public class Gasolina extends Veiculo{
         this.setVelocidade(90); // kinda pointless
     }
 
-    public Gasolina(String id, String marca, Ponto posicao, Set<Aluguer> historico, List<Integer> classificoes, double depositoAtual, double depositoMax, double priceKm, double consumoKm, int velocidade){
+    public Gasolina(String id, String marca, Ponto posicao, Set<Aluguer> historico, List<Integer> classificoes, double depositoAtual, double depositoMax){
         super(id,marca,posicao,historico, classificoes,depositoAtual,depositoMax);
-        this.setPriceKm(priceKm);
-        this.setConsumoKm(consumoKm);
-        this.setVelocidade(velocidade);
+        this.setPriceKm(0.0729);
+        this.setConsumoKm(0.047);
+        this.setVelocidade(90);
     }
 
     public Gasolina(Veiculo x) {
@@ -26,17 +26,8 @@ public class Gasolina extends Veiculo{
     }
 
     public String toString(){
-        return ("Tipo de Combustível: Gasolina" +
-                "\nMatrícula do Veículo: " + this.getID() +
-                "\nMarca: " + this.getMarca() +
-                "\nPosição atual: " + this.getPosicao() +
-                "Velocidade média: " + this.getVelocidade() +
-                "\nPreço/km: " + this.getPriceKm() + " €/km" +
-                "\nConsumo/km: " + this.getConsumoKm() + " L/km" +
-                "\nDepósito: " + this.getDepositoAtual() + "/" + this.getDepositoMax() + " L" +
-                "\n\nHistórico de Alugueres:\n\n " + this.getHistorico() +
-                "\n\nHistórico de Classificações:\n\n " + this.getClassificacoes() + "\n"
-        );
+        return ("Tipo de Combustível: Gasolina"
+                + super.toString());
     }
 
     public Gasolina clone(){return new Gasolina(this);}

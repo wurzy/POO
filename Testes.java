@@ -1,6 +1,3 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -9,124 +6,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.*;
 
-import static java.lang.System.out;
-
 public class Testes
 {
-
-    public static List<String> readLinesWithBR(String fichtxt){
-        List<String> linhas = new ArrayList<>();
-        BufferedReader inFile = null;
-        String linha = null;
-        try{
-            inFile = new BufferedReader(new FileReader(fichtxt));
-            while((linha = inFile.readLine()) != null)
-                linhas.add(linha);
-        } catch (IOException e) {out.println(e);}
-        return linhas;
-    }
-
-    public static List<Cliente> readClients (List<String> logFile){
-        String[] partes;
-        List<Cliente> clientes = new ArrayList<>();
-        Cliente cli;
-        Ponto pI;
-        Double x,y;
-
-
-        for (String i : logFile){
-            partes = i.split(":");
-            if (partes[0].equals("NovoCliente")){
-                partes = partes[1].split(",");
-                x = Double.parseDouble(partes[4]);
-                y = Double.parseDouble(partes[5]);
-                pI = new Ponto(x,y);
-                cli = new Cliente(partes[2], partes[0], "", partes[3], LocalDate.of(1,1,1), pI, new Ponto() , new TreeSet<>() );
-                clientes.add(cli);
-            }
-        }
-        return clientes;
-    }
-
-    public static List<Proprietario> readProps (List<String> logFile){
-        String[] partes;
-        List<Proprietario> proprietarios = new ArrayList<>();
-        Proprietario prop;
-
-
-        for (String i : logFile){
-            partes = i.split(":");
-            if (partes[0].equals("NovoProp")){
-                partes = partes[1].split(",");
-                prop = new Proprietario(partes[2], partes[0], "", partes[3], LocalDate.of(1,1,1), new TreeSet<>(), 0 , new HashMap<>() );
-                proprietarios.add(prop);
-            }
-        }
-        return proprietarios;
-    }
-
-    public static List<Veiculo> readVeiculos (List<String> logFile){
-        String[] partes;
-        List<Veiculo> veiculos = new ArrayList<>();
-        Gasolina g;
-        Hibrido h;
-        Eletrico e;
-        Ponto p;
-        double x,y;
-
-
-        for (String i : logFile){
-            partes = i.split(":");
-            if (partes[0].equals("NovoCarro")){
-                partes = partes[1].split(",");
-                if(partes[0].equals("Gasolina")){
-                    x = Double.parseDouble(partes[8]);
-                    y = Double.parseDouble(partes[9]);
-                    p = new Ponto(x,y);
-                    g = new Gasolina(partes[2], partes[1],p, new TreeSet<>(), new ArrayList<>(), 0, 0,
-                            Double.parseDouble(partes[5]) , Double.parseDouble(partes[6]), Integer.parseInt(partes[4]));
-                    veiculos.add(g);
-                }
-                if(partes[0].equals("Hibrido")) {
-                    x = Double.parseDouble(partes[8]);
-                    y = Double.parseDouble(partes[9]);
-                    p = new Ponto(x, y);
-                    h = new Hibrido(partes[2], partes[1], p, new TreeSet<>(), new ArrayList<>(), 0, 0,
-                            Double.parseDouble(partes[5]), Double.parseDouble(partes[6]), Integer.parseInt(partes[4]));
-                    veiculos.add(h);
-                }
-                if(partes[0].equals("Eletrico")) {
-                    x = Double.parseDouble(partes[8]);
-                    y = Double.parseDouble(partes[9]);
-                    p = new Ponto(x, y);
-                    e = new Eletrico(partes[2], partes[1], p, new TreeSet<>(), new ArrayList<>(), 0, 0,
-                            Double.parseDouble(partes[5]), Double.parseDouble(partes[6]), Integer.parseInt(partes[4]));
-                    veiculos.add(e);
-                }
-            }
-        }
-        return veiculos;
-    }
-
-    public List<Aluguer> readAluguers (List<String> logFile){
-        String[] partes;
-        List<Aluguer> aluguers = new ArrayList<>();
-        Aluguer al;
-
-
-        for (String i : logFile){
-            partes = i.split(":");
-            if (partes[0].equals("Aluguer")){
-                partes = partes[1].split(",");
-                al = new Aluguer(0, "", partes[0], "", new Ponto(Double.parseDouble(partes[1]), Double.parseDouble(partes[2])),
-                        new Ponto(), new Ponto() ,0, 0, 0) ;
-                aluguers.add(al);
-            }
-        }
-        return aluguers;
-    }
-
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
        /*
@@ -289,9 +170,7 @@ public class Testes
        Proprietario prop = new Proprietario(at,hist1,20.4,frota);
 
        System.out.println(prop);
-       */
 
-       /*
        Set<Aluguer> hist1 = new TreeSet<>();
        Map<String, Veiculo> frota = new HashMap<>();
        List<Integer> class1 = new ArrayList<>();
@@ -303,23 +182,30 @@ public class Testes
        Ponto p2 = new Ponto( 7.2, 1.9 );
        Ponto p3 = new Ponto(6.1,20.3);
        Aluguer al1 = new Aluguer(4,"chungo","xd","xd2",p1,p2,p3,100,2.4,69);
-      // Aluguer al2 = new Aluguer(1,"big","a","b",p2,p1,p1,20,40,10.2);
-      // Aluguer al3 = new Aluguer(5,"is","uu","sdaa",p3,p3,p3,40,1,2);
+       Aluguer al2 = new Aluguer(1,"big","a","b",p2,p1,p1,20,40,10.2);
+       Aluguer al3 = new Aluguer(5,"is","uu","sdaa",p3,p3,p3,40,1,2);
       // Aluguer al4 = new Aluguer(2,"op","ssss","sdadaa",p1,p3,p2,401,21,332);
 
        hist1.add(al1);
-       //hist1.add(al2);
-       //hist1.add(al3);
-       Veiculo opel = new Gasolina("69","opel",new Ponto(1,2), hist1 ,class1,10,20);
-       System.out.println(opel);
-        */
-       List<String> sr = readLinesWithBR("logsPOO_carregamentoInicial.bak");
-       List<Cliente> clientes = readClients(sr);
-       System.out.println(clientes.get(1).toString());
-       List<Proprietario> prop = readProps(sr);
-       System.out.println(prop.get(100).toString());
-        List<Veiculo> veiculos = readVeiculos(sr);
-        System.out.println(veiculos.get(2).toString());
-    }
+       hist1.add(al2);
+       hist1.add(al3);
+       Ator at = new Ator("ola@user.com","Fernando","ola123","69 street xD",LocalDate.of(1,1,1),hist1);
 
+
+       Veiculo opel = new Gasolina("69","opel",new Ponto(1,2), hist1 ,class1,10,20);
+       */
+       Map<String,Veiculo> frota = new HashMap<>();
+       Veiculo opel = new Eletrico("XX","opel",new Ponto(2,3),null,null,0,0);
+       Veiculo vw = new Hibrido("AA","vw",new Ponto(1,3),null,null,0,0);
+       Veiculo seat = new Hibrido("BB","seat",new Ponto(0,1),null,null,0,0);
+       Veiculo ford = new Gasolina("YY","ford",new Ponto(4,4),null,null,0,0);
+       frota.put("opel",opel);
+       frota.put("vw",vw);
+       frota.put("seat",seat);
+       frota.put("ford",ford);
+       //System.out.println(UmCarroJá.rentClosest().toString());
+       //System.out.println(hist1);
+       //System.out.println(at);
+       //System.out.println(at.getHistorico());
+    }
 }

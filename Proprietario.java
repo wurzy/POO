@@ -3,49 +3,35 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Proprietario extends Ator{
-    private Set<Aluguer> historico; // might be changed
-    private double classificacao; // podemos gerir isto por metodo externo
+    private List<Integer> classificacao; // podemos gerir isto por metodo externo
     private Map<String,Veiculo> frota; // id de carro -> carro
 
     public Proprietario() {
         super();
-        this.historico = new TreeSet<>();
-        this.classificacao = 0;
+        this.classificacao = new ArrayList<>();
         this.frota = new HashMap<>();
     }
 
-    public Proprietario(String email, String name, String password, String address, LocalDate date, Set<Aluguer> historico, double classificacao, Map<String, Veiculo> frota) {
-        super(email, name, password, address, date);
-        setHistorico(historico);
-        this.classificacao = classificacao;
+    public Proprietario(String email, String name, String password, String address, LocalDate date, Set<Aluguer> historico, List<Integer> classificacao, Map<String, Veiculo> frota) {
+        super(email, name, password, address, date,historico);
+        this.classificacao = new ArrayList<>(classificacao);
         setFrota(frota);
     }
 
-    public Proprietario(Ator at, Set<Aluguer> historico, double classificacao, Map<String, Veiculo> frota) {
+    public Proprietario(Ator at, List<Integer> classificacao, Map<String, Veiculo> frota) {
         super(at);
-        setHistorico(historico);
-        this.classificacao = classificacao;
+        this.classificacao = new ArrayList<>(classificacao);
         setFrota(frota);
     }
 
     public Proprietario(Proprietario prop) {
-        super(prop.getEmail(),prop.getName(),prop.getPassword(),prop.getAddress(),prop.getBirthday());
-        setHistorico(prop.getHistorico());
+        super(prop.getEmail(),prop.getName(),prop.getPassword(),prop.getAddress(),prop.getBirthday(),prop.getHistorico());
         this.classificacao = prop.getClassificacao();
         setFrota(prop.getFrota());
     }
 
-    public Set<Aluguer> getHistorico() {
-        Set<Aluguer> getter = new TreeSet<>();
-        Iterator<Aluguer> it = this.historico.iterator();
-        while(it.hasNext()) {
-            getter.add(it.next().clone());
-        }
-        return getter;
-    }
-
-    public double getClassificacao() {
-        return this.classificacao;
+    public List<Integer> getClassificacao() {
+        return new ArrayList<>(this.classificacao);
     }
 
     public Map<String, Veiculo> getFrota() {
@@ -54,16 +40,8 @@ public class Proprietario extends Ator{
                          .collect(Collectors.toMap(e->e.getKey(),e->e.getValue().clone()));
     }
 
-    public void setHistorico(Set<Aluguer> historico) {
-        this.historico = new TreeSet<>();
-        Iterator<Aluguer> it = historico.iterator();
-        while(it.hasNext()) {
-            this.historico.add(it.next().clone());
-        }
-    }
-
-    public void setClassificacao(double classificacao) {
-        this.classificacao = classificacao;
+    public void setClassificacao(List<Integer> classificacao) {
+        this.classificacao = new ArrayList<>(classificacao);
     }
 
     public void setFrota(Map<String, Veiculo> frota) {
@@ -74,17 +52,16 @@ public class Proprietario extends Ator{
 
     public String toString(){
         return (super.toString() +
-                "Classificação média: " + this.classificacao +
-                "\nAlugueres realizados:\n" + this.historico.toString() +
-                "\nFrota de veículos:\n " + this.frota.toString());
+                "\n\nClassificação média: " + calculaClassificao() +
+                "\nFrota de veículos:\n\n " + this.frota.toString()) + "\n";
     }
 
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Proprietario that = (Proprietario) o;
-        return (this.classificacao == that.getClassificacao() &&
-                this.historico.equals(that.getHistorico()) &&
+        return (super.equals(that) &&
+                this.classificacao.equals(that.getClassificacao()) &&
                 this.frota.equals(that.getFrota()));
     }
 
@@ -92,24 +69,12 @@ public class Proprietario extends Ator{
         return new Proprietario(this);
     }
 
-    public void abastecer (Veiculo veiculo){
-        this.getFrota().get(veiculo.getID()).setDepositoAtual(veiculo.getDepositoMax());
-
-    }
-
-    public void newPrecoKm (Veiculo veiculo, double pkm){
-        this.getFrota().get(veiculo.getID()).setPriceKm(pkm);
-    }
-
-    public void setTripCost (int id,double preco){
-        Iterator<Aluguer> it = this.historico.iterator();
-
-        while (it.hasNext()){
-            Aluguer l = it.next();
-            if(id == l.getAluguerID()) {
-                l.setPreco(preco);
-            }
+    public double calculaClassificao() {
+        int sum = 0;
+        for(Integer x : this.classificacao) {
+            sum+=x;
         }
+        return (double) sum/this.classificacao.size();
     }
 
 }

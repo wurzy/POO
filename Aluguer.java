@@ -1,55 +1,56 @@
+import java.time.LocalDate;
 import java.util.*;
 
 public class Aluguer implements Comparable<Aluguer>{
     private int aluguerID; //ordenaçao
     private String veiculoID; //matricula do veiculo
     private String clienteID; //email do cliente
-    private String propID; //email do proprietario
+    //tirei email prop meti data
     private Ponto inicioPercurso; //onde estava cliente
     private Ponto fimPercurso; //onde quer ir cliente
     private Ponto posInicialVeiculo; //onde veiculo estava
     private int rating; // rating
     private double preco; // inicio->fim preco
     private double tempo; // inicio->fim tempo
-    // aqui vai dar jeito ter uma Data em que foi alugado, imo
+    private LocalDate date;
 
     public Aluguer() {
         this.aluguerID = -1;
         this.veiculoID = "N/A";
         this.clienteID = "N/A";
-        this.propID = "N/A";
         this.inicioPercurso = new Ponto();
         this.fimPercurso = new Ponto();
         this.posInicialVeiculo = new Ponto();
         this.rating = 0;
         this.preco = 0;
         this.tempo = 0;
+        this.date = LocalDate.now();
     }
 
-    public Aluguer(int aluguerID, String veiculoID, String clienteID, String propID, Ponto inicioPercurso, Ponto fimPercurso, Ponto posInicialVeiculo, int rating, double preco, double tempo) {
+    public Aluguer(int aluguerID, String veiculoID, String clienteID, Ponto inicioPercurso, Ponto fimPercurso, Ponto posInicialVeiculo, int rating, double preco, double tempo, LocalDate date) {
         this.aluguerID = aluguerID;
         this.veiculoID = veiculoID;
         this.clienteID = clienteID;
-        this.propID = propID;
         this.inicioPercurso = inicioPercurso.clone();
         this.fimPercurso = fimPercurso.clone();
         this.posInicialVeiculo = posInicialVeiculo.clone();
         this.rating = rating;
         this.preco = preco;
         this.tempo = tempo;
+        this.date = LocalDate.of(date.getYear(),date.getMonth(),date.getDayOfMonth());
     }
 
     public Aluguer(Aluguer al) {
         this.aluguerID = al.getAluguerID();
         this.veiculoID = al.getVeiculoID();
         this.clienteID = al.getClienteID();
-        this.propID = al.getPropID();
         this.inicioPercurso = al.getInicioPercurso();
         this.fimPercurso = al.getFimPercurso();
         this.posInicialVeiculo = al.getPosInicialVeiculo();
         this.rating = al.getRating();
         this.preco = al.getPreco();
         this.tempo = al.getTempo();
+        this.date = al.getDate();
     }
 
     public int getAluguerID() {
@@ -62,10 +63,6 @@ public class Aluguer implements Comparable<Aluguer>{
 
     public String getClienteID() {
         return this.clienteID;
-    }
-
-    public String getPropID() {
-        return this.propID;
     }
 
     public Ponto getInicioPercurso() {
@@ -92,6 +89,10 @@ public class Aluguer implements Comparable<Aluguer>{
         return this.tempo;
     }
 
+    public LocalDate getDate(){
+        return LocalDate.of(this.date.getYear(),this.date.getMonth(),this.date.getDayOfMonth());
+    }
+
     public void setAluguerID(int aluguerID) {
         this.aluguerID = aluguerID;
     }
@@ -102,10 +103,6 @@ public class Aluguer implements Comparable<Aluguer>{
 
     public void setClienteID(String clienteID) {
         this.clienteID = clienteID;
-    }
-
-    public void setPropID(String propID) {
-        this.propID = propID;
     }
 
     public void setInicioPercurso(Ponto inicioPercurso) {
@@ -132,22 +129,21 @@ public class Aluguer implements Comparable<Aluguer>{
         this.tempo = tempo;
     }
 
+    public void setDate(LocalDate date) {
+        this.date = LocalDate.of(date.getYear(),date.getMonth(),date.getDayOfMonth());
+    }
+
     public String toString(){
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("ID do Aluguer: ").append(this.aluguerID).
-        append("\nMatrícula do Veículo: ").append(this.veiculoID).
-        append("\nEmail do Cliente: ").append(this.clienteID).
-        append("\nEmail do Proprietário: ").append(this.propID).
-        append("\nPosição inicial do Cliente: ").append(this.inicioPercurso.toString()).
-        append("Posição final do Cliente: ").append(this.fimPercurso.toString()).
-        append("Posição inicial do Veículo:").append(this.posInicialVeiculo.toString()).
-        append("Pontuação dada pelo Cliente: ").append(this.rating).
-        append("\nCusto da viagem: ").append(this.preco).
-        append("\nTempo que demorou a viagem: ").append(this.tempo).append("\n");
-       // append("\n").append();
-
-        return sb.toString();
+        return ("ID do Aluguer: " + this.aluguerID +
+                "\nMatrícula do Veículo: " + this.veiculoID +
+                "\nEmail do Cliente: " + this.clienteID +
+                "\nPosição inicial do Cliente: " + this.inicioPercurso +
+                "Posição final do Cliente: " + this.fimPercurso +
+                "Posição inicial do Veículo:" + this.posInicialVeiculo+
+                "Pontuação dada pelo Cliente: " + this.rating +
+                "\nCusto da viagem: " + this.preco +
+                "\nTempo que demorou a viagem: " + this.tempo +
+                "\nData em que foi realizado: " + this.date);
     }
 
     public boolean equals(Object o) {
@@ -157,13 +153,13 @@ public class Aluguer implements Comparable<Aluguer>{
         return (this.aluguerID == aluguer.getAluguerID() &&
                 this.veiculoID.equals(aluguer.getVeiculoID()) &&
                 this.clienteID.equals(aluguer.getClienteID()) &&
-                this.propID.equals(aluguer.getPropID()) &&
                 this.inicioPercurso.equals(aluguer.getInicioPercurso()) &&
                 this.fimPercurso.equals(aluguer.getFimPercurso()) &&
                 this.posInicialVeiculo.equals(aluguer.getPosInicialVeiculo()) &&
                 this.rating == aluguer.getRating() &&
                 this.preco == aluguer.getPreco() &&
-                this.tempo == aluguer.getTempo()
+                this.tempo == aluguer.getTempo() &&
+                this.date.equals(aluguer.getDate())
                 );
     }
 
@@ -172,12 +168,12 @@ public class Aluguer implements Comparable<Aluguer>{
     }
 
     public int compareTo(Aluguer al) {
-        return Integer.compare(this.aluguerID,al.getAluguerID());
-        /*
+        //return Integer.compare(this.aluguerID,al.getAluguerID());
+
         if(this.aluguerID == al.getAluguerID()) return 0;
         else if (this.aluguerID < al.getAluguerID()) return -1;
         else return 1;
-        */
+
     }
 
 }

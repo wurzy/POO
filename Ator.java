@@ -6,6 +6,9 @@
  */
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class Ator {
     private String email; //key
@@ -13,6 +16,7 @@ public class Ator {
     private String password;
     private String address; // varias componentes da morada
     private LocalDate birthday; // Day-Mth-Yr
+    private Set<Aluguer> historico;
 
     /**
      * Construtor por omissão de um Ator.
@@ -22,19 +26,21 @@ public class Ator {
         this.name = "N/A";
         this.password = "N/A";
         this.address = "N/A";
-        this.birthday = LocalDate.of(0,0,0);
+        this.birthday = LocalDate.of(1,1,1);
+        this.historico = new TreeSet<>();
     }
 
     /**
      * Construtor parametrizado de um Ator.
      * Aceita como parâmetros cada componente necessária.
      */
-    public Ator(String email, String name, String password, String address, LocalDate date) {
+    public Ator(String email, String name, String password, String address, LocalDate date, Set<Aluguer> hist) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.address = address;
         this.birthday = LocalDate.of(date.getYear(),date.getMonth(),date.getDayOfMonth());
+        setHistorico(hist);
     }
 
     /**
@@ -47,6 +53,7 @@ public class Ator {
         this.password = at.getPassword();
         this.address = at.getAddress();
         this.birthday = at.getBirthday();
+        this.historico = at.getHistorico();
     }
 
     /**
@@ -99,6 +106,14 @@ public class Ator {
         return LocalDate.of(this.birthday.getYear(),this.birthday.getMonth(),this.birthday.getDayOfMonth());
     }
 
+    public Set<Aluguer> getHistorico(){
+        Set<Aluguer> novo = new TreeSet<>();
+        for(Aluguer l : this.historico) {
+            novo.add(l.clone());
+        }
+        return novo;
+    }
+
     /**
      * Método de instância (set).
      * Atualiza o email do utilizador.
@@ -149,20 +164,25 @@ public class Ator {
         this.birthday = LocalDate.of(bd.getYear(),bd.getMonth(),bd.getDayOfMonth());
     }
 
+    public void setHistorico(Set<Aluguer> hist) {
+        this.historico = new TreeSet<>();
+        for(Aluguer l : hist) {
+           this.historico.add(l.clone());
+       }
+    }
+
     /**
      * Método que devolve a representação em String do Ator.
      * @return String com toda a informação do Ator.
      */
+
     public String toString(){
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("Informação pessoal:\n\nNome: ").append(this.name).
-        append("\nAniversário: ").append(this.birthday.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))).
-        append("\nEmail: ").append(this.email).
-        append("\nPassword: ").append(this.password).
-        append("\nMorada:").append(this.address);
-
-        return sb.toString();
+        return "Nome: " + this.name +
+                "\nAniversário: " + this.birthday +
+                "\nE-mail: " + this.email +
+                "\nPassword: " + this.password +
+                "\nMorada: " + this.address +
+                "\n\nHistórico: " + this.historico.toString();
     }
 
     /**
@@ -173,11 +193,12 @@ public class Ator {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Ator ator = (Ator) o;
-        return (this.email == ator.getEmail() &&
-                this.name == ator.getName() &&
-                this.password == ator.getPassword() &&
+        return (this.email.equals(ator.getEmail()) &&
+                this.name.equals(ator.getName()) &&
+                this.password.equals(ator.getPassword()) &&
                 this.address.equals(ator.getAddress()) &&
-                this.birthday.equals(ator.getBirthday()));
+                this.birthday.equals(ator.getBirthday()) &&
+                this.historico.equals(ator.getHistorico()));
     }
 
     /**
