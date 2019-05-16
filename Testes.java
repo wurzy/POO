@@ -203,7 +203,6 @@ public class Testes
        frota.put("vw",vw);
        frota.put("seat",seat);
        frota.put("ford",ford);
-       //System.out.println(UmCarroJá.rentClosest().toString());
        //System.out.println(hist1);
        //System.out.println(at);
        //System.out.println(at.getHistorico());
