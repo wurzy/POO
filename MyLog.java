@@ -18,6 +18,7 @@ public class MyLog {
         List<String> lidos = readLinesWithBR("logs.bak");
         this.clientes = new HashMap<>();
         this.proprietarios = new HashMap<>();
+        this.listaVeiculos = new HashMap<>();
         createData(lidos);
     }
 
@@ -62,7 +63,7 @@ public class MyLog {
 
     private Veiculo makeVeiculo(String linha){
         String[] partes = linha.split(",");
-        Veiculo v = null; // se necessario meter um throw
+        Veiculo v = new Eletrico(); // se necessario meter um throw
         switch (partes[0]){
             case "Eletrico":
                 v = new Eletrico();
@@ -75,22 +76,31 @@ public class MyLog {
                 break;
         }
 
-        Ponto p = null;
+        Ponto p;
 
         v.setMarca(partes[1]);
-        v.setID(partes[2]); // id == matricula (?)
+        v.setID(partes[2]);
         v.setVelocidade(Double.parseDouble(partes[4]));
         v.setPriceKm(Double.parseDouble(partes[5]));
         v.setConsumoKm(Double.parseDouble(partes[6]));
         v.setDepositoAtual(Double.parseDouble(partes[7]));
+        v.setDepositoMax(Double.parseDouble(partes[7]));
         p = new Ponto(Double.parseDouble(partes[8]), Double.parseDouble(partes[9]));
         v.setPosicao(p);
 
         return v;
     }
 
-    public int getQts(){
+    public int getNumClientes(){
         return this.clientes.size();
+    }
+
+    public int getNumCarros(){
+        return this.listaVeiculos.size();
+    }
+
+    public int getNumProprietarios(){
+        return this.proprietarios.size();
     }
 
     public void createData (List<String> logFile){
@@ -101,11 +111,15 @@ public class MyLog {
             switch (partes[0]){
                 case "NovoProp":
                     Proprietario p = makeProprietario(partes[1]);
-                    this.proprietarios.put(p.getEmail(), p.clone());
+                    this.proprietarios.put(p.getPassword(), p.clone());
                     break;
                 case "NovoCliente":
                     Cliente c = makeCliente(partes[1]);
-                    this.clientes.put(c.getEmail(), c.clone());
+                    this.clientes.put(c.getPassword(), c.clone());
+                    break;
+                case "NovoCarro":
+                    Veiculo carro = makeVeiculo(partes[1]);
+                    this.listaVeiculos.put(carro.getID(),carro.clone());
                     break;
                 case "Aluguer":
                     //fazer qq coisa;
@@ -121,14 +135,34 @@ public class MyLog {
         return this.listaVeiculos.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),e->e.getValue().clone()));
     }
 
-    public boolean verificaLogin(String tipo, String password){
+    public Map<String,Cliente> getClientes(){
+        return this.clientes.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),e->e.getValue().clone()));
+    }
+
+    public Map<String,Proprietario> getProps(){
+        return this.proprietarios.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),e->e.getValue().clone()));
+    }
+
+    public boolean verificaLogin(Integer tipo, String password, String email){
         boolean retValue;
         switch (tipo){
-            case "Cliente":
+            case 1:
                 retValue = this.clientes.containsKey(password);
+                if(retValue && this.clientes.get(password).getEmail().equals(email)) {
+                    retValue = true;
+                }
+                else {
+                    retValue = false;
+                }
                 break;
-            case "Proprietario":
+            case 2:
                 retValue = this.proprietarios.containsKey(password);
+                if(retValue && this.proprietarios.get(password).getEmail().equals(email)) {
+                    retValue = true;
+                }
+                else {
+                    retValue = false;
+                }
                 break;
             default:
                 retValue = false;

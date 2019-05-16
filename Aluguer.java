@@ -5,6 +5,7 @@ public class Aluguer implements Comparable<Aluguer>{
     private int aluguerID; //ordenaçao
     private String veiculoID; //matricula do veiculo
     private String clienteID; //email do cliente
+    private String tipo;
     //tirei email prop meti data
     private Ponto inicioPercurso; //onde estava cliente
     private Ponto fimPercurso; //onde quer ir cliente
@@ -18,6 +19,7 @@ public class Aluguer implements Comparable<Aluguer>{
         this.aluguerID = -1;
         this.veiculoID = "N/A";
         this.clienteID = "N/A";
+        this.tipo = "N/A";
         this.inicioPercurso = new Ponto();
         this.fimPercurso = new Ponto();
         this.posInicialVeiculo = new Ponto();
@@ -27,10 +29,11 @@ public class Aluguer implements Comparable<Aluguer>{
         this.date = LocalDate.now();
     }
 
-    public Aluguer(int aluguerID, String veiculoID, String clienteID, Ponto inicioPercurso, Ponto fimPercurso, Ponto posInicialVeiculo, int rating, double preco, double tempo, LocalDate date) {
+    public Aluguer(int aluguerID, String veiculoID, String clienteID, String tipo, Ponto inicioPercurso, Ponto fimPercurso, Ponto posInicialVeiculo, int rating, double preco, double tempo, LocalDate date) {
         this.aluguerID = aluguerID;
         this.veiculoID = veiculoID;
         this.clienteID = clienteID;
+        this.tipo = tipo;
         this.inicioPercurso = inicioPercurso.clone();
         this.fimPercurso = fimPercurso.clone();
         this.posInicialVeiculo = posInicialVeiculo.clone();
@@ -44,6 +47,7 @@ public class Aluguer implements Comparable<Aluguer>{
         this.aluguerID = al.getAluguerID();
         this.veiculoID = al.getVeiculoID();
         this.clienteID = al.getClienteID();
+        this.tipo = al.getTipo();
         this.inicioPercurso = al.getInicioPercurso();
         this.fimPercurso = al.getFimPercurso();
         this.posInicialVeiculo = al.getPosInicialVeiculo();
@@ -64,6 +68,8 @@ public class Aluguer implements Comparable<Aluguer>{
     public String getClienteID() {
         return this.clienteID;
     }
+
+    public String getTipo(){return this.tipo;}
 
     public Ponto getInicioPercurso() {
         return this.inicioPercurso.clone();
@@ -105,6 +111,8 @@ public class Aluguer implements Comparable<Aluguer>{
         this.clienteID = clienteID;
     }
 
+    public void setTipo(String tipo) {this.tipo = tipo;}
+
     public void setInicioPercurso(Ponto inicioPercurso) {
         this.inicioPercurso = new Ponto(inicioPercurso);
     }
@@ -137,6 +145,7 @@ public class Aluguer implements Comparable<Aluguer>{
         return ("ID do Aluguer: " + this.aluguerID +
                 "\nMatrícula do Veículo: " + this.veiculoID +
                 "\nEmail do Cliente: " + this.clienteID +
+                "\nTipo de Aluguer: "  + this.tipo +
                 "\nPosição inicial do Cliente: " + this.inicioPercurso +
                 "Posição final do Cliente: " + this.fimPercurso +
                 "Posição inicial do Veículo:" + this.posInicialVeiculo+
@@ -153,6 +162,7 @@ public class Aluguer implements Comparable<Aluguer>{
         return (this.aluguerID == aluguer.getAluguerID() &&
                 this.veiculoID.equals(aluguer.getVeiculoID()) &&
                 this.clienteID.equals(aluguer.getClienteID()) &&
+                this.tipo.equals(aluguer.getTipo()) &&
                 this.inicioPercurso.equals(aluguer.getInicioPercurso()) &&
                 this.fimPercurso.equals(aluguer.getFimPercurso()) &&
                 this.posInicialVeiculo.equals(aluguer.getPosInicialVeiculo()) &&

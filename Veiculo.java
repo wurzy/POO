@@ -6,14 +6,13 @@ public abstract class Veiculo {
     private String marca;
     private String prop;
     private Ponto posicao;
-   // private double reliable; // grau de fiabilidade
     private double velocidade; // Vel media
     private double priceKm; // €/km
     private double consumoKm; // Combust/KM
     private Set<Aluguer> historico; // alugueres
     private List<Integer> classificoes; // ratings
-    private double depositoMax; // max do deposito
-    private double depositoAtual; //litros que tem o deposito de combustivel
+    private double depositoMax; // autonomia
+    private double depositoAtual; // autonomia atual
 
     public Veiculo() {
         this.ID = "N/A";

@@ -2,7 +2,6 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-
 import static java.lang.System.out;
 
 public class Menu {
@@ -13,7 +12,6 @@ public class Menu {
         this.opcoes = Arrays.asList(opcoes);
         this.op = 0;
     }
-
 
     public void executa() {
         do {
