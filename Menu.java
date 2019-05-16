@@ -8,38 +8,12 @@ import static java.lang.System.out;
 public class Menu {
     private List<String> opcoes;
     private int op;
-    private String tipo;
-    private String user;
-    private String password;
 
     public Menu(String[] opcoes){
         this.opcoes = Arrays.asList(opcoes);
         this.op = 0;
     }
 
-    public String leString(){
-        String op = null;
-        Scanner sc = new Scanner(System.in);
-        out.print("Opção: ");
-        try {
-            op = sc.nextLine();
-            this.op = 0;
-        }
-        catch (InputMismatchException e){
-            this.op = -1;
-        }
-
-        return op;
-    }
-
-    public void executaLogin(){
-        do {
-            showMenu();
-            this.tipo = leString();
-            this.user = leString();
-            this.password = leString();
-        } while (this.op == -1);
-    }
 
     public void executa() {
         do {
@@ -58,7 +32,7 @@ public class Menu {
         out.println("0 - Sair");
     }
 
-    private int lerOpcao(){
+    public int lerOpcao(){
         int op;
         Scanner sc = new Scanner(System.in);
         out.print("Opção: ");
@@ -80,11 +54,5 @@ public class Menu {
         return this.op;
     }
 
-    public String getTipo(){
-        return this.tipo;
-    }
-
-    public String getPassword(){
-        return this.password;
-    }
+    public void setOp(int op){ this.op = op; }
 }
