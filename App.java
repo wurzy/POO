@@ -56,7 +56,6 @@ public class App {
                         this.menuCliente.executa();
                         switch (menuCliente.getOp()) {
                             case 1:
-                                //EXECUTE QUERIES
                                 System.out.println("O carro mais perto é:\n");
                                 System.out.println(rentClosest(logNegocio.getCliente(menuLogin.getPassword()),logNegocio.getCarros()));
                                 break;
@@ -65,10 +64,10 @@ public class App {
                                 System.out.println(rentCheapest(logNegocio.getCliente(menuLogin.getPassword()),logNegocio.getCarros()));
                                 break;
                             case 3:
-                                System.out.println("Inserir distância:\n");
+                                System.out.println("Inserir raio máximo até ao carro:\n");
                                 double d;
                                 do{
-                                    System.out.print("D = ");
+                                    System.out.print("Raio = ");
                                     d=menuLogin.lerDouble();
                                 }while(d==-1);
                                 System.out.println(rentCheapest(logNegocio.getCliente(menuLogin.getPassword()),logNegocio.getCarros(),d));
@@ -77,7 +76,18 @@ public class App {
                                 System.out.println("kkkk");
                                 break;
                             case 5:
-                                System.out.println(":O");
+                                System.out.println("Inserir autonomia:\n");
+                                double aut;
+                                do{
+                                    System.out.print("Autonomia = ");
+                                    aut=menuLogin.lerDouble();
+                                }while(aut==-1);
+                                try{
+                                    System.out.println(rentAutonomy(logNegocio.getCliente(menuLogin.getPassword()),logNegocio.getCarros(),aut));
+                                }
+                                catch (PrintError e){
+                                    System.out.println(e.getMessage());
+                                }
                                 break;
                         }
                     } while (this.menuCliente.getOp() != 0);
@@ -201,12 +211,15 @@ public class App {
             if(autonomia==autonomy) {
                 if(x instanceof Eletrico) {
                     v = new Eletrico(x);
+                    break;
                 }
                 else if (x instanceof Hibrido) {
                     v = new Hibrido(x);
+                    break;
                 }
                 else {
                     v = new Gasolina(x);
+                    break;
                 }
             }
         }
@@ -229,5 +242,17 @@ public class App {
 
     private void printAvailableCars(Map<String,Veiculo> cars) {
         System.out.println(cars.toString());
+    }
+
+    private void alterarPKM(Map<String,Veiculo> cars, String ID, double pkm) {
+        Veiculo x = cars.get(ID).clone();
+        x.setPriceKm(pkm);
+        cars.put(ID,x);
+    }
+
+    private void fillDeposit(Map<String,Veiculo> cars, String ID) {
+        Veiculo x = cars.get(ID).clone();
+        x.setDepositoAtual(x.getDepositoMax());
+        cars.put(ID,x);
     }
 }
