@@ -2,10 +2,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class Veiculo {
-    private String ID; //matricula
+    private String ID; // matricula
     private String marca;
     private String prop;
     private Ponto posicao;
+    private String tipo;
     private double velocidade; // Vel media
     private double priceKm; // €/km
     private double consumoKm; // Combust/KM
@@ -18,9 +19,10 @@ public abstract class Veiculo {
         this.ID = "N/A";
         this.marca = "N/A";
         this.posicao = new Ponto();
-        this.velocidade = 50.0;
-        this.priceKm = 50.0; //gerimos isto nas extended
-        this.consumoKm = 50.0;
+        this.velocidade = 0.0;
+        this.tipo = "N/A";
+        this.priceKm = 0.0; //gerimos isto nas extended
+        this.consumoKm = 0.0;
         this.historico = new TreeSet<>();
         this.classificoes = new ArrayList<>();
         this.depositoMax = 0;
@@ -92,9 +94,13 @@ public abstract class Veiculo {
         return this.depositoAtual;
     }
 
+    public String getTipo(){return this.tipo;}
+
     public void setID(String id) { this.ID = id; }
 
     public void setMarca(String marca) {this.marca = marca;}
+
+    public void setTipo(String tipo) {this.tipo = tipo;}
 
     public void setPosicao(Ponto p) {this.posicao = p.clone();}
 
@@ -130,6 +136,8 @@ public abstract class Veiculo {
         this.depositoAtual = depositoAtual;
     }
 
+    public void setProp(String prop) {this.prop = prop;}
+
     public String historicString(){
         return "Histórico de Alugueres:\n " + this.getHistorico();
     }
@@ -141,7 +149,8 @@ public abstract class Veiculo {
                 "Velocidade média: " + this.getVelocidade() +
                 "\nPreço/km: " + this.getPriceKm() + " €/km" +
                 "\nConsumo/km: " + this.getConsumoKm() + " L/km" +
-                "\nAutonomia: " + this.getDepositoAtual() + "/" + this.getDepositoMax() + " L" ;
+                "\nAutonomia: " + this.getDepositoAtual() + "/" + this.getDepositoMax() + " km" +
+                "\n-------------------------------------------\n";
                 //"\n\nHistórico de Alugueres:\n\n " + this.getHistorico() +
                 //"\n\nHistórico de Classificações:\n\n " + this.getClassificacoes() + "\n";
     }
@@ -152,6 +161,7 @@ public abstract class Veiculo {
         Veiculo veiculo = (Veiculo) o;
         return (this.ID.equals(veiculo.getID()) &&
                 this.marca.equals(veiculo.getMarca()) &&
+                this.tipo.equals(veiculo.getTipo()) &&
                 this.posicao.equals(veiculo.getPosicao()) &&
                 this.consumoKm == veiculo.getConsumoKm() &&
                 this.velocidade == veiculo.getVelocidade() &&
@@ -163,5 +173,9 @@ public abstract class Veiculo {
     }
 
     public abstract Veiculo clone();
+
+    public void addClassificacao(int rating) {
+        this.classificoes.add(rating);
+    }
 
 }

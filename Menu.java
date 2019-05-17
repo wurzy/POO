@@ -21,7 +21,7 @@ public class Menu {
     }
 
     public void showMenu(){
-        out.println("\n *** Menu ***");
+        out.println("\n Selecionar opção:\n");
         for (int i=0; i<this.opcoes.size(); i++){
             out.print(i+1);
             out.print(" - ");
@@ -63,6 +63,26 @@ public class Menu {
             out.println("Não foi um double");
         }
         return op;
+    }
+
+    public Ponto lerCoordenada(){
+        double cx,cy;
+        Scanner sc = new Scanner(System.in);
+        try{
+            cx = sc.nextDouble();
+        }
+        catch (InputMismatchException e){
+            out.println("A componente X não é um double.");
+            return null;
+        }
+        try {
+            cy = sc.nextDouble();
+        }
+        catch (InputMismatchException e){
+            out.println("A componente Y não é um double.");
+            return null;
+        }
+        return new Ponto(cx,cy);
     }
 
     public void setOp(int op){ this.op = op; }

@@ -35,7 +35,7 @@ public class Eletrico extends Veiculo {
     }
 
     public String toString(){
-        return ("Tipo de Combustível: Elétrico"
+        return ("Tipo de Combustível: " + this.getTipo()
                 + super.toString());
     }
 

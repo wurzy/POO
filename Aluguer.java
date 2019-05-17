@@ -5,13 +5,14 @@ public class Aluguer implements Comparable<Aluguer>{
     private int aluguerID; //ordenaçao
     private boolean status;
     private String veiculoID; //matricula do veiculo
-    private String clienteID; //email do cliente
+    private String clienteID; //password do cliente
     private String tipo;
     //tirei email prop meti data
     private Ponto inicioPercurso; //onde estava cliente
     private Ponto fimPercurso; //onde quer ir cliente
     private Ponto posInicialVeiculo; //onde veiculo estava
     private int rating; // rating
+    private String rated;
     private double preco; // inicio->fim preco
     private double tempo; // inicio->fim tempo
     private LocalDate date;
@@ -27,6 +28,7 @@ public class Aluguer implements Comparable<Aluguer>{
         this.posInicialVeiculo = new Ponto();
         this.rating = 0;
         this.preco = 0;
+        this.rated = "N/A";
         this.tempo = 0;
         this.date = LocalDate.now();
     }
@@ -138,6 +140,8 @@ public class Aluguer implements Comparable<Aluguer>{
     public void setRating(int rating) {
         this.rating = rating;
     }
+
+    public void setRated(String rated) {this.rated = rated;}
 
     public void setPreco(double preco) {
         this.preco = preco;

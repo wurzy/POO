@@ -1,10 +1,7 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.lang.System.out;
@@ -13,6 +10,7 @@ public class MyLog {
     private Map<String,Cliente> clientes;
     private Map<String,Proprietario> proprietarios;
     private Map<String,Veiculo> listaVeiculos; // MATRICULA - CARRO
+    private Set<Aluguer> alugueres;
 
     public MyLog(){
         List<String> lidos = readLinesWithBR("logs.bak");
@@ -67,12 +65,15 @@ public class MyLog {
         switch (partes[0]){
             case "Electrico":
                 v = new Eletrico();
+                v.setTipo("Eletrico");
                 break;
             case "Gasolina":
                 v = new Gasolina();
+                v.setTipo("Gasolina");
                 break;
             case "Hibrido":
                 v = new Hibrido();
+                v.setTipo("Hibrido");
                 break;
             default:
                 throw new PrintError("Tipo de veículo inválido");
@@ -82,7 +83,8 @@ public class MyLog {
 
         v.setMarca(partes[1]);
         v.setID(partes[2]);
-
+        Proprietario prop = this.proprietarios.get(partes[3]).clone();
+        v.setProp(partes[3]);
         v.setVelocidade(Double.parseDouble(partes[4]));
         v.setPriceKm(Double.parseDouble(partes[5]));
         v.setConsumoKm(Double.parseDouble(partes[6]));
@@ -90,8 +92,20 @@ public class MyLog {
         v.setDepositoMax(Double.parseDouble(partes[7]));
         p = new Ponto(Double.parseDouble(partes[8]), Double.parseDouble(partes[9]));
         v.setPosicao(p);
-
+        prop.addToFrota(v);
+        this.proprietarios.put(partes[3],prop);
         return v;
+    }
+
+    private Aluguer makeAluguer(String linha, int ID){
+        String[] partes = linha.split(",");
+        Aluguer aluguer = new Aluguer();
+        aluguer.setAluguerID(ID);
+        aluguer.setClienteID(partes[0]);
+        Ponto p = new Ponto(Double.parseDouble(partes[1]),Double.parseDouble(partes[2]));
+        aluguer.setFimPercurso(p);
+
+        return aluguer;
     }
 
     public int getNumClientes(){
@@ -108,6 +122,7 @@ public class MyLog {
 
     public void createData (List<String> logFile){
         String[] partes;
+        int counter = 1;
 
         for (String i : logFile){
             partes = i.split(":");
@@ -130,7 +145,8 @@ public class MyLog {
                         out.println(e.getMessage());
                     }
                 case "Aluguer":
-                    //fazer qq coisa;
+                    //Aluguer alug = makeAluguer(partes[1],counter);
+//                    this.alugueres.add(alug);
                     break;
                 case "Classificar":
                     //fazer qq coisa;
@@ -186,5 +202,52 @@ public class MyLog {
         Proprietario p = this.proprietarios.get(password).clone();
         p.addToFrota(v);
         this.proprietarios.put(password,p);
+    }
+
+    public Veiculo getCarro(String ID) throws PrintError{
+        if(this.listaVeiculos.containsKey(ID)){
+            return this.listaVeiculos.get(ID);
+        }
+        else {
+            throw new PrintError("Não existe o carro pedido com a matrícula fornecida.");
+        }
+    }
+
+    public void setClientCoordI(String client, Ponto nova) {
+        Cliente cl = this.clientes.get(client).clone();
+        cl.setPosicaoI(nova);
+        this.clientes.put(client,cl);
+    }
+
+    public void setClientCoordF(String client, Ponto nova) {
+        Cliente cl = this.clientes.get(client).clone();
+        cl.setPosicaoF(nova);
+        this.clientes.put(client,cl);
+    }
+
+    public Ponto getClienteCoordI(String id) {
+        return this.clientes.get(id).getPosicaoI().clone();
+    }
+
+    public Ponto getClienteCoordF(String id) {
+        return this.clientes.get(id).getPosicaoF().clone();
+    }
+
+    private Veiculo fetchClosestBy(String tipo, Cliente client) {
+        double mincusto = Double.MAX_VALUE;
+        Veiculo v = null;
+        Ponto posF = client.getPosicaoF();
+        Ponto posC;
+        double pkm, custo,distancia;
+        for(Veiculo x: this.listaVeiculos.values()) {
+            posC = x.getPosicao();
+            distancia = posF.distancia(posC);
+            pkm = x.getPriceKm();
+            custo = pkm*distancia;
+            if(custo<mincusto) {
+
+            }
+        }
+        return v;
     }
 }

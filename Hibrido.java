@@ -29,7 +29,7 @@ public class Hibrido extends Veiculo {
     }
 
     public String toString(){
-        return ("Tipo de Combustível: Híbrido"
+        return ("Tipo de Combustível: " + this.getTipo()
                 + super.toString());
     }
 

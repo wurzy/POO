@@ -29,7 +29,7 @@ public class Gasolina extends Veiculo{
     }
 
     public String toString(){
-        return ("Tipo de Combustível: Gasolina"
+        return ("Tipo de Combustível: " + this.getTipo()
                 + super.toString());
     }
 
