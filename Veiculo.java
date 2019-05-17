@@ -18,9 +18,9 @@ public abstract class Veiculo {
         this.ID = "N/A";
         this.marca = "N/A";
         this.posicao = new Ponto();
-      //  this.velocidade = 0;
-       // this.priceKm = 0; //gerimos isto nas extended
-       // this.consumoKm = 0;
+        this.velocidade = 50.0;
+        this.priceKm = 50.0; //gerimos isto nas extended
+        this.consumoKm = 50.0;
         this.historico = new TreeSet<>();
         this.classificoes = new ArrayList<>();
         this.depositoMax = 0;

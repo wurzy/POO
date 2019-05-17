@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.util.*;
 import java.io.*;
+import java.util.stream.Collectors;
 
 public class App {
     private MyLog logNegocio = new MyLog();
@@ -11,6 +12,10 @@ public class App {
         new App().run();
     }
 
+    private void run2(){
+        List<Veiculo> ve = this.logNegocio.getCarros().values().stream().collect(Collectors.toList());
+        System.out.println(ve);
+    }
     private App(){
         String[] cliente = {"Alugar carro mais perto",
                 "Alugar o carro mais barato",

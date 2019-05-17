@@ -19,6 +19,9 @@ public class Hibrido extends Veiculo {
 
     public Hibrido(Veiculo x) {
         super(x.getID(),x.getMarca(),x.getPosicao(),x.getHistorico(),x.getClassificacoes(),x.getDepositoAtual(),x.getDepositoMax());
+        this.setPriceKm(x.getPriceKm());
+        this.setVelocidade(x.getVelocidade());
+        this.setConsumoKm(x.getConsumoKm());
         //this.setPriceKm(0.0438);
         //this.setConsumoKm(0.032);
         //this.setVelocidade(80);

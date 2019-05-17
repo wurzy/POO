@@ -61,11 +61,11 @@ public class MyLog {
         return c;
     }
 
-    private Veiculo makeVeiculo(String linha){
+    private Veiculo makeVeiculo(String linha) throws PrintError{
         String[] partes = linha.split(",");
-        Veiculo v = new Eletrico(); // se necessario meter um throw
+        Veiculo v; // se necessario meter um throw
         switch (partes[0]){
-            case "Eletrico":
+            case "Electrico":
                 v = new Eletrico();
                 break;
             case "Gasolina":
@@ -74,6 +74,8 @@ public class MyLog {
             case "Hibrido":
                 v = new Hibrido();
                 break;
+            default:
+                throw new PrintError("Tipo de veículo inválido");
         }
 
         Ponto p;
@@ -119,9 +121,14 @@ public class MyLog {
                     this.clientes.put(c.getPassword(), c.clone());
                     break;
                 case "NovoCarro":
+                    try {
                     Veiculo carro = makeVeiculo(partes[1]);
                     this.listaVeiculos.put(carro.getID(),carro.clone());
                     break;
+                    }
+                    catch(PrintError e) {
+                        out.println(e.getMessage());
+                    }
                 case "Aluguer":
                     //fazer qq coisa;
                     break;
