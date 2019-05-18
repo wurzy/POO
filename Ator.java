@@ -5,10 +5,10 @@
  * @author  Grupo de Trabalho -->INSERIR<--
  */
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 public class Ator {
     private String email; //key
@@ -17,6 +17,7 @@ public class Ator {
     private String address; // varias componentes da morada
     private LocalDate birthday; // Day-Mth-Yr
     private Set<Aluguer> historico;
+    private List<Integer> classificacao; // podemos gerir isto por metodo externo
 
     /**
      * Construtor por omissão de um Ator.
@@ -26,21 +27,23 @@ public class Ator {
         this.name = "N/A";
         this.password = "N/A";
         this.address = "N/A";
-        this.birthday = LocalDate.of(1,1,1);
+        this.birthday = LocalDate.of(1999,1,1);
         this.historico = new TreeSet<>();
+        this.classificacao = new ArrayList<>();
     }
 
     /**
      * Construtor parametrizado de um Ator.
      * Aceita como parâmetros cada componente necessária.
      */
-    public Ator(String email, String name, String password, String address, LocalDate date, Set<Aluguer> hist) {
+    public Ator(String email, String name, String password, String address, LocalDate date, Set<Aluguer> hist, List<Integer> classif) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.address = address;
         this.birthday = LocalDate.of(date.getYear(),date.getMonth(),date.getDayOfMonth());
         setHistorico(hist);
+        setClassificacao(classif);
     }
 
     /**
@@ -54,6 +57,7 @@ public class Ator {
         this.address = at.getAddress();
         this.birthday = at.getBirthday();
         this.historico = at.getHistorico();
+        this.classificacao = at.getClassificacao();
     }
 
     /**
@@ -114,6 +118,10 @@ public class Ator {
         return novo;
     }
 
+    public List<Integer> getClassificacao(){
+        return new ArrayList<>(this.classificacao);
+    }
+
     /**
      * Método de instância (set).
      * Atualiza o email do utilizador.
@@ -171,6 +179,10 @@ public class Ator {
        }
     }
 
+    public void setClassificacao(List<Integer> classif) {
+        this.classificacao = new ArrayList<>(classif);
+    }
+
     /**
      * Método que devolve a representação em String do Ator.
      * @return String com toda a informação do Ator.
@@ -178,11 +190,11 @@ public class Ator {
 
     public String toString(){
         return "Nome: " + this.name +
+                "\nClassificação média: " + this.calculaClassificao() +
                 "\nAniversário: " + this.birthday +
                 "\nE-mail: " + this.email +
                 "\nPassword: " + this.password +
-                "\nMorada: " + this.address +
-                "\n\nHistórico: " + this.historico.toString();
+                "\nMorada: " + this.address;
     }
 
     /**
@@ -198,7 +210,8 @@ public class Ator {
                 this.password.equals(ator.getPassword()) &&
                 this.address.equals(ator.getAddress()) &&
                 this.birthday.equals(ator.getBirthday()) &&
-                this.historico.equals(ator.getHistorico()));
+                this.historico.equals(ator.getHistorico())) &&
+                this.classificacao.equals(ator.getClassificacao());
     }
 
     /**
@@ -211,5 +224,17 @@ public class Ator {
 
     public void addAluguer(Aluguer aluguer){
         this.historico.add(aluguer.clone());
+    }
+
+    public double calculaClassificao() {
+        int sum = 0;
+        for(Integer x : this.classificacao) {
+            sum+=x;
+        }
+        return (double) sum/this.classificacao.size();
+    }
+
+    public void addClassificacao(Integer i) {
+        this.classificacao.add(i);
     }
 }

@@ -13,8 +13,8 @@ public class Cliente extends Ator{
         this.posicaoF = new Ponto();
     }
 
-    public Cliente(String email, String name, String password, String address, LocalDate date, Ponto posicaoI, Ponto posicaoF,Set<Aluguer>historico) {
-        super(email, name, password, address, date,historico);
+    public Cliente(String email, String name, String password, String address, LocalDate date, Ponto posicaoI, Ponto posicaoF,Set<Aluguer>historico, List<Integer> classif) {
+        super(email, name, password, address, date,historico, classif);
         this.posicaoI = posicaoI;
         this.posicaoF = posicaoF;
 
@@ -27,7 +27,7 @@ public class Cliente extends Ator{
     }
 
     public Cliente(Cliente cl) {
-        super(cl.getEmail(),cl.getName(),cl.getPassword(),cl.getAddress(),cl.getBirthday(),cl.getHistorico());
+        super(cl.getEmail(),cl.getName(),cl.getPassword(),cl.getAddress(),cl.getBirthday(),cl.getHistorico(),cl.getClassificacao());
         this.posicaoI = cl.getPosicaoI();
         this.posicaoF = cl.getPosicaoF();
     }

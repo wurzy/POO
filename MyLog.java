@@ -44,7 +44,7 @@ public class MyLog {
         p.setPassword(partes[1]);
         p.setEmail(partes[2]);
         p.setAddress(partes[3]);
-
+        p.setHistorico(new TreeSet<>());
         return p;
     }
 
@@ -150,6 +150,29 @@ public class MyLog {
         return aluguer;
     }
 
+    public void addClassificacao(String linha) {
+        String[] partes = linha.split(",");
+
+        if(partes[0].contains("-")) {
+            Veiculo v = this.listaVeiculos.get(partes[0]).clone();
+            v.addClassificacao(Integer.parseInt(partes[1]));
+            this.listaVeiculos.put(v.getID(),v);
+        }
+
+        else {
+            if(this.proprietarios.containsKey(partes[0])){
+                Proprietario p = this.proprietarios.get(partes[0]).clone();
+                p.addClassificacao(Integer.parseInt(partes[1]));
+                this.proprietarios.put(p.getPassword(),p);
+            }
+            else {
+                Cliente cl = this.clientes.get(partes[0]).clone();
+                cl.addClassificacao(Integer.parseInt(partes[1]));
+                this.clientes.put(cl.getPassword(),cl);
+            }
+        }
+    }
+
     public int getNumClientes(){
         return this.clientes.size();
     }
@@ -179,7 +202,6 @@ public class MyLog {
                 case "NovoCarro":
                     try {
                     Veiculo carro = makeVeiculo(partes[1]);
-                   // out.println(carro);
                     this.listaVeiculos.put(carro.getID(),carro.clone());
                     break;
                     }
@@ -192,7 +214,8 @@ public class MyLog {
                     this.alugueres.add(alug);
                     break;
                 case "Classificar":
-                    //fazer qq coisa;
+                    addClassificacao(partes[1]);
+                  //  out.println(this.proprietarios.get("463062725").getClassificacao());
                     break;
             }
         }
