@@ -56,9 +56,6 @@ public class Proprietario extends Ator{
 
     public String toString(){
         return (super.toString() +
-                "\nClassificação média: " + calculaClassificao() +
-                "\nFrota de veículos:\n\n " + this.frota.toString() +
-                "\nAlugueres por aceitar:\n\n" + this.queue.toString() +
                 "\n--------------------------------------------------\n");
     }
 
@@ -86,6 +83,10 @@ public class Proprietario extends Ator{
     public void updateFrota(Veiculo x) {
         //this.frota.get(x.getID());
         this.frota.put(x.getID(),x);
+    }
+
+    public void removeCarro(Veiculo x) {
+        this.frota.remove(x);
     }
 }
 

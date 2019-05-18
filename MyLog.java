@@ -272,6 +272,10 @@ public class MyLog {
         return this.clientes.get(password);
     }
 
+    public Proprietario getProp(String password) {
+        return this.proprietarios.get(password);
+    }
+
     private void addVehicle(Veiculo v, String password) {
         Proprietario p = this.proprietarios.get(password).clone();
         p.addToFrota(v);
@@ -530,6 +534,8 @@ public class MyLog {
         cl.addAluguer(al);
         cl.setPosicaoI(al.getFimPercurso());
         this.clientes.put(nif,cl);
+
+        this.alugueres.add(al.clone());
     }
 
     public List<Veiculo> getVeiculosFill(String nif) throws PrintError {
@@ -565,5 +571,18 @@ public class MyLog {
         else {
             return ret;
         }
+    }
+
+    public void updateFrota(String nif, List<Veiculo> frota, String matricula) throws PrintError{
+
+        if(frota.contains(this.listaVeiculos.get(matricula))) {
+            Proprietario p = this.proprietarios.get(nif).clone();
+            p.removeCarro(this.listaVeiculos.get(matricula).clone());
+            this.proprietarios.put(p.getPassword(),p);
+        }
+        else {
+            throw new PrintError("Eu não tenho este veículo registado.");
+        }
+
     }
 }

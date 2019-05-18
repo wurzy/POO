@@ -321,13 +321,49 @@ public class App {
                                             System.out.println("dddd");
                                             break;
                                         case 5:
-                                            System.out.println(":D");
+                                            String toremove;
+                                            System.out.println("A minha frota atual de veículos é: \n");
+                                            List<Veiculo> frotaRemove;
+                                            try{
+                                                frotaRemove = logNegocio.getVeiculos(this.menuLogin.getPassword());
+                                                System.out.println(frotaRemove);
+                                            }
+                                            catch(PrintError e) {
+                                                System.out.println(e.getMessage());
+                                                break;
+                                            }
+
+                                            System.out.println("O veículo para remover é: \n");
+
+                                            do {
+                                                System.out.print("Matrícula: ");
+                                                toremove = menuLogin.leString();
+                                            }while(toremove==null);
+
+                                            try {
+                                                this.logNegocio.updateFrota(this.menuLogin.getPassword(),frotaRemove,toremove);
+                                                System.out.println("Ok. Removido da minha frota.");
+                                            }
+                                            catch(PrintError e) {
+                                                System.out.println(e.getMessage());
+                                                break;
+                                            }
                                             break;
                                         case 6:
                                             break;
                                         case 7:
+                                            System.out.println("A minha frota atual de veículos é: \n");
+                                            try{
+                                                List<Veiculo> frotaAtual = logNegocio.getVeiculos(this.menuLogin.getPassword());
+                                                System.out.println(frotaAtual);
+                                            }
+                                            catch(PrintError e) {
+                                                System.out.println(e.getMessage());
+                                            }
                                             break;
                                         case 8:
+                                            System.out.println("A minha informação pessoal é:\n");
+                                            System.out.println(logNegocio.getProp(this.menuLogin.getPassword()));
                                             break;
                                     }
                                 } while (this.menuProprietario.getOp() != 0);
@@ -530,6 +566,5 @@ public class App {
         x.setDepositoAtual(x.getDepositoMax());
         cars.put(ID,x);
     }
-
 
 }
