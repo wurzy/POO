@@ -48,7 +48,8 @@ public class Cliente extends Ator{
     public String toString() {
         return  super.toString() +
                 "\n\nPosição atual: (x , y) = " + this.posicaoI.toString() +
-                "\nPosição pretendida: (x , y) = " + this.posicaoF.toString();
+                "\nPosição pretendida: (x , y) = " + this.posicaoF.toString() +
+                "\n------------------------------------------------------------\n";
 
     }
 

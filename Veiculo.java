@@ -151,6 +151,7 @@ public abstract class Veiculo {
 
     public String toString() {
         return "\nMatrícula do Veículo: " + this.getID() +
+                "\nClassificação média atual: " + this.getMedia() +
                 "\nMarca: " + this.getMarca() +
                 "\nNIF Proprietário: " + this.getProp() +
                 "\nPosição atual: " + this.getPosicao() +
@@ -212,6 +213,14 @@ public abstract class Veiculo {
         double dist = i.distancia(f);
         tempo = dist/this.velocidade;
         return (double) Math.round(tempo*100)/100;
+    }
+
+    public double getMedia(){
+        int contador=0;
+        for(int i : this.classificoes) {
+            contador+=i;
+        }
+        return (double) contador/this.classificoes.size();
     }
 
 }

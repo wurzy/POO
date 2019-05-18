@@ -65,9 +65,10 @@ public class Proprietario extends Ator{
 
     public String toString(){
         return (super.toString() +
-                "\n\nClassificação média: " + calculaClassificao() +
+                "\nClassificação média: " + calculaClassificao() +
                 "\nFrota de veículos:\n\n " + this.frota.toString() +
-                "\nAlugueres por aceitar:\n\n" + this.queue.toString() + "\n");
+                "\nAlugueres por aceitar:\n\n" + this.queue.toString() +
+                "\n--------------------------------------------------\n");
     }
 
     public boolean equals(Object o) {
@@ -99,5 +100,6 @@ public class Proprietario extends Ator{
     public void addToQueue(Aluguer al) {
         this.queue.add(al.clone());
     }
+
 }
 

@@ -139,7 +139,8 @@ public class Aluguer implements Comparable<Aluguer>{
                 "\nPosição inicial do Cliente: " + this.inicioPercurso +
                 "Posição final do Cliente: " + this.fimPercurso +
                 "Posição inicial do Veículo: " + this.posInicialVeiculo+
-                "Custo da viagem (em €): " + this.preco +
+                "Distância total (em km): " + this.distancia()  +
+                "\nCusto da viagem (em €): " + this.preco +
                 "\nTempo que demorou a viagem (em h): " + this.tempo +
                 "\nData em que foi realizado: " + this.date +
                 "\n---------------------------------------------\n");
@@ -174,6 +175,11 @@ public class Aluguer implements Comparable<Aluguer>{
         if(this.aluguerID == al.getAluguerID()) return 0;
         else if (this.aluguerID < al.getAluguerID()) return -1;
         else return 1;
+    }
+
+    public double distancia() {
+        double res = this.posInicialVeiculo.distancia(this.getFimPercurso());
+        return (double) Math.round(res*100)/100;
     }
 
 }

@@ -78,6 +78,20 @@ public class App {
                                             System.out.println("O carro mais perto é:\n");
                                             Veiculo cheapest = this.logNegocio.rentClosest(menuLogin.getPassword(),tipo);
                                             System.out.println(cheapest!=null?cheapest:"Não existe nenhum carro com estas condições.");
+                                            if(cheapest!=null) {
+                                                Aluguer theCheap = new Aluguer();
+                                                theCheap.setAluguerID(this.logNegocio.getCounter());
+                                                this.logNegocio.updateCounter();
+                                                theCheap.setVeiculoID(cheapest.getID());
+                                                theCheap.setClienteID(this.menuLogin.getPassword());
+                                                theCheap.setPropID(cheapest.getProp());
+                                                theCheap.setTipo("MaisBarato");
+                                                theCheap.setTipoVeiculo(cheapest.getTipo());
+                                                theCheap.setInicioPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
+                                                theCheap.setFimPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoF());
+                                                theCheap.setPosInicialVeiculo(cheapest.getPosicao());
+                                                this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap,cheapest);
+                                            }
                                             break;
                                         case 2:
                                             String tipoC;

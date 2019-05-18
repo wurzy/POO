@@ -12,6 +12,7 @@ public class MyLog {
     private Map<String,Proprietario> proprietarios;
     private Map<String,Veiculo> listaVeiculos; // MATRICULA - CARRO
     private Set<Aluguer> alugueres;
+    private int counter;
 
     public MyLog(){
         List<String> lidos = readLinesWithBR("logs.bak");
@@ -19,6 +20,7 @@ public class MyLog {
         this.proprietarios = new HashMap<>();
         this.listaVeiculos = new HashMap<>();
         this.alugueres = new TreeSet<>();
+        this.counter = 1;
         createData(lidos);
     }
 
@@ -125,26 +127,18 @@ public class MyLog {
 
         switch(partes[4]){
             case "MaisBarato":
-                //out.println("Ola mais barato");
                 veic=rentCheapest(partes[0],partes[3]);
-                //out.println(veic);
                 break;
             case "MaisPerto":
-                //out.println("Ola maisperto");
                 veic=rentClosest(partes[0],partes[3]);
-                //out.println(veic);
-                // veic = rentClosest(partes[0],partes[3]);
                 break;
             default:
-                //out.println("Ola default");
-                //veic = null;
                 break;
         }
 
         aluguer.setVeiculoID(veic.getID());
         aluguer.setInicioPercurso(cl.getPosicaoI());
         aluguer.setPosInicialVeiculo(veic.getPosicao());
-        //out.println("GOT: " + veic.getPosicao());
         aluguer.setPropID(veic.getProp());
 
         //dealt with later
@@ -170,7 +164,6 @@ public class MyLog {
 
     public void createData (List<String> logFile){
         String[] partes;
-        int counter = 1;
 
         for (String i : logFile){
             partes = i.split(":");
@@ -194,8 +187,8 @@ public class MyLog {
                         out.println(e.getMessage());
                     }
                 case "Aluguer":
-                    Aluguer alug = makeAluguer(partes[1],counter);
-                    counter++;
+                    Aluguer alug = makeAluguer(partes[1],this.counter);
+                    this.counter++;
                     this.alugueres.add(alug);
                     break;
                 case "Classificar":
@@ -271,6 +264,14 @@ public class MyLog {
         }
     }
 
+    public int getCounter(){
+        return this.counter;
+    }
+
+    public void updateCounter(){
+        this.counter++;
+    }
+
     public void setClientCoordI(String client, Ponto nova) {
         Cliente cl = this.clientes.get(client).clone();
         cl.setPosicaoI(nova);
@@ -302,7 +303,7 @@ public class MyLog {
        Ponto posI = cliente.getPosicaoI();
 
        Veiculo aux = null;
-       Veiculo ret = null;
+       //Veiculo ret = null;
 
        double dist_carro, mindist = Double.MAX_VALUE,dist=0;
 
@@ -314,27 +315,30 @@ public class MyLog {
                mindist = dist_carro;
                if(veiculo instanceof Eletrico) {
                    aux = new Eletrico(veiculo);
-                   ret = new Eletrico(veiculo);
+                   //ret = new Eletrico(veiculo);
                }
                else if (veiculo instanceof Hibrido) {
-                   ret = new Hibrido(veiculo);
+                   //ret = new Hibrido(veiculo);
                    aux = new Hibrido(veiculo);
                }
                else {
-                   ret = new Gasolina(veiculo);
+                   //ret = new Gasolina(veiculo);
                    aux = new Gasolina(veiculo);
                }
            }
        }
        //out.println("carro inicio closest" + aux.getPosicao());
-       if(aux!=null) {
+       /*
+        if(aux!=null) {
            aux.setPosicao(posF);
            aux.updateAutonomia(dist);
            this.listaVeiculos.put(aux.getID(),aux);
        }
+       */
         //out.println("carro fim closest" + aux.getPosicao());
 
-        return ret;
+     //   return ret;
+        return aux;
     }
 
 /*
@@ -383,7 +387,7 @@ public class MyLog {
         Cliente client = this.clientes.get(nif).clone();
         Ponto posF = client.getPosicaoF();
         Ponto posC;
-        Veiculo ret = null;
+       // Veiculo ret = null;
         double pkm, custo;
         double distancia=0;
         for(Veiculo x: this.listaVeiculos.values()) {
@@ -395,30 +399,31 @@ public class MyLog {
                 mincusto = custo;
                 if(x instanceof Eletrico) {
                     v = new Eletrico(x);
-                    ret = new Eletrico(x);
+                   // ret = new Eletrico(x);
                 }
                 else if (x instanceof Hibrido) {
                     v = new Hibrido(x);
-                    ret = new Hibrido(x);
+                    //ret = new Hibrido(x);
                 }
                 else {
                     v = new Gasolina(x);
-                    ret = new Gasolina(x);
+                   // ret = new Gasolina(x);
                 }
             }
         }
 
        // out.println("inicio cheapest posicao" + v.getPosicao());
 
-        if(v!=null) {
-            v.setPosicao(posF);
-            v.updateAutonomia(distancia);
-            this.listaVeiculos.put(v.getID(),v);
-        }
+       // if(v!=null) {
+            //v.setPosicao(posF);
+            //v.updateAutonomia(distancia);
+            //this.listaVeiculos.put(v.getID(),v);
+       // }
 
         //out.println("carro fim cheapeast" + v.getPosicao());
 
-        return ret;
+        //return ret;
+        return v;
     }
 
     public Veiculo rentCheapest(String nif, double raio) {
@@ -428,7 +433,7 @@ public class MyLog {
         Ponto posI = client.getPosicaoI();
         Ponto posF = client.getPosicaoF();
         Ponto posC;
-        Veiculo ret=null;
+       // Veiculo ret=null;
         double pkm, custo;
         double distancia=0,raio_2;
         for(Veiculo x: this.listaVeiculos.values()) {
@@ -441,21 +446,21 @@ public class MyLog {
                 mincusto = custo;
                 if(x instanceof Eletrico) {
                     v = new Eletrico(x);
-                    ret = new Eletrico(x);
+                  //  ret = new Eletrico(x);
                 }
                 else if (x instanceof Hibrido) {
                     v = new Hibrido(x);
-                    ret = new Hibrido(x);
+                //    ret = new Hibrido(x);
                 }
                 else {
                     v = new Gasolina(x);
-                    ret = new Gasolina(x);
+                   // ret = new Gasolina(x);
                 }
             }
         }
 
         // out.println("inicio cheapest posicao" + v.getPosicao());
-
+/*
         if(v!=null) {
             v.setPosicao(posF);
             v.updateAutonomia(distancia);
@@ -464,7 +469,8 @@ public class MyLog {
 
         //out.println("carro fim cheapeast" + v.getPosicao());
 
-        return ret;
+        return ret;*/
+        return v;
     }
 
     public Veiculo rentID(String matricula) throws PrintError{
@@ -482,12 +488,20 @@ public class MyLog {
         this.proprietarios.put(prop,pr);
     }
 
-    public void addAluguer(String nif, Aluguer al, Veiculo x) {
+    public void addAluguer(String nif, Aluguer al, Veiculo d) {
         Cliente cl = this.clientes.get(nif).clone();
+        Veiculo x = d.clone();
+
         al.setPreco(x.calculaTarifa(x.getPosicao(),al.getFimPercurso()));
         al.setDate(LocalDate.now());
         al.setTempo(x.calculaTempo(x.getPosicao(),al.getFimPercurso()));
+
+        x.setPosicao(al.getFimPercurso());
+        x.updateAutonomia(al.distancia());
+        this.listaVeiculos.put(x.getID(),x);
+
         cl.addAluguer(al);
+        cl.setPosicaoI(al.getFimPercurso());
         this.clientes.put(nif,cl);
     }
 
