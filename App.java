@@ -23,16 +23,18 @@ public class App {
                 "Alugar um carro em específico",
                 "Alterar a minha localização",
                 "Alterar o meu destino",
-                "Ver o meu histórico de Alugueres",
+                "Ver o meu histórico de alugueres aceites",
                 "Ver a minha localização atual",
                 "Ver o meu destino atual",
                 "Ver minha informação pessoal"};
-        String[] props = {"Disponibilizar um veículo para aluguer",
-                "Abastacer um dos meus veículos",
+        String[] props = {"Abastacer um dos meus veículos",
                 "Alterar preço/km de um dos meus veículos",
                 "Aceitar/Rejeitar um aluguer",
-                "Registar o custo da viagem"
-                };
+                "Inserir nova viatura para aluguer",
+                "Remover uma viatura de aluguer",
+                "Ver o meu histórico de alugueres aceites",
+                "Ver a minha frota atual de veículos",
+                "Ver a minha informação pessoal"};
 
         String[] sign = {"Sign-in",
                         "Sign-up"};
@@ -77,7 +79,7 @@ public class App {
                                                 tipo = menuLogin.lerTipo();
                                             }while (tipo==null);
                                             System.out.println("A minha posição atual é: " + this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
-                                            System.out.println("O carro mais perto é:\n");
+                                            System.out.println("Alugado o carro mais perto:\n");
                                             Veiculo cheapest = this.logNegocio.rentClosest(menuLogin.getPassword(),tipo);
                                             System.out.println(cheapest!=null?cheapest:"Não existe nenhum carro com estas condições.");
                                             if(cheapest!=null) {
@@ -87,7 +89,7 @@ public class App {
                                                 theCheap.setVeiculoID(cheapest.getID());
                                                 theCheap.setClienteID(this.menuLogin.getPassword());
                                                 theCheap.setPropID(cheapest.getProp());
-                                                theCheap.setTipo("MaisBarato");
+                                                theCheap.setTipo("MaisPerto");
                                                 theCheap.setTipoVeiculo(cheapest.getTipo());
                                                 theCheap.setInicioPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
                                                 theCheap.setFimPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoF());
@@ -106,6 +108,20 @@ public class App {
                                             System.out.println("O meu destino é: "+ this.logNegocio.getCliente(this.menuLogin.getPassword()).getPosicaoF());
                                             System.out.println("Alugado o carro seguinte, com custo de " + cheap.calculaTarifa(this.logNegocio.getClienteCoordF(this.menuLogin.getPassword()),cheap.getPosicao()) +" €.\n");
                                             System.out.println(cheap!=null?cheap:"Não existe nenhum carro com estas condições.");
+                                            if(cheap!=null) {
+                                                Aluguer theCheap2 = new Aluguer();
+                                                theCheap2.setAluguerID(this.logNegocio.getCounter());
+                                                this.logNegocio.updateCounter();
+                                                theCheap2.setVeiculoID(cheap.getID());
+                                                theCheap2.setClienteID(this.menuLogin.getPassword());
+                                                theCheap2.setPropID(cheap.getProp());
+                                                theCheap2.setTipo("MaisBarato");
+                                                theCheap2.setTipoVeiculo(cheap.getTipo());
+                                                theCheap2.setInicioPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
+                                                theCheap2.setFimPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoF());
+                                                theCheap2.setPosInicialVeiculo(cheap.getPosicao());
+                                                this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap2,cheap);
+                                            }
                                             break;
                                         case 3:
                                             System.out.println("Inserir raio máximo até ao carro:\n");
@@ -120,6 +136,18 @@ public class App {
                                                 double disttotal = raioCheap.getPosicao().distancia(this.logNegocio.getClienteCoordI(this.menuLogin.getPassword()));
                                                 System.out.println("Alugado o veículo mais barato, com distância de " + (double) Math.round(disttotal*100)/100 + "m.\n");
                                                 System.out.println(raioCheap);
+                                                Aluguer theCheap3 = new Aluguer();
+                                                theCheap3.setAluguerID(this.logNegocio.getCounter());
+                                                this.logNegocio.updateCounter();
+                                                theCheap3.setVeiculoID(raioCheap.getID());
+                                                theCheap3.setClienteID(this.menuLogin.getPassword());
+                                                theCheap3.setPropID(raioCheap.getProp());
+                                                theCheap3.setTipo("MaisBarato");
+                                                theCheap3.setTipoVeiculo(raioCheap.getTipo());
+                                                theCheap3.setInicioPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
+                                                theCheap3.setFimPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoF());
+                                                theCheap3.setPosInicialVeiculo(raioCheap.getPosicao());
+                                                this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap3,raioCheap);
                                             }
                                             else {
                                                 System.out.println("Não há nenhum veículo nesse raio.");
@@ -146,6 +174,18 @@ public class App {
                                                     Veiculo query4 = rentID(ret,lido);
                                                     System.out.println("Dentre a lista de carros foi alugado:\n");
                                                     System.out.println(query4);
+                                                    Aluguer theCheap4 = new Aluguer();
+                                                    theCheap4.setAluguerID(this.logNegocio.getCounter());
+                                                    this.logNegocio.updateCounter();
+                                                    theCheap4.setVeiculoID(query4.getID());
+                                                    theCheap4.setClienteID(this.menuLogin.getPassword());
+                                                    theCheap4.setPropID(query4.getProp());
+                                                    theCheap4.setTipo("MaisBarato");
+                                                    theCheap4.setTipoVeiculo(query4.getTipo());
+                                                    theCheap4.setInicioPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
+                                                    theCheap4.setFimPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoF());
+                                                    theCheap4.setPosInicialVeiculo(query4.getPosicao());
+                                                    this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap4,query4);
                                                 }
                                                 catch (PrintError e){
                                                     System.out.println(e.getMessage());
@@ -216,7 +256,31 @@ public class App {
                                     this.menuProprietario.executa();
                                     switch (menuProprietario.getOp()) {
                                         case 1:
-                                            System.out.println("mjmj");
+                                            String matr1;
+                                            try {
+                                                List<Veiculo> frotaFill = logNegocio.getVeiculos(this.menuLogin.getPassword());
+                                                System.out.println(frotaFill);
+                                                System.out.println("Encher o depósito de: ");
+                                            }
+                                            catch (PrintError e) {
+                                                System.out.println(e.getMessage());
+                                                break;
+                                            }
+                                            do {
+                                                System.out.print("Matrícula: ");
+                                                matr1 = menuLogin.leString();
+                                            }while(matr1==null);
+
+                                            try {
+                                                Veiculo v = logNegocio.getCarro(matr1).clone();
+                                                System.out.println(v);
+                                                v.fillDeposito();
+                                                logNegocio.updateCarro(v);
+                                                System.out.println(logNegocio.getCarro(v.getID()));
+                                            }
+                                            catch(PrintError e) {
+                                                System.out.println(e.getMessage());
+                                            }
                                             break;
                                         case 2:
                                             System.out.println("heh");

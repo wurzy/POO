@@ -223,4 +223,11 @@ public abstract class Veiculo {
         return (double) contador/this.classificoes.size();
     }
 
+    public void fillDeposito(){
+        this.depositoAtual = this.depositoMax;
+    }
+
+    public boolean isFull(){
+        return this.depositoAtual==this.depositoMax;
+    }
 }

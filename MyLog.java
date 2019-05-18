@@ -523,9 +523,34 @@ public class MyLog {
         x.updateAutonomia(al.distancia());
         this.listaVeiculos.put(x.getID(),x);
 
+        Proprietario p = this.proprietarios.get(x.getProp()).clone();
+        p.updateFrota(x);
+        this.proprietarios.put(p.getPassword(),p);
+
         cl.addAluguer(al);
         cl.setPosicaoI(al.getFimPercurso());
         this.clientes.put(nif,cl);
     }
 
+    public List<Veiculo> getVeiculos(String nif) throws PrintError {
+        List<Veiculo> ret = new ArrayList<>();
+        for(Veiculo v: this.proprietarios.get(nif).getFrota().values()) {
+            if(!v.isFull()) {
+                ret.add(v.clone());
+            }
+        }
+        if(ret.size()==0) {
+            throw new PrintError("Todos estão com depósito cheio.");
+        }
+        else {
+            return ret;
+        }
+    }
+
+    public void updateCarro(Veiculo v) {
+        Proprietario p = this.proprietarios.get(v.getProp()).clone();
+        p.updateFrota(v);
+        this.proprietarios.put(p.getPassword(),p);
+        this.listaVeiculos.put(v.getID(),v);
+    }
 }
