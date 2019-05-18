@@ -24,7 +24,9 @@ public class App {
                // "Alugar um carro com a autonomia desejada",
                 "Alterar a minha localização",
                 "Alterar o meu destino",
-                "Ver o meu histórico de Alugueres"};
+                "Ver o meu histórico de Alugueres",
+                "Ver a minha localização atual",
+                "Ver o meu destino atual"};
         String[] props = {"Disponibilizar um veículo para aluguer",
                 "Abastacer um dos meus veículos",
                 "Alterar preço/km de um dos meus veículos",
@@ -193,6 +195,13 @@ public class App {
                                             System.out.println("O meu histórico de alugueres é:\n");
                                             System.out.println(logNegocio.getClienteHistorico(menuLogin.getPassword()));
                                             break;
+                                        case 8:
+                                            System.out.println("A minha posição atual é: \n");
+                                            System.out.println(logNegocio.getCliente(this.menuLogin.getPassword()).getPosicaoI());
+                                            break;
+                                        case 9:
+                                            System.out.println("O meu destino atual é: \n");
+                                            System.out.println(logNegocio.getCliente(this.menuLogin.getPassword()).getPosicaoF());
                                     }
                                 } while (this.menuCliente.getOp() != 0);
                                 System.out.println("Voltando ao menu de login...");
