@@ -207,4 +207,11 @@ public abstract class Veiculo {
         return (double) Math.round(preco*100)/100;
     }
 
+    public double calculaTempo(Ponto i, Ponto f) {
+        double tempo;
+        double dist = i.distancia(f);
+        tempo = dist/this.velocidade;
+        return (double) Math.round(tempo*100)/100;
+    }
+
 }

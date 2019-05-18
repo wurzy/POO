@@ -208,4 +208,8 @@ public class Ator {
     public Ator clone(){
         return new Ator(this);
     }
+
+    public void addAluguer(Aluguer aluguer){
+        this.historico.add(aluguer.clone());
+    }
 }

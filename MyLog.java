@@ -151,6 +151,7 @@ public class MyLog {
         aluguer.setPreco(0);
         aluguer.setTempo(0);
         aluguer.setDate(LocalDate.of(1,1,1));
+        addAluguer(partes[0],aluguer,veic);
 
         return aluguer;
     }
@@ -480,4 +481,14 @@ public class MyLog {
         pr.addToQueue(al);
         this.proprietarios.put(prop,pr);
     }
+
+    public void addAluguer(String nif, Aluguer al, Veiculo x) {
+        Cliente cl = this.clientes.get(nif).clone();
+        al.setPreco(x.calculaTarifa(x.getPosicao(),al.getFimPercurso()));
+        al.setDate(LocalDate.now());
+        al.setTempo(x.calculaTempo(x.getPosicao(),al.getFimPercurso()));
+        cl.addAluguer(al);
+        this.clientes.put(nif,cl);
+    }
+
 }

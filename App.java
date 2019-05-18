@@ -101,17 +101,15 @@ public class App {
                                             System.out.println("A minha posição atual é: " + this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
                                             Veiculo raioCheap =logNegocio.rentCheapest(menuLogin.getPassword(),d);
                                             if(raioCheap!=null) {
-                                                System.out.println("O veículo mais barato a uma distância de " + d + " m é:\n");
+                                                double disttotal = raioCheap.getPosicao().distancia(this.logNegocio.getClienteCoordI(this.menuLogin.getPassword()));
+                                                System.out.println("Alugado o veículo mais barato, com distância de " + (double) Math.round(disttotal*100)/100 + "m.\n");
                                                 System.out.println(raioCheap);
                                             }
                                             else {
                                                 System.out.println("Não há nenhum veículo nesse raio.");
                                             }
-                                           // System.out.println(raioCheap);
-                                            //System.out.println(rentCheapest(logNegocio.getCliente(menuLogin.getPassword()),logNegocio.getCarros(),d));
                                             break;
                                         case 4:
-                                            //esta aqui não faz sentido printar todos os carros
                                             double d2;
                                             String lido;
                                             System.out.println("Aqui estão os carros todos que existem num raio:");
@@ -130,6 +128,7 @@ public class App {
                                                 System.out.println();
                                                 try {
                                                     Veiculo query4 = rentID(ret,lido);
+                                                    System.out.println("Dentre a lista de carros foi alugado:\n");
                                                     System.out.println(query4);
                                                 }
                                                 catch (PrintError e){

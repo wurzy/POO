@@ -138,9 +138,9 @@ public class Aluguer implements Comparable<Aluguer>{
                 "\nTipo de Veículo: " + this.tipoVeiculo +
                 "\nPosição inicial do Cliente: " + this.inicioPercurso +
                 "Posição final do Cliente: " + this.fimPercurso +
-                "Posição inicial do Veículo:" + this.posInicialVeiculo+
-                "\nCusto da viagem: " + this.preco +
-                "\nTempo que demorou a viagem: " + this.tempo +
+                "Posição inicial do Veículo: " + this.posInicialVeiculo+
+                "Custo da viagem (em €): " + this.preco +
+                "\nTempo que demorou a viagem (em h): " + this.tempo +
                 "\nData em que foi realizado: " + this.date +
                 "\n---------------------------------------------\n");
     }
