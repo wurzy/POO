@@ -574,15 +574,51 @@ public class MyLog {
     }
 
     public void updateFrota(String nif, List<Veiculo> frota, String matricula) throws PrintError{
-
-        if(frota.contains(this.listaVeiculos.get(matricula))) {
-            Proprietario p = this.proprietarios.get(nif).clone();
-            p.removeCarro(this.listaVeiculos.get(matricula).clone());
-            this.proprietarios.put(p.getPassword(),p);
+        for(Veiculo v: frota) {
+            if(v.getID().equals(matricula)) {
+                Proprietario p = this.proprietarios.get(nif).clone();
+                p.removeCarro(v);
+                this.proprietarios.put(nif,p);
+                return;
+            }
         }
-        else {
-            throw new PrintError("Eu não tenho este veículo registado.");
-        }
+        throw new PrintError("Eu não tenho este veículo registado.");
+    }
 
+    //this.menuLogin.getPassword(),posicaoCreate,matricVeic,marcaVeic,velM,pKm,cKm,depMax
+
+    public void createVeiculo(String nif, String tipo, Ponto p,  String matricula, String marca, double vel, double pkm, double ckm, double dep){
+        Veiculo v;
+        switch(tipo) {
+            case "Hibrido":
+                v = new Hibrido();
+                break;
+            case "Electrico":
+                v = new Eletrico();
+                break;
+            case "Gasolina":
+                v = new Gasolina();
+                break;
+            default:
+                v=null;
+                break;
+        }
+        v.setID(matricula);
+        v.setMarca(marca);
+        v.setProp(nif);
+        v.setPosicao(p);
+        v.setTipo(tipo);
+        v.setVelocidade(vel);
+        v.setPriceKm(pkm);
+        v.setConsumoKm(ckm);
+        v.setHistorico(new TreeSet<>());
+        v.setClassificacoes(new ArrayList<>());
+        v.setDepositoMax(dep);
+        v.setDepositoAtual(dep);
+
+        this.listaVeiculos.put(matricula,v);
+        Proprietario prop= this.proprietarios.get(nif).clone();
+        prop.addToFrota(v);
+        this.proprietarios.put(nif,prop);
     }
 }

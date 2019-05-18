@@ -37,7 +37,6 @@ public class MenuLogin extends Menu{
             catch (InputMismatchException e){
                 out.println("Não leu string");
             }
-
             return op;
         }
 

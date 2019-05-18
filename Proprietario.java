@@ -81,12 +81,11 @@ public class Proprietario extends Ator{
     }
 
     public void updateFrota(Veiculo x) {
-        //this.frota.get(x.getID());
         this.frota.put(x.getID(),x);
     }
 
     public void removeCarro(Veiculo x) {
-        this.frota.remove(x);
+        this.frota.remove(x.getID());
     }
 }
 

@@ -61,6 +61,7 @@ public class Menu {
             }
         }
         catch (InputMismatchException e) {
+            out.println("Não é um tipo válido.");
             op = null;
         }
 
@@ -87,7 +88,9 @@ public class Menu {
     public Ponto lerCoordenada(){
         double cx,cy;
         Scanner sc = new Scanner(System.in);
+        out.println("Inserir (cx , cy): ");
         try{
+            out.print("Componente cx: ");
             cx = sc.nextDouble();
         }
         catch (InputMismatchException e){
@@ -95,6 +98,7 @@ public class Menu {
             return null;
         }
         try {
+            out.print("Componente cy: ");
             cy = sc.nextDouble();
         }
         catch (InputMismatchException e){
@@ -102,6 +106,38 @@ public class Menu {
             return null;
         }
         return new Ponto(cx,cy);
+    }
+
+    public String leMatricula(){
+        String op = null;
+        Scanner sc = new Scanner(System.in);
+        try {
+            op = sc.nextLine();
+            if(op.matches("^\\d{2}-[A-Z]{2}-\\d{2}")){
+                return op;
+            }
+            else {
+                op = null;
+            }
+        }
+        catch(InputMismatchException e) {
+            out.println("Não foi uma matrícula válida. Coloque dd-xx-dd");
+            op = null;
+        }
+        return op;
+    }
+
+    public String leMarca(){
+        String op = null;
+        Scanner sc = new Scanner(System.in);
+        try {
+            op = sc.nextLine();
+        }
+        catch(InputMismatchException e) {
+            out.println("Não foi uma matrícula válida. Coloque dd-xx-dd");
+            op = null;
+        }
+        return op;
     }
 
     public void setOp(int op){ this.op = op; }

@@ -318,7 +318,51 @@ public class App {
                                             System.out.println("keke");
                                             break;
                                         case 4:
-                                            System.out.println("dddd");
+                                            System.out.println("Inserir o tipo de Veículo: ");
+                                            String tipoVeic, matricVeic,marcaVeic;
+                                            Ponto posicaoCreate;
+                                            double velM,pKm,cKm,depMax;
+                                            do {
+                                                System.out.print("Tipo: ");
+                                                tipoVeic = this.menuLogin.lerTipo();
+                                            }while(tipoVeic==null);
+                                            do{
+                                                posicaoCreate=this.menuLogin.lerCoordenada();
+                                            }while(posicaoCreate==null);
+                                            do {
+                                                System.out.print("Matricula: ");
+                                                matricVeic=this.menuLogin.leMatricula();
+                                            }while(matricVeic==null);
+
+                                            try {
+                                                Veiculo auxVei = this.logNegocio.getCarro(matricVeic);
+                                                System.out.println("Já existe um veículo com esta matrícula.");
+                                                break;
+                                            }
+                                            catch(PrintError e) {
+                                                do {
+                                                    System.out.print("Marca: ");
+                                                    marcaVeic = this.menuLogin.leMarca();
+                                                }while(marcaVeic==null);
+                                                do{
+                                                    System.out.print("Velocidade média: ");
+                                                    velM = menuLogin.lerDouble();
+                                                }while(velM==-1);
+                                                do{
+                                                    System.out.print("Preço/km: ");
+                                                    pKm = menuLogin.lerDouble();
+                                                }while(pKm==-1);
+                                                do{
+                                                    System.out.print("Consumo/km: ");
+                                                    cKm = menuLogin.lerDouble();
+                                                }while(cKm==-1);
+                                                do{
+                                                    System.out.print("Autonomia: ");
+                                                    depMax = menuLogin.lerDouble();
+                                                }while(depMax==-1);
+                                                this.logNegocio.createVeiculo(this.menuLogin.getPassword(),tipoVeic,posicaoCreate,matricVeic,marcaVeic,velM,pKm,cKm,depMax);
+                                                System.out.println("Ok. Veículo criado.");
+                                            }
                                             break;
                                         case 5:
                                             String toremove;
