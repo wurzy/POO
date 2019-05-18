@@ -258,7 +258,7 @@ public class App {
                                         case 1:
                                             String matr1;
                                             try {
-                                                List<Veiculo> frotaFill = logNegocio.getVeiculos(this.menuLogin.getPassword());
+                                                List<Veiculo> frotaFill = logNegocio.getVeiculosFill(this.menuLogin.getPassword());
                                                 System.out.println(frotaFill);
                                                 System.out.println("Encher o depósito de: ");
                                             }
@@ -273,17 +273,46 @@ public class App {
 
                                             try {
                                                 Veiculo v = logNegocio.getCarro(matr1).clone();
-                                                System.out.println(v);
                                                 v.fillDeposito();
                                                 logNegocio.updateCarro(v);
-                                                System.out.println(logNegocio.getCarro(v.getID()));
+                                                System.out.println("Ok. Depósito do carro está agora cheio.");
                                             }
                                             catch(PrintError e) {
                                                 System.out.println(e.getMessage());
                                             }
                                             break;
                                         case 2:
-                                            System.out.println("heh");
+                                            System.out.println("Alterar o preço/km de: ");
+                                            String matr2;
+                                            double novopkm;
+                                            List<Veiculo> frotaPreco;
+                                            try {
+                                                frotaPreco = logNegocio.getVeiculos(this.menuLogin.getPassword());
+                                                System.out.println(frotaPreco);
+                                                System.out.println("Alterar o preço de:");
+                                            }
+                                            catch (PrintError e) {
+                                                System.out.println(e.getMessage());
+                                                break;
+                                            }
+                                            do {
+                                                System.out.print("Matrícula: ");
+                                                matr2 = menuLogin.leString();
+                                            }while(matr2==null);
+
+                                            try {
+                                                Veiculo vxx = rentID(frotaPreco,matr2);
+                                                do{
+                                                    System.out.print("Novo preço/km: ");
+                                                    novopkm = menuLogin.lerDouble();
+                                                }while(novopkm==-1);
+                                                vxx.setPriceKm(novopkm);
+                                                logNegocio.updateCarro(vxx);
+                                                System.out.println("Ok. Alterado o novo preco/km.");
+                                            }
+                                            catch (PrintError e) {
+                                                System.out.println(e.getMessage());
+                                            }
                                             break;
                                         case 3:
                                             System.out.println("keke");
@@ -293,6 +322,12 @@ public class App {
                                             break;
                                         case 5:
                                             System.out.println(":D");
+                                            break;
+                                        case 6:
+                                            break;
+                                        case 7:
+                                            break;
+                                        case 8:
                                             break;
                                     }
                                 } while (this.menuProprietario.getOp() != 0);
@@ -456,12 +491,12 @@ public class App {
     }
 */
     private Veiculo rentID(List<Veiculo> cars, String ID) throws PrintError {
-        try {
-            return this.logNegocio.getCarro(ID);
-        }
-        catch (PrintError e) {
-            throw new PrintError(e.getMessage());
-        }
+            for(Veiculo ret: cars) {
+                if(ret.getID().equals(ID)) {
+                    return ret.clone();
+                }
+            }
+            throw new PrintError("Não é possivel obter o carro pedido.");
     }
 
     private List<Veiculo> availableCars(Cliente client, Map<String,Veiculo> cars, double d) throws PrintError{

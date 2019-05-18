@@ -532,7 +532,7 @@ public class MyLog {
         this.clientes.put(nif,cl);
     }
 
-    public List<Veiculo> getVeiculos(String nif) throws PrintError {
+    public List<Veiculo> getVeiculosFill(String nif) throws PrintError {
         List<Veiculo> ret = new ArrayList<>();
         for(Veiculo v: this.proprietarios.get(nif).getFrota().values()) {
             if(!v.isFull()) {
@@ -552,5 +552,18 @@ public class MyLog {
         p.updateFrota(v);
         this.proprietarios.put(p.getPassword(),p);
         this.listaVeiculos.put(v.getID(),v);
+    }
+
+    public List<Veiculo> getVeiculos(String nif) throws PrintError{
+        List<Veiculo> ret = new ArrayList<>();
+        for(Veiculo v: this.proprietarios.get(nif).getFrota().values()) {
+            ret.add(v.clone());
+        }
+        if(ret.size()==0) {
+            throw new PrintError("Não possuo veículos registados.");
+        }
+        else {
+            return ret;
+        }
     }
 }
