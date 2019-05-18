@@ -21,9 +21,10 @@ public class App {
                 "Alugar o carro mais barato",
                 "Alugar o carro mais barato num raio",
                 "Alugar um carro em específico",
-                "Alugar um carro com a autonomia desejada",
+               // "Alugar um carro com a autonomia desejada",
                 "Alterar a minha localização",
-                "Alterar o meu destino"};
+                "Alterar o meu destino",
+                "Ver o meu histórico de Alugueres"};
         String[] props = {"Disponibilizar um veículo para aluguer",
                 "Abastacer um dos meus veículos",
                 "Alterar preço/km de um dos meus veículos",
@@ -67,12 +68,28 @@ public class App {
                                     this.menuCliente.executa();
                                     switch (menuCliente.getOp()) {
                                         case 1:
+                                            String tipo;
+                                            System.out.println("Inserir o tipo de Carro: Gasolina | Hibrido | Electrico");
+                                            do{
+                                                System.out.print("Tipo: ");
+                                                tipo = menuLogin.lerTipo();
+                                            }while (tipo==null);
+                                            System.out.println("A minha posição atual é: " + this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
                                             System.out.println("O carro mais perto é:\n");
-                                            System.out.println(rentClosest(logNegocio.getCliente(menuLogin.getPassword()),logNegocio.getCarros()));
+                                            Veiculo cheapest = this.logNegocio.rentClosest(menuLogin.getPassword(),tipo);
+                                            System.out.println(cheapest!=null?cheapest:"Não existe nenhum carro com estas condições.");
                                             break;
                                         case 2:
-                                            System.out.println("O carro mais barato é:");
-                                            System.out.println(rentCheapest(logNegocio.getCliente(menuLogin.getPassword()),logNegocio.getCarros()));
+                                            String tipoC;
+                                            System.out.println("Inserir o tipo de Carro: Gasolina | Hibrido | Electrico");
+                                            do{
+                                                System.out.print("Tipo: ");
+                                                tipoC = menuLogin.lerTipo();
+                                            }while (tipoC==null);
+                                            Veiculo cheap = logNegocio.rentCheapest(menuLogin.getPassword(),tipoC);
+                                            System.out.println("O meu destino é: "+ this.logNegocio.getCliente(this.menuLogin.getPassword()).getPosicaoF());
+                                            System.out.println("Alugado o carro seguinte, com custo de " + cheap.calculaTarifa(this.logNegocio.getClienteCoordF(this.menuLogin.getPassword()),cheap.getPosicao()) +" €.\n");
+                                            System.out.println(cheap!=null?cheap:"Não existe nenhum carro com estas condições.");
                                             break;
                                         case 3:
                                             System.out.println("Inserir raio máximo até ao carro:\n");
@@ -81,7 +98,17 @@ public class App {
                                                 System.out.print("Raio = ");
                                                 d=menuLogin.lerDouble();
                                             }while(d==-1);
-                                            System.out.println(rentCheapest(logNegocio.getCliente(menuLogin.getPassword()),logNegocio.getCarros(),d));
+                                            System.out.println("A minha posição atual é: " + this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
+                                            Veiculo raioCheap =logNegocio.rentCheapest(menuLogin.getPassword(),d);
+                                            if(raioCheap!=null) {
+                                                System.out.println("O veículo mais barato a uma distância de " + d + " m é:\n");
+                                                System.out.println(raioCheap);
+                                            }
+                                            else {
+                                                System.out.println("Não há nenhum veículo nesse raio.");
+                                            }
+                                           // System.out.println(raioCheap);
+                                            //System.out.println(rentCheapest(logNegocio.getCliente(menuLogin.getPassword()),logNegocio.getCarros(),d));
                                             break;
                                         case 4:
                                             //esta aqui não faz sentido printar todos os carros
@@ -113,6 +140,7 @@ public class App {
                                                 System.out.println(e.getMessage());
                                             }
                                             break;
+                                            /*
                                         case 5:
                                             System.out.println("Inserir autonomia:\n");
                                             double aut;
@@ -120,14 +148,15 @@ public class App {
                                                 System.out.print("Autonomia = ");
                                                 aut=menuLogin.lerDouble();
                                             }while(aut==-1);
-                                            try{
-                                                System.out.println(rentAutonomy(logNegocio.getCliente(menuLogin.getPassword()),logNegocio.getCarros(),aut));
-                                            }
-                                            catch (PrintError e){
-                                                System.out.println(e.getMessage());
-                                            }
+                                           // try{
+                                               // System.out.println(rentAutonomy(logNegocio.getCliente(menuLogin.getPassword()),logNegocio.getCarros(),aut));
+                                           // }
+                                           // catch (PrintError e){
+                                             //   System.out.println(e.getMessage());
+                                           // }
                                             break;
-                                        case 6:
+                                            */
+                                        case 5:
                                             System.out.println("A localização atual é: " + logNegocio.getClienteCoordI(menuLogin.getPassword()));
                                             System.out.println("Inserir novas coordenadas: ");
                                             Ponto novoPonto;
@@ -137,7 +166,7 @@ public class App {
                                             logNegocio.setClientCoordI(menuLogin.getPassword(),novoPonto);
                                             System.out.println("Ok. Localização atual: " + novoPonto);
                                             break;
-                                        case 7:
+                                        case 6:
                                             System.out.println("O destino atual é: " + logNegocio.getClienteCoordF(menuLogin.getPassword()));
                                             System.out.println("Inserir novas coordenadas: ");
                                             Ponto outroPonto;
@@ -146,6 +175,10 @@ public class App {
                                             } while(outroPonto==null);
                                             logNegocio.setClientCoordF(menuLogin.getPassword(),outroPonto);
                                             System.out.println("Ok. Destino atual: " + outroPonto);
+                                            break;
+                                        case 7:
+                                            System.out.println("O meu histórico de alugueres é:\n");
+                                            System.out.println(logNegocio.getClienteHistorico(menuLogin.getPassword()));
                                             break;
                                     }
                                 } while (this.menuCliente.getOp() != 0);
@@ -185,17 +218,19 @@ public class App {
         }while(this.menuSign.getOp()!=0);
         System.out.println("Saindo do programa...");
     }
-
+/*
     private Veiculo rentClosest(Cliente client, Map<String,Veiculo> cars) {
-        double dist, mindist = Double.MAX_VALUE;
+        double dist, mindist = Double.MAX_VALUE, distFinal;
         Ponto posI = client.getPosicaoI();
+        Ponto posF = client.getPosicaoF();
+        distFinal = posF.distancia(posI);
         Ponto poscar;
         Veiculo aux = null;
 
         for(Veiculo x : cars.values()) {
             poscar = x.getPosicao();
             dist = poscar.distancia(posI);
-            if(dist < mindist) { //tem de ter autonomia
+            if(dist < mindist && x.hasAutonomia(distFinal)) { //tem de ter autonomia
                 mindist = dist;
                 if(x instanceof Eletrico) {
                     aux = new Eletrico(x);
@@ -207,6 +242,41 @@ public class App {
                     aux = new Gasolina(x);
                 }
             }
+        }
+        if(aux!=null){
+            aux.updateAutonomia(distFinal);
+            aux.setPosicao(posF);
+        }
+        return aux;
+    }
+
+    private Veiculo rentClosest(Cliente client, Map<String,Veiculo> cars, String tipo) {
+        double dist, mindist = Double.MAX_VALUE;
+        Ponto posI = client.getPosicaoI();
+        Ponto posF = client.getPosicaoF();
+        double distFinal = posI.distancia(posF);
+        Ponto poscar;
+        Veiculo aux = null;
+
+        for(Veiculo x : cars.values()) {
+            poscar = x.getPosicao();
+            dist = poscar.distancia(posI);
+            if(dist < mindist && x.getTipo().equals(tipo) && x.hasAutonomia(distFinal)) { //tem de ter autonomia
+                mindist = dist;
+                if(x instanceof Eletrico) {
+                    aux = new Eletrico(x);
+                }
+                else if (x instanceof Hibrido) {
+                    aux = new Hibrido(x);
+                }
+                else {
+                    aux = new Gasolina(x);
+                }
+            }
+        }
+        if(aux!=null) {
+            aux.updateAutonomia(distFinal);
+            aux.setPosicao(posF);
         }
         return aux;
     }
@@ -293,7 +363,7 @@ public class App {
         }
         return v;
     }
-
+*/
     private Veiculo rentID(List<Veiculo> cars, String ID) throws PrintError {
         try {
             return this.logNegocio.getCarro(ID);

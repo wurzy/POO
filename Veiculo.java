@@ -18,9 +18,10 @@ public abstract class Veiculo {
     public Veiculo() {
         this.ID = "N/A";
         this.marca = "N/A";
+        this.prop = "N/A";
         this.posicao = new Ponto();
-        this.velocidade = 0.0;
         this.tipo = "N/A";
+        this.velocidade = 0.0;
         this.priceKm = 0.0; //gerimos isto nas extended
         this.consumoKm = 0.0;
         this.historico = new TreeSet<>();
@@ -29,10 +30,12 @@ public abstract class Veiculo {
         this.depositoAtual = 0;
     }
 
-    public Veiculo(String id, String marca, Ponto posicao, Set<Aluguer> historico, List<Integer> classificoes, double depositoAtual, double depositoMax) {
+    public Veiculo(String id, String marca, String prop, Ponto posicao, String tipo, Set<Aluguer> historico, List<Integer> classificoes, double depositoAtual, double depositoMax) {
         this.ID = id;
         this.marca = marca;
+        this.prop = prop;
         this.posicao = posicao.clone();
+        this.tipo = tipo;
         //this.velocidade = velocidade;
         //this.priceKm = priceKm;
         //this.consumoKm = consumoKm;
@@ -45,7 +48,9 @@ public abstract class Veiculo {
     public Veiculo(Veiculo x) {
         this.ID = x.getID();
         this.marca = x.getMarca();
+        this.prop = x.getProp();
         this.posicao = x.getPosicao();
+        this.tipo = x.getTipo();
        // this.velocidade = x.getVelocidade();
         //this.priceKm = x.getPriceKm();
         //this.consumoKm = x.getConsumoKm();
@@ -96,6 +101,8 @@ public abstract class Veiculo {
 
     public String getTipo(){return this.tipo;}
 
+    public String getProp(){return this.prop;}
+
     public void setID(String id) { this.ID = id; }
 
     public void setMarca(String marca) {this.marca = marca;}
@@ -145,6 +152,7 @@ public abstract class Veiculo {
     public String toString() {
         return "\nMatrícula do Veículo: " + this.getID() +
                 "\nMarca: " + this.getMarca() +
+                "\nNIF Proprietário: " + this.getProp() +
                 "\nPosição atual: " + this.getPosicao() +
                 "Velocidade média: " + this.getVelocidade() +
                 "\nPreço/km: " + this.getPriceKm() + " €/km" +
@@ -162,6 +170,7 @@ public abstract class Veiculo {
         return (this.ID.equals(veiculo.getID()) &&
                 this.marca.equals(veiculo.getMarca()) &&
                 this.tipo.equals(veiculo.getTipo()) &&
+                this.prop.equals(veiculo.getProp()) &&
                 this.posicao.equals(veiculo.getPosicao()) &&
                 this.consumoKm == veiculo.getConsumoKm() &&
                 this.velocidade == veiculo.getVelocidade() &&
@@ -174,8 +183,28 @@ public abstract class Veiculo {
 
     public abstract Veiculo clone();
 
+    public boolean hasAutonomia(double dist) {
+        double consumo = this.consumoKm*dist;
+        double result = this.depositoAtual - consumo;
+
+        return (result >= 0);
+    }
+
+    public void updateAutonomia(double dist) {
+        double consumo = this.consumoKm*dist;
+        double result = this.depositoAtual - consumo;
+        this.depositoAtual = (double) Math.round(result*100)/100;
+    }
+
     public void addClassificacao(int rating) {
         this.classificoes.add(rating);
+    }
+
+    public double calculaTarifa(Ponto i, Ponto f) {
+        double preco = 0;
+        double dist = i.distancia(f);
+        preco = this.priceKm * dist;
+        return (double) Math.round(preco*100)/100;
     }
 
 }

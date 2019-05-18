@@ -10,15 +10,8 @@ public class Hibrido extends Veiculo {
         //this.setVelocidade(80); // kinda pointless
     }
 
-    public Hibrido(String id, String marca, Ponto posicao, Set<Aluguer> historico, List<Integer> classificoes, double depositoAtual, double depositoMax){
-        super(id,marca,posicao,historico, classificoes,depositoAtual,depositoMax);
-        //this.setPriceKm(0.0438);
-        //this.setConsumoKm(0.32);
-        //this.setVelocidade(80);
-    }
-
     public Hibrido(Veiculo x) {
-        super(x.getID(),x.getMarca(),x.getPosicao(),x.getHistorico(),x.getClassificacoes(),x.getDepositoAtual(),x.getDepositoMax());
+        super(x.getID(),x.getMarca(),x.getProp(),x.getPosicao(),x.getTipo(),x.getHistorico(),x.getClassificacoes(),x.getDepositoAtual(),x.getDepositoMax());
         this.setPriceKm(x.getPriceKm());
         this.setVelocidade(x.getVelocidade());
         this.setConsumoKm(x.getConsumoKm());

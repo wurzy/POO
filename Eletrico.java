@@ -16,15 +16,8 @@ public class Eletrico extends Veiculo {
         //this.setVelocidade(70); // kinda pointless
     }
 
-    public Eletrico(String id, String marca, Ponto posicao, Set<Aluguer> historico, List<Integer> classificoes, double depositoAtual, double depositoMax){
-        super(id,marca,posicao,historico, classificoes,depositoAtual,depositoMax);
-        //this.setPriceKm(0.018);
-        //this.setConsumoKm(0.04);
-        //this.setVelocidade(70);
-    }
-
     public Eletrico(Veiculo x) {
-        super(x.getID(),x.getMarca(),x.getPosicao(),x.getHistorico(),x.getClassificacoes(),x.getDepositoAtual(),x.getDepositoMax());
+        super(x.getID(),x.getMarca(),x.getProp(),x.getPosicao(),x.getTipo(),x.getHistorico(),x.getClassificacoes(),x.getDepositoAtual(),x.getDepositoMax());
         this.setPriceKm(x.getPriceKm());
         this.setVelocidade(x.getVelocidade());
         this.setConsumoKm(x.getConsumoKm());

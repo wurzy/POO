@@ -48,6 +48,25 @@ public class Menu {
         return op;
     }
 
+    public String lerTipo(){
+        String op;
+        Scanner sc = new Scanner(System.in);
+        try{
+            op = sc.nextLine();
+            if(op.equals("Electrico") || op.equals("Hibrido") || op.equals("Gasolina")) {
+                return op;
+            }
+            else {
+                op = null;
+            }
+        }
+        catch (InputMismatchException e) {
+            op = null;
+        }
+
+        return op;
+    }
+
     public int getOp(){
         return this.op;
     }

@@ -95,5 +95,9 @@ public class Proprietario extends Ator{
     public void addToFrota(Veiculo v) {
         this.frota.put(v.getID(),v.clone());
     }
+
+    public void addToQueue(Aluguer al) {
+        this.queue.add(al.clone());
+    }
 }
 

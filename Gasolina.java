@@ -10,15 +10,8 @@ public class Gasolina extends Veiculo{
         //this.setVelocidade(90); // kinda pointless
     }
 
-    public Gasolina(String id, String marca, Ponto posicao, Set<Aluguer> historico, List<Integer> classificoes, double depositoAtual, double depositoMax){
-        super(id,marca,posicao,historico, classificoes,depositoAtual,depositoMax);
-        //this.setPriceKm(0.0729);
-        //this.setConsumoKm(0.047);
-        //this.setVelocidade(90);
-    }
-
     public Gasolina(Veiculo x) {
-        super(x.getID(),x.getMarca(),x.getPosicao(),x.getHistorico(),x.getClassificacoes(),x.getDepositoAtual(),x.getDepositoMax());
+        super(x.getID(),x.getMarca(),x.getProp(),x.getPosicao(),x.getTipo(),x.getHistorico(),x.getClassificacoes(),x.getDepositoAtual(),x.getDepositoMax());
         this.setPriceKm(x.getPriceKm());
         this.setVelocidade(x.getVelocidade());
         this.setConsumoKm(x.getConsumoKm());
