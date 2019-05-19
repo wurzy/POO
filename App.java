@@ -94,7 +94,8 @@ public class App {
                                                 theCheap.setInicioPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
                                                 theCheap.setFimPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoF());
                                                 theCheap.setPosInicialVeiculo(cheapest.getPosicao());
-                                                this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap,cheapest);
+                                                //this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap,cheapest);
+                                                this.logNegocio.addAluguerQueue(theCheap);
                                             }
                                             break;
                                         case 2:
@@ -120,7 +121,8 @@ public class App {
                                                 theCheap2.setInicioPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
                                                 theCheap2.setFimPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoF());
                                                 theCheap2.setPosInicialVeiculo(cheap.getPosicao());
-                                                this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap2,cheap);
+                                               // this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap2,cheap);
+                                                this.logNegocio.addAluguerQueue(theCheap2);
                                             }
                                             break;
                                         case 3:
@@ -147,7 +149,8 @@ public class App {
                                                 theCheap3.setInicioPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
                                                 theCheap3.setFimPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoF());
                                                 theCheap3.setPosInicialVeiculo(raioCheap.getPosicao());
-                                                this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap3,raioCheap);
+                                                //this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap3,raioCheap);
+                                                this.logNegocio.addAluguerQueue(theCheap3);
                                             }
                                             else {
                                                 System.out.println("Não há nenhum veículo nesse raio.");
@@ -185,7 +188,8 @@ public class App {
                                                     theCheap4.setInicioPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
                                                     theCheap4.setFimPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoF());
                                                     theCheap4.setPosInicialVeiculo(query4.getPosicao());
-                                                    this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap4,query4);
+                                                    //this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap4,query4);
+                                                    this.logNegocio.addAluguerQueue(theCheap4);
                                                 }
                                                 catch (PrintError e){
                                                     System.out.println(e.getMessage());
@@ -394,6 +398,7 @@ public class App {
                                             }
                                             break;
                                         case 6:
+                                            System.out.println(this.logNegocio.getProp(this.menuLogin.getPassword()).getQueue());
                                             break;
                                         case 7:
                                             System.out.println("A minha frota atual de veículos é: \n");

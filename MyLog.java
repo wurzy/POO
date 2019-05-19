@@ -538,6 +538,45 @@ public class MyLog {
         this.alugueres.add(al.clone());
     }
 
+    public void addAluguerQueue(Aluguer al1){
+        Aluguer al = al1.clone();
+        Veiculo v = this.listaVeiculos.get(al.getVeiculoID()).clone();
+
+        al.setPreco(v.calculaTarifa(v.getPosicao(),al.getFimPercurso()));
+        al.setDate(LocalDate.now());
+        al.setTempo(v.calculaTempo(v.getPosicao(),al.getFimPercurso()));
+
+        Proprietario p = this.proprietarios.get(al.getPropID()).clone();
+        p.addToQueue(al);
+        this.proprietarios.put(p.getPassword(),p);
+    }
+
+    public void confirmedAluguer(Aluguer al1) {
+        Aluguer al = al1.clone();
+        al.setDate(LocalDate.now());
+
+        Cliente cl = this.clientes.get(al.getClienteID()).clone();
+        Proprietario p = this.proprietarios.get(al.getPropID()).clone();
+        Veiculo v = this.listaVeiculos.get(al.getVeiculoID()).clone();
+
+        cl.setPosicaoI(al.getFimPercurso());
+
+        v.updateAutonomia(al.distancia());
+        v.setPosicao(al.getFimPercurso());
+
+        cl.addAluguer(al);
+        //v.addAluguer...
+        p.addAluguer(al);
+        p.updateFrota(v);
+
+        this.proprietarios.put(p.getPassword(),p);
+        this.clientes.put(cl.getPassword(),cl);
+        this.listaVeiculos.put(v.getID(),v);
+        this.alugueres.add(al1);
+
+        //manda para file aqui
+    }
+
     public List<Veiculo> getVeiculosFill(String nif) throws PrintError {
         List<Veiculo> ret = new ArrayList<>();
         for(Veiculo v: this.proprietarios.get(nif).getFrota().values()) {
@@ -621,4 +660,5 @@ public class MyLog {
         prop.addToFrota(v);
         this.proprietarios.put(nif,prop);
     }
+
 }

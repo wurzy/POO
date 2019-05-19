@@ -191,6 +191,10 @@ public abstract class Veiculo {
         return (result >= 0);
     }
 
+    public void addAluguer(Aluguer al) {
+        this.historico.add(al.clone());
+    }
+
     public void updateAutonomia(double dist) {
         double consumo = this.consumoKm*dist;
         double result = this.depositoAtual - consumo;
