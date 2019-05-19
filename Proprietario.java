@@ -87,5 +87,32 @@ public class Proprietario extends Ator{
     public void removeCarro(Veiculo x) {
         this.frota.remove(x.getID());
     }
+
+    public boolean isInQueue(int id) {
+        for(Aluguer l : this.queue) {
+            if(l.getAluguerID()==id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void removeFromQueue(int id) {
+        for(Aluguer l:this.queue) {
+            if(id==l.getAluguerID()) {
+                this.queue.remove(l);
+                return;
+            }
+        }
+    }
+
+    public Aluguer getFromQueue(int id) {
+        for(Aluguer l:this.queue) {
+            if(id==l.getAluguerID()) {
+                return l.clone();
+            }
+        }
+        return null;
+    }
 }
 

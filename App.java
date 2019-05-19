@@ -73,6 +73,7 @@ public class App {
                                     switch (menuCliente.getOp()) {
                                         case 1:
                                             String tipo;
+                                            int rateCheap;
                                             System.out.println("Inserir o tipo de Carro: Gasolina | Hibrido | Electrico");
                                             do{
                                                 System.out.print("Tipo: ");
@@ -95,11 +96,22 @@ public class App {
                                                 theCheap.setFimPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoF());
                                                 theCheap.setPosInicialVeiculo(cheapest.getPosicao());
                                                 //this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap,cheapest);
+                                                do{
+                                                    System.out.print("Classificação do proprietário (0-100): ");
+                                                    rateCheap=this.menuLogin.leInt();
+                                                }while(rateCheap==-1);
+                                                this.logNegocio.addClassificacao(cheapest.getProp(),rateCheap,"Prop");
+                                                do{
+                                                    System.out.print("Classificação do veículo (0-100): ");
+                                                    rateCheap=this.menuLogin.leInt();
+                                                }while(rateCheap==-1);
+                                                this.logNegocio.addClassificacao(cheapest.getID(),rateCheap,"Veiculo");
                                                 this.logNegocio.addAluguerQueue(theCheap);
                                             }
                                             break;
                                         case 2:
                                             String tipoC;
+                                            int rateCheap2;
                                             System.out.println("Inserir o tipo de Carro: Gasolina | Hibrido | Electrico");
                                             do{
                                                 System.out.print("Tipo: ");
@@ -121,6 +133,16 @@ public class App {
                                                 theCheap2.setInicioPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
                                                 theCheap2.setFimPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoF());
                                                 theCheap2.setPosInicialVeiculo(cheap.getPosicao());
+                                                do{
+                                                    System.out.print("Classificação do proprietário (0-100): ");
+                                                    rateCheap2=this.menuLogin.leInt();
+                                                }while(rateCheap2==-1);
+                                                this.logNegocio.addClassificacao(cheap.getProp(),rateCheap2,"Prop");
+                                                do{
+                                                    System.out.print("Classificação do carro (0-100): ");
+                                                    rateCheap2=this.menuLogin.leInt();
+                                                }while(rateCheap2==-1);
+                                                this.logNegocio.addClassificacao(cheap.getID(),rateCheap2,"Veiculo");
                                                // this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap2,cheap);
                                                 this.logNegocio.addAluguerQueue(theCheap2);
                                             }
@@ -128,6 +150,7 @@ public class App {
                                         case 3:
                                             System.out.println("Inserir raio máximo até ao carro:\n");
                                             double d;
+                                            int rate3;
                                             do{
                                                 System.out.print("Raio = ");
                                                 d=menuLogin.lerDouble();
@@ -149,6 +172,17 @@ public class App {
                                                 theCheap3.setInicioPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
                                                 theCheap3.setFimPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoF());
                                                 theCheap3.setPosInicialVeiculo(raioCheap.getPosicao());
+                                                do{
+                                                    System.out.print("Classificação do proprietário (0-100): ");
+                                                    rate3=this.menuLogin.leInt();
+                                                }while(rate3==-1);
+                                                this.logNegocio.addClassificacao(raioCheap.getProp(),rate3,"Prop");
+
+                                                do{
+                                                    System.out.print("Classificação do carro (0-100): ");
+                                                    rate3=this.menuLogin.leInt();
+                                                }while(rate3==-1);
+                                                this.logNegocio.addClassificacao(raioCheap.getID(),rate3,"Veiculo");
                                                 //this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap3,raioCheap);
                                                 this.logNegocio.addAluguerQueue(theCheap3);
                                             }
@@ -159,6 +193,7 @@ public class App {
                                         case 4:
                                             double d2;
                                             String lido;
+                                            int rate4;
                                             System.out.println("Aqui estão os carros todos que existem num raio:");
                                             do{
                                                 System.out.print("Raio = ");
@@ -188,6 +223,17 @@ public class App {
                                                     theCheap4.setInicioPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoI());
                                                     theCheap4.setFimPercurso(this.logNegocio.getCliente(menuLogin.getPassword()).getPosicaoF());
                                                     theCheap4.setPosInicialVeiculo(query4.getPosicao());
+                                                    do{
+                                                        System.out.print("Classificação do proprietário (0-100): ");
+                                                        rate4=this.menuLogin.leInt();
+                                                    }while(rate4==-1);
+                                                    this.logNegocio.addClassificacao(query4.getProp(),rate4,"Prop");
+
+                                                    do{
+                                                        System.out.print("Classificação do carro (0-100): ");
+                                                        rate4=this.menuLogin.leInt();
+                                                    }while(rate4==-1);
+                                                    this.logNegocio.addClassificacao(query4.getID(),rate4,"Veiculo");
                                                     //this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap4,query4);
                                                     this.logNegocio.addAluguerQueue(theCheap4);
                                                 }
@@ -319,7 +365,38 @@ public class App {
                                             }
                                             break;
                                         case 3:
-                                            System.out.println("keke");
+                                            int leitInt,ratecl;
+                                            String yesNo;
+                                            System.out.println("Esta é a lista de Alugueres: ");
+                                            System.out.println(this.logNegocio.getProp(this.menuLogin.getPassword()).getQueue());
+                                            if(this.logNegocio.getProp(this.menuLogin.getPassword()).getQueue().isEmpty()){
+                                                System.out.println("Não há alugueres para aceitar/recusar.");
+                                                break;
+                                            }
+                                            do{
+                                                System.out.print("Inserir ID do aluguer: ");
+                                                leitInt = this.menuLogin.leInt();
+                                            }while(leitInt==-1);
+                                            try {
+                                                this.logNegocio.isInQueue(this.menuLogin.getPassword(),leitInt);
+                                                do{
+                                                    System.out.print("Aceitar? [y/n]: ");
+                                                    yesNo = this.menuLogin.leYesNo();
+                                                }while(yesNo==null);
+                                                Aluguer auxAluguer = logNegocio.getProp(this.menuLogin.getPassword()).getFromQueue(leitInt);
+                                                boolean decided = this.logNegocio.decideAluguer(this.menuLogin.getPassword(),leitInt,yesNo);
+                                                if(decided) {
+                                                    do{
+                                                        System.out.print("Classificação do Cliente (0-100): ");
+                                                        ratecl=this.menuLogin.leInt();
+                                                    }while(ratecl==-1);
+                                                    this.logNegocio.addClassificacao(auxAluguer.getClienteID(),ratecl,"Cliente");
+                                                }
+                                            }
+                                            catch(PrintError e) {
+                                                System.out.println(e.getMessage());
+                                                break;
+                                            }
                                             break;
                                         case 4:
                                             System.out.println("Inserir o tipo de Veículo: ");
@@ -398,7 +475,8 @@ public class App {
                                             }
                                             break;
                                         case 6:
-                                            System.out.println(this.logNegocio.getProp(this.menuLogin.getPassword()).getQueue());
+                                            System.out.println("Esta é a minha lista de alugueres aceites: ");
+                                            System.out.println(this.logNegocio.getProp(this.menuLogin.getPassword()).getHistorico());
                                             break;
                                         case 7:
                                             System.out.println("A minha frota atual de veículos é: \n");

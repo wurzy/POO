@@ -525,10 +525,12 @@ public class MyLog {
 
         x.setPosicao(al.getFimPercurso());
         x.updateAutonomia(al.distancia());
+        x.addAluguer(al);
         this.listaVeiculos.put(x.getID(),x);
 
         Proprietario p = this.proprietarios.get(x.getProp()).clone();
         p.updateFrota(x);
+        p.addAluguer(al);
         this.proprietarios.put(p.getPassword(),p);
 
         cl.addAluguer(al);
@@ -565,7 +567,7 @@ public class MyLog {
         v.setPosicao(al.getFimPercurso());
 
         cl.addAluguer(al);
-        //v.addAluguer...
+        v.addAluguer(al);
         p.addAluguer(al);
         p.updateFrota(v);
 
@@ -661,4 +663,55 @@ public class MyLog {
         this.proprietarios.put(nif,prop);
     }
 
+    public void isInQueue(String nif, int id) throws PrintError{
+        Proprietario p = this.proprietarios.get(nif).clone();
+        if(p.isInQueue(id)) {
+            return;
+        }
+        else {
+            throw new PrintError("Não existe este aluguer na minha lista de espera.");
+        }
+    }
+
+    public boolean decideAluguer(String nif, int id, String yn) {
+        Proprietario p = this.proprietarios.get(nif).clone();
+        switch(yn) {
+            case "y":
+                confirmedAluguer(p.getFromQueue(id));
+                p = this.proprietarios.get(nif).clone();
+                p.removeFromQueue(id);
+                this.proprietarios.put(nif,p);
+                return true;
+            case "n":
+                p.removeFromQueue(id);
+                this.proprietarios.put(nif,p);
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    public void addClassificacao(String id, int rating, String tipo){
+        switch(tipo) {
+            case "Veiculo":
+                Veiculo v = this.listaVeiculos.get(id).clone();
+                v.addClassificacao(rating);
+                this.listaVeiculos.put(id,v);
+                break;
+            case "Cliente":
+                Cliente cl = this.clientes.get(id).clone();
+                cl.addClassificacao(rating);
+                this.clientes.put(id,cl);
+                break;
+            case "Prop":
+                Proprietario prop = this.proprietarios.get(id).clone();
+                prop.addClassificacao(rating);
+                this.proprietarios.put(id,prop);
+                break;
+            default:
+                break;
+        }
+
+        //mandar para file.
+    }
 }

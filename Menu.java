@@ -140,5 +140,40 @@ public class Menu {
         return op;
     }
 
+    public int leInt(){
+        int op;
+        Scanner sc = new Scanner(System.in);
+        try{
+            op = sc.nextInt();
+            if(op<0) {
+                op = -1;
+            }
+        }
+        catch(InputMismatchException e){
+            out.println("Não é um número inteiro válido.");
+            op = -1;
+        }
+        return op;
+    }
+
+    public String leYesNo(){
+        String op;
+        Scanner sc = new Scanner(System.in);
+        try{
+            op = sc.nextLine();
+            if(op.equals("y") || op.equals("n")) {
+                return op;
+            }
+            else {
+                op = null;
+            }
+        }
+        catch (InputMismatchException e) {
+            out.println("Não é uma escolha válida.");
+            op = null;
+        }
+        return op;
+    }
+
     public void setOp(int op){ this.op = op; }
 }
