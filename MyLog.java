@@ -72,6 +72,9 @@ public class MyLog implements Serializable{
         p.setEmail(partes[2]);
         p.setAddress(partes[3]);
         p.setHistorico(new TreeSet<>());
+        if(this.proprietarios.containsKey(partes[1])) {
+            return null;
+        }
         return p;
     }
 
@@ -86,6 +89,9 @@ public class MyLog implements Serializable{
         c.setAddress(partes[3]);
         p = new Ponto(Double.parseDouble(partes[4]), Double.parseDouble(partes[5]));
         c.setPosicaoI(p);
+        if(this.clientes.containsKey(partes[1])) {
+            return null;
+        }
 
         return c;
     }
@@ -126,6 +132,9 @@ public class MyLog implements Serializable{
         prop.addToFrota(v);
         this.proprietarios.put(partes[3],prop);
         //System.out.println(v);
+        if(this.listaVeiculos.containsKey(partes[2])) {
+            throw new PrintError("Já existe o veículo.");
+        }
         return v;
     }
 
@@ -224,10 +233,16 @@ public class MyLog implements Serializable{
             switch (partes[0]){
                 case "NovoProp":
                     Proprietario p = makeProprietario(partes[1]);
+                    if(p==null) {
+                        break;
+                    }
                     this.proprietarios.put(p.getPassword(), p.clone());
                     break;
                 case "NovoCliente":
                     Cliente c = makeCliente(partes[1]);
+                    if(c==null) {
+                        break;
+                    }
                     this.clientes.put(c.getPassword(), c.clone());
                     break;
                 case "NovoCarro":
