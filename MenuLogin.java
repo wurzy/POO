@@ -1,8 +1,10 @@
 import static java.lang.System.out;
+
+import java.io.Serializable;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class MenuLogin extends Menu{
+public class MenuLogin extends Menu implements Serializable {
         private String email;
         private String password;
 

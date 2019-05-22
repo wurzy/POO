@@ -4,13 +4,14 @@
  *
  * @author  Grupo de Trabalho -->INSERIR<--
  */
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Ator {
+public class Ator implements Serializable {
     private String email; //key
     private String name;
     private String password;

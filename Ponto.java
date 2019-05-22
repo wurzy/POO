@@ -1,10 +1,12 @@
+import java.io.Serializable;
+
 /**
  * Classe que implementa um Ponto num plano2D.
  * As coordenadas do Ponto são doubles.
  *
  * @author  Material de Aulas (alterado)
  */
-public class Ponto {
+public class Ponto implements Serializable {
     private double x;
     private double y;
 

@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Aluguer implements Comparable<Aluguer>{
+public class Aluguer implements Comparable<Aluguer>, Serializable {
     private int aluguerID; //ordenaçao
     private String veiculoID; //matricula do veiculo
     private String clienteID; //password do cliente
@@ -14,6 +15,7 @@ public class Aluguer implements Comparable<Aluguer>{
     private double preco; // inicio->fim preco
     private double tempo; // inicio->fim tempo
     private LocalDate date;
+    private Randomizer randomizer;
 
     public Aluguer() {
         this.aluguerID = -1;
@@ -28,6 +30,7 @@ public class Aluguer implements Comparable<Aluguer>{
         this.preco = 0;
         this.tempo = 0;
         this.date = LocalDate.now();
+        this.randomizer = new Randomizer(0);
     }
 
     public Aluguer(Aluguer al) {
@@ -43,6 +46,7 @@ public class Aluguer implements Comparable<Aluguer>{
         this.preco = al.getPreco();
         this.tempo = al.getTempo();
         this.date = al.getDate();
+        this.randomizer = al.getRandomizer();
     }
 
     public int getAluguerID() {
@@ -85,6 +89,14 @@ public class Aluguer implements Comparable<Aluguer>{
 
     public LocalDate getDate(){
         return LocalDate.of(this.date.getYear(),this.date.getMonth(),this.date.getDayOfMonth());
+    }
+
+    public Randomizer getRandomizer(){
+        return this.randomizer.clone();
+    }
+
+    public void setRandomizer(Randomizer r) {
+        this.randomizer = r.clone();
     }
 
     public void setAluguerID(int aluguerID) {
@@ -146,6 +158,15 @@ public class Aluguer implements Comparable<Aluguer>{
                 "\n---------------------------------------------\n");
     }
 
+    public String toPrint(){
+        return "Aluguer:" +
+                this.clienteID + "," +
+                this.fimPercurso.getX() + "," +
+                this.fimPercurso.getY() + "," +
+                this.tipoVeiculo + "," +
+                this.tipo + "\n";
+    }
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
@@ -161,7 +182,8 @@ public class Aluguer implements Comparable<Aluguer>{
                 this.posInicialVeiculo.equals(aluguer.getPosInicialVeiculo()) &&
                 this.preco == aluguer.getPreco() &&
                 this.tempo == aluguer.getTempo() &&
-                this.date.equals(aluguer.getDate())
+                this.date.equals(aluguer.getDate()) &&
+                this.randomizer.equals(aluguer.getRandomizer())
                 );
     }
 
@@ -170,7 +192,6 @@ public class Aluguer implements Comparable<Aluguer>{
     }
 
     public int compareTo(Aluguer al) {
-        //return Integer.compare(this.aluguerID,al.getAluguerID());
 
         if(this.aluguerID == al.getAluguerID()) return 0;
         else if (this.aluguerID < al.getAluguerID()) return -1;

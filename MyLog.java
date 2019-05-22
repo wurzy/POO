@@ -1,13 +1,12 @@
+import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.stream.Collectors;
+import java.util.Collection;
 
 import static java.lang.System.out;
 
-public class MyLog {
+public class MyLog implements Serializable{
     private Map<String,Cliente> clientes;
     private Map<String,Proprietario> proprietarios;
     private Map<String,Veiculo> listaVeiculos; // MATRICULA - CARRO
@@ -34,6 +33,34 @@ public class MyLog {
                 linhas.add(linha);
         } catch (IOException e) {out.println(e);}
         return linhas;
+    }
+
+    public void escreveEmFicheiroTxt(String nomeFicheiro, Aluguer al) throws IOException{
+        PrintWriter fich = new PrintWriter(new FileOutputStream(new File(nomeFicheiro), true));
+        fich.println(al.toPrint());
+        fich.flush();
+        fich.close();
+    }
+
+    public void escreveEmFicheiroTxt(String nomeFicheiro, Veiculo al) throws IOException{
+        PrintWriter fich = new PrintWriter(new FileOutputStream(new File(nomeFicheiro), true));
+        fich.println(al.toPrint());
+        fich.flush();
+        fich.close();
+    }
+
+    public void escreveEmFicheiroTxt(String nomeFicheiro, Proprietario al) throws IOException{
+        PrintWriter fich = new PrintWriter(new FileOutputStream(new File(nomeFicheiro), true));
+        fich.println(al.toPrint());
+        fich.flush();
+        fich.close();
+    }
+
+    public void escreveEmFicheiroTxt(String nomeFicheiro, Cliente al) throws IOException{
+        PrintWriter fich = new PrintWriter(new FileOutputStream(new File(nomeFicheiro), true));
+        fich.println(al.toPrint());
+        fich.flush();
+        fich.close();
     }
 
     private Proprietario makeProprietario(String linha){
@@ -135,6 +162,10 @@ public class MyLog {
             default:
                 break;
         }
+        Randomizer rand = new Randomizer(0);
+
+        aluguer.setRandomizer(rand);
+        //out.println(rand);
 
         aluguer.setVeiculoID(veic.getID());
         aluguer.setInicioPercurso(cl.getPosicaoI());
@@ -354,59 +385,9 @@ public class MyLog {
                }
            }
        }
-       //out.println("carro inicio closest" + aux.getPosicao());
-       /*
-        if(aux!=null) {
-           aux.setPosicao(posF);
-           aux.updateAutonomia(dist);
-           this.listaVeiculos.put(aux.getID(),aux);
-       }
-       */
-        //out.println("carro fim closest" + aux.getPosicao());
-
-     //   return ret;
-        return aux;
-    }
-
-/*
-    public Veiculo rentClosest(String nif) {
-
-        Cliente cliente = this.clientes.get(nif).clone();
-        Ponto posF = cliente.getPosicaoF();
-        Ponto posI = cliente.getPosicaoI();
-
-        Veiculo aux = null;
-
-        double dist_carro, mindist = Double.MAX_VALUE,dist=0;
-
-        for(Veiculo veiculo: this.listaVeiculos.values()) {
-            Ponto posC = veiculo.getPosicao();
-            dist_carro = posI.distancia(posC);
-            dist = posC.distancia(posF);
-            if(dist_carro<mindist  && veiculo.hasAutonomia(dist)) {
-                mindist = dist_carro;
-                if(veiculo instanceof Eletrico) {
-                    aux = new Eletrico(veiculo);
-                }
-                else if (veiculo instanceof Hibrido) {
-                    aux = new Hibrido(veiculo);
-                }
-                else {
-                    aux = new Gasolina(veiculo);
-                }
-            }
-        }
-        //out.println("carro inicio closest" + aux.getPosicao());
-
-        if(aux!=null) {
-            aux.setPosicao(posF);
-            aux.updateAutonomia(dist);
-        }
-        //out.println("carro fim closest" + aux.getPosicao());
 
         return aux;
     }
-*/
 
     public Veiculo rentCheapest(String nif, String tipo) {
         double mincusto = Double.MAX_VALUE;
@@ -509,6 +490,15 @@ public class MyLog {
         }
     }
 
+    public Aluguer getAluguer(int ID) {
+        for(Aluguer l: this.alugueres) {
+            if(l.getAluguerID()==ID) {
+                return l.clone();
+            }
+        }
+        return null;
+    }
+
     public void addToQueue(String prop, Aluguer al) {
         Proprietario pr = this.proprietarios.get(prop).clone();
         pr.addToQueue(al);
@@ -540,12 +530,16 @@ public class MyLog {
         this.alugueres.add(al.clone());
     }
 
-    public void addAluguerQueue(Aluguer al1){
+    public void addAluguerQueue(Aluguer al1, String clima){
         Aluguer al = al1.clone();
         Veiculo v = this.listaVeiculos.get(al.getVeiculoID()).clone();
-
-        al.setPreco(v.calculaTarifa(v.getPosicao(),al.getFimPercurso()));
+        Randomizer n = new Randomizer();
+        n.setClima(clima);
+        al.setRandomizer(n);
+        double velNova = n.novaVelocidade(v.getVelocidade());
+        v.setVelocidade(velNova);
         al.setDate(LocalDate.now());
+        al.setPreco(v.calculaTarifa(v.getPosicao(),al.getFimPercurso()));
         al.setTempo(v.calculaTempo(v.getPosicao(),al.getFimPercurso()));
 
         Proprietario p = this.proprietarios.get(al.getPropID()).clone();
@@ -713,5 +707,39 @@ public class MyLog {
         }
 
         //mandar para file.
+    }
+
+    public void existsProp(String nif) throws PrintError {
+        if(this.proprietarios.containsKey(nif)) {
+            throw new PrintError("Já existe o proprietário registado.");
+        }
+    }
+
+    public void existsCliente(String nif) throws PrintError {
+        if(this.clientes.containsKey(nif)) {
+            throw new PrintError("Já existe o cliente registado.");
+        }
+    }
+
+    public void existsMatricula(String matricula) throws PrintError {
+        if(this.listaVeiculos.containsKey(matricula)) {
+            throw new PrintError("Já existe a matrícula registada.");
+        }
+    }
+
+    public void signProp(Proprietario p) {
+        this.proprietarios.put(p.getPassword(),p.clone());
+    }
+
+    public void signCliente(Cliente cl) {
+        this.clientes.put(cl.getPassword(),cl.clone());
+    }
+
+    public List<Cliente> fetchTop10(){
+        List<Cliente> ret = this.clientes.values().stream().map(Cliente::clone).collect(Collectors.toList());
+        Collections.sort(ret, new Top10Comparator());
+        ret = ret.stream().limit((long) 10).collect(Collectors.toList());
+
+        return ret;
     }
 }

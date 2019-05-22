@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Cliente extends Ator{
+public class Cliente extends Ator implements Serializable {
     private Ponto posicaoI;
     private Ponto posicaoF;
 
@@ -15,9 +16,15 @@ public class Cliente extends Ator{
 
     public Cliente(String email, String name, String password, String address, LocalDate date, Ponto posicaoI, Ponto posicaoF,Set<Aluguer>historico, List<Integer> classif) {
         super(email, name, password, address, date,historico, classif);
-        this.posicaoI = posicaoI;
-        this.posicaoF = posicaoF;
+        this.posicaoI = posicaoI.clone();
+        this.posicaoF = posicaoF.clone();
 
+    }
+
+    public Cliente(String email, String name, String password, String address, LocalDate date, Ponto posicaoI) {
+        super(email, name, password, address, date, new TreeSet<>(),new ArrayList<>());
+        this.posicaoI = posicaoI.clone();
+        this.posicaoF = new Ponto(0,0);
     }
 
     public Cliente(Ator at, Ponto posicaoI, Ponto posicaoF) {
@@ -51,6 +58,17 @@ public class Cliente extends Ator{
                 "\nPosição pretendida: (x , y) = " + this.posicaoF.toString() +
                 "\n------------------------------------------------------------\n";
 
+    }
+
+    public String toPrint() {
+        Ponto p = this.getPosicaoI();
+        return "NovoCliente:" +
+                this.getName() + "," +
+                this.getPassword() + "," +
+                this.getEmail() + "," +
+                this.getAddress() + "," +
+                p.getX() + "," +
+                p.getY();
     }
 
     public boolean equals(Object o) {

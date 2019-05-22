@@ -1,10 +1,12 @@
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import static java.lang.System.out;
 
-public class Menu {
+public class Menu implements Serializable {
     private List<String> opcoes;
     private int op;
 
@@ -134,7 +136,7 @@ public class Menu {
             op = sc.nextLine();
         }
         catch(InputMismatchException e) {
-            out.println("Não foi uma matrícula válida. Coloque dd-xx-dd");
+            out.println("Não foi uma String válida.");
             op = null;
         }
         return op;
@@ -173,6 +175,26 @@ public class Menu {
             op = null;
         }
         return op;
+    }
+
+    public LocalDate lerData(){
+        int dataD,dataM,dataA;
+        do {
+            System.out.print("Inserir dia: ");
+            dataD = leInt();
+        }while(dataD<=0 || dataD > 31);
+
+        do {
+            System.out.print("Inserir mês: ");
+            dataM = leInt();
+        }while(dataM<=0 || dataM > 12);
+
+        do {
+            System.out.print("Inserir ano: ");
+            dataA = leInt();
+        }while(dataA==-1 || dataA > 2019);
+
+        return LocalDate.of(dataA,dataM,dataD);
     }
 
     public void setOp(int op){ this.op = op; }

@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Proprietario extends Ator{
+public class Proprietario extends Ator implements Serializable {
     private Map<String,Veiculo> frota; // id de carro -> carro
     private Set<Aluguer> queue;
 
@@ -57,6 +58,14 @@ public class Proprietario extends Ator{
     public String toString(){
         return (super.toString() +
                 "\n--------------------------------------------------\n");
+    }
+
+    public String toPrint(){
+        return "NovoProp:" +
+                this.getName() + "," +
+                this.getPassword() + "," +
+                this.getEmail() + "," +
+                this.getAddress();
     }
 
     public boolean equals(Object o) {

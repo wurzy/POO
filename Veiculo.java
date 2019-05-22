@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public abstract class Veiculo {
+public abstract class Veiculo implements Serializable {
     private String ID; // matricula
     private String marca;
     private String prop;
@@ -160,8 +161,20 @@ public abstract class Veiculo {
                 "\nConsumo/km: " + this.getConsumoKm() + " L/km" +
                 "\nAutonomia: " + this.getDepositoAtual() + "/" + this.getDepositoMax() + " km" +
                 "\n-------------------------------------------\n";
-                //"\n\nHistórico de Alugueres:\n\n " + this.getHistorico() +
-                //"\n\nHistórico de Classificações:\n\n " + this.getClassificacoes() + "\n";
+    }
+
+    public String toPrint(){
+        return "NovoCarro:" +
+                this.tipo + "," +
+                this.marca + "," +
+                this.ID + "," +
+                this.prop + "," +
+                this.velocidade + "," +
+                this.priceKm + "," +
+                this.consumoKm + "," +
+                this.depositoMax + "," +
+                this.getPosicao().getX() + "," +
+                this.getPosicao().getY() + "\n";
     }
 
     public boolean equals(Object o) {

@@ -1,13 +1,11 @@
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-public class Gasolina extends Veiculo{
+public class Gasolina extends Veiculo implements Serializable {
 
     public Gasolina() {
         super();
-        //this.setPriceKm(0.0729); // 1.55 € / L -> 7.29 € / 100KM
-        //this.setConsumoKm(0.047); // 4.7L / 100 km
-        //this.setVelocidade(90); // kinda pointless
     }
 
     public Gasolina(Veiculo x) {
@@ -15,10 +13,6 @@ public class Gasolina extends Veiculo{
         this.setPriceKm(x.getPriceKm());
         this.setVelocidade(x.getVelocidade());
         this.setConsumoKm(x.getConsumoKm());
-        //this.setPriceKm(0.0729);
-        //this.setConsumoKm(0.047);
-        //this.setVelocidade(90);
-
     }
 
     public String toString(){
