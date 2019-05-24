@@ -1,6 +1,5 @@
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.*;
 
 public class Aluguer implements Comparable<Aluguer>, Serializable {
     private int aluguerID; //ordenaçao

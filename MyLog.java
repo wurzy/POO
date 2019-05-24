@@ -96,7 +96,7 @@ public class MyLog implements Serializable{
         return c;
     }
 
-    private Veiculo makeVeiculo(String linha) throws PrintError{
+    private Veiculo makeVeiculo(String linha){
         String[] partes = linha.split(",");
         Veiculo v; // se necessario meter um throw
         switch (partes[0]){
@@ -113,11 +113,11 @@ public class MyLog implements Serializable{
                 v.setTipo("Hibrido");
                 break;
             default:
-                throw new PrintError("Tipo de veículo inválido");
+                return null;
         }
 
         Ponto p;
-
+        if(this.listaVeiculos.containsKey(partes[2])) return null;
         v.setMarca(partes[1]);
         v.setID(partes[2]);
         Proprietario prop = this.proprietarios.get(partes[3]).clone();
@@ -132,9 +132,6 @@ public class MyLog implements Serializable{
         prop.addToFrota(v);
         this.proprietarios.put(partes[3],prop);
         //System.out.println(v);
-        if(this.listaVeiculos.containsKey(partes[2])) {
-            throw new PrintError("Já existe o veículo.");
-        }
         return v;
     }
 
@@ -246,14 +243,10 @@ public class MyLog implements Serializable{
                     this.clientes.put(c.getPassword(), c.clone());
                     break;
                 case "NovoCarro":
-                    try {
                     Veiculo carro = makeVeiculo(partes[1]);
+                    if(carro==null) break;
                     this.listaVeiculos.put(carro.getID(),carro.clone());
                     break;
-                    }
-                    catch(PrintError e) {
-                        out.println(e.getMessage());
-                    }
                 case "Aluguer":
                     Aluguer alug = makeAluguer(partes[1],this.counter);
                     this.counter++;
@@ -261,7 +254,6 @@ public class MyLog implements Serializable{
                     break;
                 case "Classificar":
                     addClassificacao(partes[1]);
-                  //  out.println(this.proprietarios.get("463062725").getClassificacao());
                     break;
             }
         }
@@ -575,6 +567,7 @@ public class MyLog implements Serializable{
         v.updateAutonomia(al.distancia());
         v.setPosicao(al.getFimPercurso());
 
+        cl.addQueue(al);
         cl.addAluguer(al);
         v.addAluguer(al);
         p.addAluguer(al);
@@ -756,5 +749,8 @@ public class MyLog implements Serializable{
         ret = ret.stream().limit((long) 10).collect(Collectors.toList());
 
         return ret;
+    }
+    public void removeQueue(String nif, int id) {
+        this.clientes.get(nif).removeFromQueue(id);
     }
 }

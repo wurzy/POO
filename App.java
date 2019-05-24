@@ -37,6 +37,7 @@ public class App implements Serializable{
                 "Alterar a minha localização",
                 "Alterar o meu destino",
                 "Ver o meu histórico de alugueres aceites",
+                "Adicionar uma classificação",
                 "Ver a minha localização atual",
                 "Ver o meu destino atual",
                 "Ver minha informação pessoal"};
@@ -51,7 +52,8 @@ public class App implements Serializable{
 
         String[] sign = {"Sign-in",
                         "Sign-up",
-                        "Top 10"};
+                        "Top 10",
+                        "Ver histórico dum carro"};
 
         String[] login = {"Cliente", "Proprietário"};
 
@@ -117,12 +119,15 @@ public class App implements Serializable{
                                             buscaHistoricoCliente(logNegocio.getClienteHistorico(clPW));
                                             break;
                                         case 8:
-                                            posAtual(clPW);
+                                            adicionarClassificao(clPW);
                                             break;
                                         case 9:
-                                            destinoAtual(clPW);
+                                            posAtual(clPW);
                                             break;
                                         case 10:
+                                            destinoAtual(clPW);
+                                            break;
+                                        case 11:
                                             buscaPersonalCl(clPW);
                                             break;
                                     }
@@ -184,7 +189,9 @@ public class App implements Serializable{
                     top10();
                     System.out.println("Voltando ao menu de sign-in/sign-up...");
                     break;
-
+                case 4:
+                    historico();
+                    break;
             }
         }while(this.menuSign.getOp()!=0);
         save();
@@ -268,7 +275,7 @@ public class App implements Serializable{
                 case 0:
                     System.out.println("Localização atual:");
                     Ponto posicaoI = this.menuLogin.lerCoordenada();
-                    Cliente cl = new Cliente(email,nome,Integer.toString(nif),morada,birthday,posicaoI);
+                    Cliente cl = new Cliente(email,nome,Integer.toString(nif),morada,birthday,posicaoI, new TreeSet<>());
                     this.logNegocio.signCliente(cl);
                     System.out.println("Novo cliente gravado com sucesso.");
                     break;
@@ -569,17 +576,7 @@ public class App implements Serializable{
                 theCheap4.setInicioPercurso(this.logNegocio.getCliente(password).getPosicaoI());
                 theCheap4.setFimPercurso(this.logNegocio.getCliente(password).getPosicaoF());
                 theCheap4.setPosInicialVeiculo(query4.getPosicao());
-                do{
-                    System.out.print("Classificação do proprietário (0-100): ");
-                    rate4=this.menuLogin.leInt();
-                }while(rate4==-1);
-                this.logNegocio.addClassificacao(query4.getProp(),rate4,"Prop");
 
-                do{
-                    System.out.print("Classificação do carro (0-100): ");
-                    rate4=this.menuLogin.leInt();
-                }while(rate4==-1);
-                this.logNegocio.addClassificacao(query4.getID(),rate4,"Veiculo");
                 //this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap4,query4);
                 this.logNegocio.addAluguerQueue(theCheap4,this.estado.getClima());
             }
@@ -617,17 +614,7 @@ public class App implements Serializable{
             theCheap3.setInicioPercurso(this.logNegocio.getCliente(password).getPosicaoI());
             theCheap3.setFimPercurso(this.logNegocio.getCliente(password).getPosicaoF());
             theCheap3.setPosInicialVeiculo(raioCheap.getPosicao());
-            do{
-                System.out.print("Classificação do proprietário (0-100): ");
-                rate3=this.menuLogin.leInt();
-            }while(rate3==-1);
-            this.logNegocio.addClassificacao(raioCheap.getProp(),rate3,"Prop");
 
-            do{
-                System.out.print("Classificação do carro (0-100): ");
-                rate3=this.menuLogin.leInt();
-            }while(rate3==-1);
-            this.logNegocio.addClassificacao(raioCheap.getID(),rate3,"Veiculo");
             //this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap3,raioCheap);
             this.logNegocio.addAluguerQueue(theCheap3,this.estado.getClima());
         }
@@ -660,17 +647,6 @@ public class App implements Serializable{
             theCheap2.setInicioPercurso(this.logNegocio.getCliente(password).getPosicaoI());
             theCheap2.setFimPercurso(this.logNegocio.getCliente(password).getPosicaoF());
             theCheap2.setPosInicialVeiculo(cheap.getPosicao());
-            do{
-                System.out.print("Classificação do proprietário (0-100): ");
-                rateCheap2=this.menuLogin.leInt();
-            }while(rateCheap2==-1);
-            this.logNegocio.addClassificacao(cheap.getProp(),rateCheap2,"Prop");
-            do{
-                System.out.print("Classificação do carro (0-100): ");
-                rateCheap2=this.menuLogin.leInt();
-            }while(rateCheap2==-1);
-            this.logNegocio.addClassificacao(cheap.getID(),rateCheap2,"Veiculo");
-            // this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap2,cheap);
             this.logNegocio.addAluguerQueue(theCheap2,this.estado.getClima());
         }
     }
@@ -700,16 +676,7 @@ public class App implements Serializable{
             theCheap.setFimPercurso(this.logNegocio.getCliente(password).getPosicaoF());
             theCheap.setPosInicialVeiculo(cheapest.getPosicao());
             //this.logNegocio.addAluguer(this.menuLogin.getPassword(),theCheap,cheapest);
-            do{
-                System.out.print("Classificação do proprietário (0-100): ");
-                rateCheap=this.menuLogin.leInt();
-            }while(rateCheap==-1);
-            this.logNegocio.addClassificacao(cheapest.getProp(),rateCheap,"Prop");
-            do{
-                System.out.print("Classificação do veículo (0-100): ");
-                rateCheap=this.menuLogin.leInt();
-            }while(rateCheap==-1);
-            this.logNegocio.addClassificacao(cheapest.getID(),rateCheap,"Veiculo");
+
             this.logNegocio.addAluguerQueue(theCheap,this.estado.getClima());
         }
     }
@@ -733,5 +700,74 @@ public class App implements Serializable{
         catch(IOException e) {
             System.out.println("Não foi possível escrever no ficheiro.");
         }
+    }
+
+    private void adicionarClassificao(String nif){
+        int ID,rateProp,rateVeic;
+        boolean valid = false;
+        Aluguer aux = null;
+        System.out.println("Estes são os meus alugueres por classificar:");
+        List<Aluguer> ret = this.logNegocio.getCliente(nif).getQueueList();
+        if(ret.isEmpty()) {
+            System.out.println("Não há alugueres por classificar.");
+            return;
+        }
+        System.out.println(ret);
+        System.out.println("Qual quero classificar?");
+        do{
+            System.out.print("ID do Aluguer:");
+            ID = this.menuLogin.leInt();
+        }while(ID==-1);
+
+        for(Aluguer l:ret) {
+            if(ID==l.getAluguerID()) {
+                aux = l.clone();
+                valid = true;
+                break;
+            }
+        }
+        if(!valid) {
+            System.out.println("Não é um ID válido.");
+            return;
+        }
+        System.out.println("ID Válido.");
+        this.logNegocio.removeQueue(nif,ID);
+        do{
+            System.out.print("Classificação do proprietário (0-100): ");
+            rateProp=this.menuLogin.leInt();
+        }while(rateProp==-1);
+
+        this.logNegocio.addClassificacao(aux.getPropID(),rateProp,"Prop");
+        do{
+            System.out.print("Classificação do veículo (0-100): ");
+            rateVeic=this.menuLogin.leInt();
+        }while(rateVeic==-1);
+
+        this.logNegocio.addClassificacao(aux.getVeiculoID(),rateVeic,"Veiculo");
+    }
+
+    private void historico(){
+        System.out.println("Inserir matrícula do carro: ");
+        String mat;
+        do{
+            System.out.print("Matrícula: ");
+            mat = this.menuLogin.leString();
+        }while(mat==null);
+        try {
+            Veiculo x = this.logNegocio.getCarro(mat);
+            System.out.println("Carro escolhido: ");
+            System.out.println(x);
+            if(x.getHistorico().isEmpty()){
+                System.out.println("Não fez nenhum aluguer até agora.");
+                return;
+            }
+            System.out.println("Os alugueres realizados por este carro são:");
+            System.out.println(x.getHistoricoList());
+        }
+        catch (PrintError e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+        return;
     }
 }

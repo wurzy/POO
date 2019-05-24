@@ -1,42 +1,40 @@
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Cliente extends Ator implements Serializable {
     private Ponto posicaoI;
     private Ponto posicaoF;
+    private Set<Aluguer> queue;
 
 
-    // -> aqui da jeito ter 4 construtores i think
     public Cliente() {
         super();
+        this.queue = new TreeSet<>();
         this.posicaoI = new Ponto();
         this.posicaoF = new Ponto();
     }
 
-    public Cliente(String email, String name, String password, String address, LocalDate date, Ponto posicaoI, Ponto posicaoF,Set<Aluguer>historico, List<Integer> classif) {
-        super(email, name, password, address, date,historico, classif);
-        this.posicaoI = posicaoI.clone();
-        this.posicaoF = posicaoF.clone();
-
-    }
-
-    public Cliente(String email, String name, String password, String address, LocalDate date, Ponto posicaoI) {
+    public Cliente(String email, String name, String password, String address, LocalDate date, Ponto posicaoI, Set<Aluguer> queue) {
         super(email, name, password, address, date, new TreeSet<>(),new ArrayList<>());
         this.posicaoI = posicaoI.clone();
         this.posicaoF = new Ponto(0,0);
+        setQueue(queue);
     }
 
-    public Cliente(Ator at, Ponto posicaoI, Ponto posicaoF) {
+    public Cliente(Ator at, Ponto posicaoI, Ponto posicaoF, Set<Aluguer> queue) {
         super(at);
         this.posicaoI = posicaoI.clone();
         this.posicaoF = posicaoF.clone();
+        setQueue(queue);
     }
 
     public Cliente(Cliente cl) {
         super(cl.getEmail(),cl.getName(),cl.getPassword(),cl.getAddress(),cl.getBirthday(),cl.getHistorico(),cl.getClassificacao());
         this.posicaoI = cl.getPosicaoI();
         this.posicaoF = cl.getPosicaoF();
+        setQueue(cl.getQueue());
     }
 
     public Ponto getPosicaoI() {
@@ -50,6 +48,42 @@ public class Cliente extends Ator implements Serializable {
     }
 
     public void setPosicaoF(Ponto posicao) {this.posicaoF = posicao.clone();}
+
+    public void setQueue(Set<Aluguer> l) {
+        this.queue = new TreeSet<>();
+        for(Aluguer a: l) {
+            this.queue.add(a.clone());
+        }
+    }
+
+    public Set<Aluguer> getQueue(){
+        Set<Aluguer> ret = new TreeSet<>();
+        for(Aluguer l: this.queue){
+            ret.add(l.clone());
+        }
+        return ret;
+    }
+
+    public List<Aluguer> getQueueList() {
+        List<Aluguer> ret = new ArrayList<>();
+        for(Aluguer l: this.queue){
+            ret.add(l.clone());
+        }
+        return ret;
+    }
+
+    public void addQueue(Aluguer l) {
+        this.queue.add(l);
+    }
+
+    public void removeFromQueue(int id) {
+        for(Aluguer l:this.queue) {
+            if(id==l.getAluguerID()) {
+                this.queue.remove(l);
+                return;
+            }
+        }
+    }
 
 
     public String toString() {

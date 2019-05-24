@@ -88,6 +88,14 @@ public abstract class Veiculo implements Serializable {
         return getter;
     }
 
+    public List<Aluguer> getHistoricoList(){
+        List<Aluguer> ret = new ArrayList<>();
+        for(Aluguer l: this.historico){
+            ret.add(l.clone());
+        }
+        return ret;
+    }
+
     public List<Integer> getClassificacoes() {
         return this.classificoes.stream().collect(Collectors.toList());
     }
