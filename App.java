@@ -346,7 +346,6 @@ public class App implements Serializable{
     }
 
     private void buscaHistoricoProp(Set<Aluguer> set) {
-        System.out.println("Data inicial:");
         LocalDate inicio,fim;
         System.out.println("Data de início: ");
         inicio = this.menuLogin.lerData();
@@ -564,7 +563,6 @@ public class App implements Serializable{
     }
 
     private void buscaHistoricoCliente(Set<Aluguer> set) {
-        System.out.println("Data inicial:");
         LocalDate inicio,fim;
         System.out.println("Data de início: ");
         inicio = this.menuLogin.lerData();
