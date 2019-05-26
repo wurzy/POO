@@ -544,6 +544,7 @@ public class MyLog implements Serializable{
         n.setClima(clima);
         al.setRandomizer(n);
         double velNova = n.novaVelocidade(v.getVelocidade());
+
         v.setVelocidade(velNova);
         al.setDate(LocalDate.now());
         al.setPreco(v.calculaTarifa(v.getPosicao(),al.getFimPercurso()));
@@ -563,7 +564,9 @@ public class MyLog implements Serializable{
         Veiculo v = this.listaVeiculos.get(al.getVeiculoID()).clone();
 
         cl.setPosicaoI(al.getFimPercurso());
-
+        double novoCon = Randomizer.novoConsumo(v.calculaTempo(v.getPosicao(),al1.getFimPercurso()),al1.getTempo(),v.getDepositoAtual());
+        v.setDepositoAtual(v.getDepositoAtual()-novoCon);
+        this.listaVeiculos.put(v.getID(),v);
         v.updateAutonomia(al.distancia());
         v.setPosicao(al.getFimPercurso());
 

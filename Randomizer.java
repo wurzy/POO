@@ -45,6 +45,7 @@ public class Randomizer implements Serializable {
 
         if(this.clima.equals("Chuva")) {
             percentage = velAtual*0.25;
+            traffic*=2;
         }
         else if (this.clima.equals("Vento")) {
             percentage = velAtual*0.1;
@@ -52,7 +53,13 @@ public class Randomizer implements Serializable {
         else {
             percentage = 0;
         }
-        return (double) Math.round((velAtual - percentage - traffic)*100)/100;
+        double ret = (double) Math.round((velAtual - percentage - traffic)*100)/100;
+        return ret>1?ret:1.0;
+    }
+
+    public static double novoConsumo(double tempo, double tempoAtual, double deposito) {
+        double dif = (tempoAtual-tempo)*0.2;
+        return (double) Math.round(dif*deposito*100)/100;
     }
 
     public boolean equals(Object o) {

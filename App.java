@@ -61,8 +61,10 @@ public class App implements Serializable{
                 "Novo proprietário"};
         try {
             carregaEstado();
+            System.out.println("Ficheiro de dados encontrado.\nInicializando...");
         }
         catch(FileNotFoundException e) {
+            System.out.println("Não há ficheiro de dados gravado.\nInicializando...");
             this.logNegocio = new MyLog();
         }
         catch(ClassNotFoundException | IOException e1) {
@@ -82,6 +84,7 @@ public class App implements Serializable{
             this.menuSign.executa();
             switch(menuSign.getOp()) {
                 case 1:
+                    clearScreen();
                     do {
                         this.menuLogin.executaReader();
                         if (this.menuLogin.getOp() == 0) {
@@ -93,107 +96,138 @@ public class App implements Serializable{
 
                         switch (menuLogin.getOp()) {
                             case 1:
+                                clearScreen();
                                 do {
                                     String clPW = this.menuLogin.getPassword();
                                     this.menuCliente.executa();
                                     switch (menuCliente.getOp()) {
                                         case 1:
+                                            clearScreen();
                                             alugarPerto(clPW);
                                             break;
                                         case 2:
+                                            clearScreen();
                                             alugarCusto(clPW);
                                             break;
                                         case 3:
+                                            clearScreen();
                                             alugarRaio(clPW);
                                             break;
                                         case 4:
+                                            clearScreen();
                                             alugarEspecifico(clPW);
                                             break;
                                         case 5:
+                                            clearScreen();
                                             alterarLocalizacao(clPW);
                                             break;
                                         case 6:
+                                            clearScreen();
                                             alteraDestino(clPW);
                                             break;
                                         case 7:
+                                            clearScreen();
                                             buscaHistoricoCliente(logNegocio.getClienteHistorico(clPW));
                                             break;
                                         case 8:
+                                            clearScreen();
                                             adicionarClassificao(clPW);
                                             break;
                                         case 9:
+                                            clearScreen();
                                             posAtual(clPW);
                                             break;
                                         case 10:
+                                            clearScreen();
                                             destinoAtual(clPW);
                                             break;
                                         case 11:
+                                            clearScreen();
                                             buscaPersonalCl(clPW);
                                             break;
                                     }
                                 } while (this.menuCliente.getOp() != 0);
+                                clearScreen();
                                 System.out.println("Voltando ao menu de login...");
                                 break;
                             case 2:
+                                clearScreen();
                                 do {
                                     String propPW = this.menuLogin.getPassword();
                                     this.menuProprietario.executa();
                                     switch (menuProprietario.getOp()) {
                                         case 1:
+                                            clearScreen();
                                             encherDeposito(propPW);
                                             break;
                                         case 2:
+                                            clearScreen();
                                             mudaPKM(propPW);
                                             break;
                                         case 3:
+                                            clearScreen();
                                             acceptReject(propPW);
                                             break;
                                         case 4:
+                                            clearScreen();
                                             insertCarro(propPW);
                                             break;
                                         case 5:
+                                            clearScreen();
                                             removeCarro(propPW);
                                             break;
                                         case 6:
+                                            clearScreen();
                                             buscaHistoricoProp(this.logNegocio.getProp(propPW).getHistorico());
                                             break;
                                         case 7:
+                                            clearScreen();
                                             buscaFrota(propPW);
                                             break;
                                         case 8:
+                                            clearScreen();
                                             buscaPersonal(logNegocio.getProp(propPW));
                                             break;
                                     }
                                 } while (this.menuProprietario.getOp() != 0);
+                                clearScreen();
                                 System.out.println("Voltando ao menu de login...");
                                 break;
                         }
                     } while(this.menuLogin.getOp()!=0);
+                    clearScreen();
                     System.out.println("Voltando ao menu de sign-in/sign-up...");
                     break;
                 case 2:
+                    clearScreen();
                     do {
                         this.menuSignUp.executa();
                         switch(menuSignUp.getOp()) {
                             case 1:
+                                clearScreen();
                                 createNewUser(0);
                                 break;
                             case 2:
+                                clearScreen();
                                 createNewUser(1);
                                 break;
                         }
                     }while(this.menuSignUp.getOp()!=0);
+                    clearScreen();
                     System.out.println("Voltando ao menu de sign-in/sign-up...");
                     break;
                 case 3:
+                    clearScreen();
                     top10();
                     System.out.println("Voltando ao menu de sign-in/sign-up...");
                     break;
                 case 4:
+                    clearScreen();
                     historico();
                     break;
             }
         }while(this.menuSign.getOp()!=0);
+        clearScreen();
         save();
         System.out.println("Saindo do programa...");
     }
@@ -312,8 +346,21 @@ public class App implements Serializable{
     }
 
     private void buscaHistoricoProp(Set<Aluguer> set) {
+        System.out.println("Data inicial:");
+        LocalDate inicio,fim;
+        System.out.println("Data de início: ");
+        inicio = this.menuLogin.lerData();
+        System.out.println("Data de fim: ");
+        fim = this.menuLogin.lerData();
+        List<Aluguer> nova = set.stream()
+                .filter(aluguer -> aluguer.getDate().isAfter(inicio) && aluguer.getDate().isBefore(fim))
+                .collect(Collectors.toList());
+        if(nova.isEmpty()) {
+            System.out.println("Não há alugueres dentro desse período.");
+            return;
+        }
         System.out.println("Esta é a minha lista de alugueres aceites: ");
-        System.out.println(set);
+        System.out.println(nova);
     }
 
     private void removeCarro(String password) {
@@ -517,8 +564,21 @@ public class App implements Serializable{
     }
 
     private void buscaHistoricoCliente(Set<Aluguer> set) {
-        System.out.println("O meu histórico de alugueres é:\n");
-        System.out.println(set);
+        System.out.println("Data inicial:");
+        LocalDate inicio,fim;
+        System.out.println("Data de início: ");
+        inicio = this.menuLogin.lerData();
+        System.out.println("Data de fim: ");
+        fim = this.menuLogin.lerData();
+        List<Aluguer> nova = set.stream()
+                .filter(aluguer -> aluguer.getDate().isAfter(inicio) && aluguer.getDate().isBefore(fim))
+                .collect(Collectors.toList());
+        if(nova.isEmpty()) {
+            System.out.println("Não há alugueres dentro desse período.");
+            return;
+        }
+        System.out.println("Esta é a minha lista de alugueres aceites: ");
+        System.out.println(nova);
     }
 
     private void alteraDestino(String password) {
@@ -769,5 +829,10 @@ public class App implements Serializable{
             return;
         }
         return;
+    }
+
+    private void clearScreen()
+    {
+        System.out.print('\u000C');
     }
 }

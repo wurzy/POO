@@ -219,7 +219,7 @@ public abstract class Veiculo implements Serializable {
     public void updateAutonomia(double dist) {
         double consumo = this.consumoKm*dist;
         double result = this.depositoAtual - consumo;
-        this.depositoAtual = (double) Math.round(result*100)/100;
+        this.depositoAtual = result>0?(double) Math.round(result*100)/100:0;
     }
 
     public void addClassificacao(int rating) {
